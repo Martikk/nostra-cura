@@ -178,3 +178,57 @@
 @media (prefers-reduced-motion: reduce){
   .team::before,.teamcard,.team__title{ animation:none !important; }
 }
+
+
+@media (max-width: 560px) {
+  .teamcard {
+    width: 100%;
+    padding: clamp(12px, 3.5vw, 18px);
+    border-radius: 14px;
+    max-width: 420px; /* ограничим общую ширину */
+    max-height: 740px; /* ограничим общую высоту карточки */
+  }
+
+  .teamcard__photo img {
+    max-height: 420px; /* уменьшаем высоту фото */
+    object-fit: cover;
+  }
+
+  .teamcard__name {
+    font-size: clamp(20px, 5vw, 28px);
+  }
+
+  .teamcard__role {
+    font-size: clamp(14px, 3.5vw, 18px);
+    margin-bottom: 0.6em;
+  }
+
+  .teamcard__info {
+    gap: 0.4em;
+  }
+
+  .cta__text {
+    font-size: clamp(14px, 3.8vw, 18px);
+    line-height: 1.45;
+  }
+}
+
+@media (max-width: 380px) {
+  .teamcard {
+    max-height: 500px;
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+
+  .teamcard__photo img {
+    max-height: 380px;
+  }
+
+  .teamcard__name {
+    font-size: 22px;
+  }
+
+  .teamcard__role {
+    font-size: 15px;
+  }
+}
