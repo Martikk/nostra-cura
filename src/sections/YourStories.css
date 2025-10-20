@@ -1,0 +1,101 @@
+:root {
+  --glass: rgba(15, 17, 20, 0.55);
+  --glass-brd: rgba(255, 255, 255, 0.16);
+  --title: #fff;
+}
+
+.stories {
+  position: relative;
+  min-height: 100vh;
+  padding-top: calc(var(--nav-h) + 120px);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+.stories::before {
+  content: "";
+  position: absolute;
+  inset: -2%;
+  background: url("https://res.cloudinary.com/dzytbkc5l/image/upload/v1760976790/liam/4rd_p8hq1m.png") center/cover no-repeat;
+  animation: team-kb 26s ease-in-out infinite alternate;
+  z-index: 0;
+}
+@keyframes team-kb {
+  0% { transform: scale(1.02) translate3d(-0.5%, -0.5%, 0); }
+  100% { transform: scale(1.06) translate3d(0.6%, 0.6%, 0); }
+}
+
+.stories__title {
+  position: absolute;
+  top: calc(var(--nav-h) + 60px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 900;
+  font-size: clamp(28px, 5.8vw, 72px);
+  color: var(--title);
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.storycard {
+  width: min(960px, 90vw);
+  border-radius: 22px;
+  background: var(--glass);
+  border: 1px solid var(--glass-brd);
+  backdrop-filter: blur(14px) saturate(150%);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.35);
+  padding: clamp(24px, 4vw, 48px);
+  text-align: center;
+  z-index: 1;
+}
+
+.storycard__stars {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.storycard__star {
+  width: 28px;
+  height: auto;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+}
+
+.storycard__text {
+  font-size: clamp(18px, 2vw, 26px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 16px;
+}
+
+/* стрелки (reuse) */
+.navbtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  color: #111;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.navbtn span { font-size: 28px; line-height: 1; }
+.navbtn--left { left: clamp(8px, 3vw, 36px); }
+.navbtn--right { right: clamp(8px, 3vw, 36px); }
+.navbtn:hover { transform: translateY(-50%) scale(1.06); box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45); }
+.navbtn:active { transform: translateY(-50%) scale(.98); }
+
+/* точки */
+.svc__dots { display: flex; gap: 10px; justify-content: center; margin-top: 18px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(255, 255, 255, .45); border: none; cursor: pointer; transition: transform .25s ease, background .25s ease; }
+.dot.active { background: #fff; transform: scale(1.3); }
