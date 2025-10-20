@@ -1,4 +1,4 @@
-import React from "react";
+
 import Navbar from "./components/layout/Navbar";
 import Hero from "./sections/Hero";
 import About from "./sections/About";

@@ -1,4 +1,5 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
+import type { KeyboardEvent } from "react";
 import "./YourStories.css";
 
 type Story = { text: string };
@@ -24,9 +25,9 @@ export default function YourStories() {
   const [paused, setPaused] = useState(false);
 
   const clamp = useCallback((i: number) => ((i % len) + len) % len, [len]);
-  const go = useCallback((dir: 1 | -1) => setIndex(i => clamp(i + dir)), [clamp]);
+  const go = useCallback((dir: 1 | -1) => setIndex((i) => clamp(i + dir)), [clamp]);
 
-  // ── auto-advance (7s), уважает prefers-reduced-motion и видимость вкладки
+  // auto-advance (7s), уважает prefers-reduced-motion и видимость вкладки
   useEffect(() => {
     const media = window.matchMedia?.("(prefers-reduced-motion: reduce)");
     if (media?.matches || paused) return;
@@ -39,7 +40,7 @@ export default function YourStories() {
   }, [go, paused]);
 
   // клавиатура
-  const onKeyDown = (e: React.KeyboardEvent) => {
+  const onKeyDown = (e: KeyboardEvent) => {
     if (e.key === "ArrowRight") go(1);
     if (e.key === "ArrowLeft") go(-1);
   };
@@ -91,13 +92,16 @@ export default function YourStories() {
         tabIndex={0}
         onKeyDown={onKeyDown}
         onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
+        // 🔧 объединяем две реакции на mouseleave в одну пропсу
+        onMouseLeave={() => {
+          setPaused(false);
+          onUp();
+        }}
         onFocus={() => setPaused(true)}
         onBlur={() => setPaused(false)}
         onMouseDown={(e) => onDown(e.clientX)}
         onMouseMove={(e) => onMove(e.clientX)}
         onMouseUp={onUp}
-        onMouseLeave={onUp}
         onTouchStart={(e) => onDown(e.touches[0].clientX)}
         onTouchMove={(e) => onMove(e.touches[0].clientX)}
         onTouchEnd={onUp}
@@ -120,18 +124,21 @@ export default function YourStories() {
         </p>
 
         <div className="svc__dots" role="tablist" aria-label="Story tabs">
-          {stories.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              role="tab"
-              className={"dot" + (i === clamp(index) ? " active" : "")}
-              aria-label={`Go to story ${i + 1}`}
-              aria-selected={i === clamp(index)}
-              tabIndex={i === clamp(index) ? 0 : -1}
-              onClick={() => setIndex(i)}
-            />
-          ))}
+          {stories.map((_, i) => {
+            const active = i === clamp(index);
+            return (
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                className={"dot" + (active ? " active" : "")}
+                aria-label={`Go to story ${i + 1}`}
+                aria-selected={active}
+                tabIndex={active ? 0 : -1}
+                onClick={() => setIndex(i)}
+              />
+            );
+          })}
         </div>
       </div>
     </section>
