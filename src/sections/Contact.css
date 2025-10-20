@@ -20,21 +20,28 @@
   overflow: hidden;
 }
 
+
+/* ===== заголовок поверх, но место уже зарезервировано паддингом секции ===== */
 .contact__title {
-  position: absolute;
-  top: calc(var(--nav-h) + 100px);
-  left: 50%;
-  transform: translateX(-50%);
-  font-weight: 900;
-  font-size: clamp(28px, 5.8vw, 72px);
-  color: var(--text);
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  z-index: 1;
+  position:absolute;
+  top: calc(var(--nav-h) + clamp(20px, 2vw, 90px));
+  left:50%;
+  transform:translateX(-50%);
+  z-index:2;
+  margin:0;
+  font-weight:900;
+  font-size:clamp(28px,5.8vw,72px);
+  color:var(--title);
+  letter-spacing:.02em;
+  text-shadow:0 4px 12px rgba(0,0,0,.4);
+  animation:titleDrop .9s cubic-bezier(.2,.9,.2,1) both;
 }
+@keyframes titleDrop{from{opacity:0;transform:translate(-50%,-30px)}to{opacity:1;transform:translate(-50%,0)}}
+
 
 /* карточка */
 .contactcard {
-  width: min(1100px, 92vw);
+  width: min(900px, 92vw);
   display: grid;
   grid-template-columns: 1fr 1fr;
   background: var(--glass);
@@ -158,3 +165,96 @@ textarea:focus {
     top: calc(var(--nav-h) + 60px);
   }
 }
+
+
+/* =========================
+   Mobile adaptations
+   ========================= */
+
+/* iOS notch + общий отступ сверху под фикс-хедер */
+.contact {
+  padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
+}
+
+/* <= 900px: одна колонка, компактнее, ниже заголовка */
+@media (max-width: 900px) {
+  .contactcard {
+    grid-template-columns: 1fr;
+    width: min(680px, 94vw);
+    padding: clamp(16px, 5vw, 28px);
+    gap: clamp(14px, 4vw, 22px);
+    border-radius: 16px;
+    /* чтобы карточка не «подъедала» заголовок */
+    margin-top: clamp(56px, 10vw, 92px);
+  }
+
+  .contact__title {
+    top: calc(var(--nav-h) + clamp(8px, 3vw, 20px));
+    font-size: clamp(26px, 6.2vw, 42px);
+  }
+
+  .contactcard__info h3 {
+    font-size: clamp(18px, 4.2vw, 22px);
+    margin-bottom: .4rem;
+  }
+  .contactcard__info p {
+    margin-bottom: 1rem;
+  }
+
+  /* поля побольше, легче попадать пальцем */
+  .contactcard__form label {
+    font-size: 0.95rem;
+  }
+  input, textarea {
+    padding: .75rem .9rem;
+    font-size: 1rem;
+    border-radius: 10px;
+  }
+
+  /* кнопка на всю ширину */
+  .btn--submit {
+    align-self: stretch;
+    padding: .9rem 1.1rem;
+    font-size: 1rem;
+    border-radius: 999px;
+    text-align: center;
+  }
+}
+
+/* <= 560px: ещё компактнее типографика и отступы */
+@media (max-width: 560px) {
+  .contactcard {
+    width: 94vw;
+    padding: clamp(14px, 4.5vw, 20px);
+    gap: clamp(12px, 3.5vw, 18px);
+    border-radius: 14px;
+    margin-top: clamp(52px, 12vw, 84px);
+  }
+
+  .contactcard__info h3 { font-size: 1.1rem; }
+  .contactcard__info p { font-size: .95rem; }
+
+  .contactcard__form label { font-size: .95rem; }
+  input, textarea { font-size: .98rem; }
+}
+
+/* <= 400px: минимальные размеры, но удобные тач-таргеты */
+@media (max-width: 400px) {
+  .contact__title {
+    font-size: clamp(22px, 7vw, 28px);
+    top: calc(var(--nav-h) + 8px);
+  }
+
+  .contactcard {
+    padding: 14px;
+    gap: 12px;
+    border-radius: 12px;
+    margin-top: 64px;
+  }
+
+  input, textarea { padding: .7rem .85rem; }
+  .btn--submit { padding: .85rem 1rem; font-size: .98rem; }
+}
+
+/* якорный скролл с учётом шапки и заголовка секции */
+#contact { scroll-margin-top: calc(var(--nav-h) + 16px); }

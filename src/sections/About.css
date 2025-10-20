@@ -145,3 +145,98 @@
     padding: 1.5rem 1.6rem;
   }
 }
+
+
+/* =========================
+   About — mobile adaptations
+   ========================= */
+
+/* якорный скролл с учётом хедера */
+#about { scroll-margin-top: calc(var(--nav-h) + 12px); }
+
+/* iOS safe-area + общий верхний отступ */
+.about { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
+
+/* чуть компактнее «дыхание» фона на мобильных, чтобы не «качало» */
+@media (max-width: 1024px){
+  @keyframes about-zoom {
+    0%   { transform: scale(1.015) translate3d(-0.3%, -0.3%, 0); }
+    100% { transform: scale(1.04)  translate3d( 0.3%,  0.3%, 0); }
+  }
+}
+
+/* <= 900px: опускаем карточку под заголовок, уменьшаем поля */
+@media (max-width: 900px){
+  .about__title{
+    top: calc(var(--nav-h) + clamp(18px, 3vw, 28px));
+    font-size: clamp(26px, 6.2vw, 42px);
+  }
+
+  .about__inner{
+    /* добавляем расстояние под заголовок, чтобы карточка не наезжала */
+    padding-top: clamp(68px, 10vw, 92px);
+  }
+
+  .about__card{
+    width: min(680px, 92vw);
+    border-radius: 14px;
+    padding: clamp(16px, 4.5vw, 24px);
+    box-shadow: 0 18px 60px rgba(0,0,0,.35);
+  }
+
+  .about__subtitle{
+    font-size: clamp(22px, 5.2vw, 32px);
+    margin-bottom: .7rem;
+  }
+
+  .about__text{
+    width: 100%;
+    font-size: clamp(15px, 2.6vw, 20px);
+    line-height: 1.6;
+  }
+}
+
+/* <= 560px: ещё компактнее карточка/шрифты, комфортные тач-таргеты */
+@media (max-width: 560px){
+  .about__title{
+    top: calc(var(--nav-h) + 10px);
+    font-size: clamp(22px, 7vw, 30px);
+  }
+
+  .about__inner{ padding-top: clamp(56px, 12vw, 80px); }
+
+  .about__card{
+    width: 92vw;
+    border-radius: 12px;
+    padding: clamp(14px, 4vw, 18px);
+    gap: 10px;
+  }
+
+  .about__subtitle{ font-size: clamp(20px, 5.8vw, 26px); }
+  .about__text{ font-size: clamp(14px, 3.2vw, 18px); }
+}
+
+/* <= 400px: минимальные размеры, чтобы всё дышало и не ломалось */
+@media (max-width: 400px){
+  .about__title{
+    top: calc(var(--nav-h) + 6px);
+    font-size: clamp(20px, 7.5vw, 26px);
+    white-space: normal;   /* разрешаем перенос при очень узкой ширине */
+  }
+
+  .about__inner{ padding-top: 56px; }
+
+  .about__card{
+    width: 94vw;
+    padding: 12px 14px;
+    border-radius: 10px;
+  }
+
+  .about__text{ line-height: 1.55; }
+}
+
+/* Reduced motion — убираем крупное движение, оставляем деликатность */
+@media (prefers-reduced-motion: reduce){
+  .about::before{ animation: none !important; }
+  .about__card{ animation: none !important; }
+}

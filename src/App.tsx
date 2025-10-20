@@ -2,29 +2,25 @@ import React from "react";
 import Navbar from "./components/layout/Navbar";
 import Hero from "./sections/Hero";
 import About from "./sections/About";
-import "./App.css";
 import Services from "./sections/Services";
 import Team from "./sections/Team";
 import YourStories from "./sections/YourStories";
+import Contact from "./sections/Contact";
 import Footer from "./components/layout/Footer";
-import { ErrorBoundary } from "./components/ErrorBoundary";
-import Contact
- from "./sections/Contact";
+
 export default function App() {
   return (
     <>
       <Navbar />
       <main>
-        <Hero />
-        <About />
-        <ErrorBoundary>
-          <Services />
-        </ErrorBoundary>
-        <Team />
-        <YourStories />
-        <Contact />
-        <Footer />
+        <section id="home"><Hero /></section>
+        <section id="about"><About /></section>
+        <section id="services"><Services /></section>
+        <section id="team"><Team /></section>
+        <section id="stories"><YourStories /></section>
+        <section id="contact"><Contact /></section>
       </main>
+      <Footer />
     </>
   );
 }

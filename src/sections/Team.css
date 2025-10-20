@@ -10,7 +10,7 @@
   position:relative;
   min-height:100vh;
   /* РЕЗЕРВ под заголовок, чтобы карточка НЕ наезжала */
-  padding-top: calc(var(--nav-h) + clamp(120px, 16vw, 220px));
+  padding-top: calc(var(--nav-h) + clamp(100px, 12vw, 180px));
   display:grid;
   place-items:center;
   color:#fff;
@@ -32,7 +32,7 @@
 /* ===== заголовок поверх, но место уже зарезервировано паддингом секции ===== */
 .team__title{
   position:absolute;
-  top: calc(var(--nav-h) + clamp(60px, 8vw, 120px));
+  top: calc(var(--nav-h) + clamp(40px, 2vw, 90px));
   left:50%;
   transform:translateX(-50%);
   z-index:2;
@@ -49,8 +49,8 @@
 /* ===== карточка ===== */
 .teamcard{
   --dx:0px;
-  width:min(1120px,92vw);
-  margin-top:0;                      /* не нужно больше поднимать/опускать */
+  width:min(800px, 85vw);
+  margin-top: -30px;                  /* не нужно больше поднимать/опускать */
   border-radius:22px;
   background:var(--glass);
   border:1px solid var(--glass-brd);
