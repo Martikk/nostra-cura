@@ -105,7 +105,7 @@ export default function Team() {
         <span>❯</span>
       </button>
 
-      <div
+            <div
         ref={cardRef}
         className="teamcard"
         key={animKey}
@@ -154,6 +154,7 @@ export default function Team() {
           </div>
         )}
 
+        {/* точки — для десктопа (внутри карточки) */}
         <div className="svc__dots" role="tablist" aria-label="Team tabs">
           {slides.map((s, i) => (
             <button
@@ -168,6 +169,43 @@ export default function Team() {
             />
           ))}
         </div>
+      </div>
+
+      {/* нижняя панель — для мобилки */}
+      <div className="team__controls" aria-label="Carousel controls">
+        <button
+          className="team__btn team__btn--prev"
+          onClick={() => go(-1)}
+          aria-label="Previous"
+        >
+          <span>❮</span>
+        </button>
+
+        <div className="team__dots" role="tablist" aria-label="Team tabs (mobile)">
+          {slides.map((_, i) => {
+            const active = i === clamp(index);
+            return (
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                className={"dot" + (active ? " active" : "")}
+                aria-label={`Go to slide ${i + 1}`}
+                aria-selected={active}
+                tabIndex={active ? 0 : -1}
+                onClick={() => { setIndex(i); setAnimKey(k => k + 1); }}
+              />
+            );
+          })}
+        </div>
+
+        <button
+          className="team__btn team__btn--next"
+          onClick={() => go(1)}
+          aria-label="Next"
+        >
+          <span>❯</span>
+        </button>
       </div>
     </section>
   );
