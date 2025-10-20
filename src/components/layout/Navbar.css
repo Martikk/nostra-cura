@@ -1,0 +1,235 @@
+:root {
+  --nav-h: 72px;
+  --glass-bg: rgba(15, 17, 20, 0.38);   /* полупрозрачный фон */
+  --glass-brd: rgba(255, 255, 255, 0.12);
+  --text: #fff;
+  --muted: rgba(255, 255, 255, 0.75);
+}
+
+/* Фикс сверху + стеклянный эффект */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-h);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  background: var(--glass-bg);
+  backdrop-filter: saturate(140%) blur(8px);
+  -webkit-backdrop-filter: saturate(140%) blur(8px);
+  border-bottom: 1px solid var(--glass-brd);
+}
+
+/* Контейнер на всю ширину с минимальными внутренними отступами */
+.nav__inner {
+  width: 100%;
+  padding: 0 3vw;   /* лёгкий внутренний отступ слева и справа */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  color: var(--text);
+}
+
+/* Блок 1: бренд */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.brand__logo {
+  display: block;
+}
+
+.brand__text {
+  line-height: 1;
+  font-size: 14px;
+}
+
+.brand__sub {
+  margin-left: 8px;
+  font-weight: 500;
+  opacity: 0.8;
+  font-size: 12px;
+}
+
+/* Блок 2: ссылки */
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav__links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.nav__links a:hover {
+  color: var(--text);
+}
+
+/* Мобильная адаптация */
+@media (max-width: 720px) {
+  .nav {
+    height: 64px;
+  }
+
+  .nav__inner {
+    padding: 0 5vw; /* чуть больше поля для тач-устройств */
+  }
+
+  .brand__text {
+    display: none; /* оставим только логотип */
+  }
+
+  .nav__links {
+    gap: 18px;
+  }
+}
+
+
+/* =========================
+   Modern hover animations
+   ========================= */
+
+/* Плавные переходы для всей шапки */
+.nav {
+  transition: background-color .35s ease, backdrop-filter .35s ease, border-color .35s ease;
+}
+
+/* При наведении на шапку — стекло чуть плотнее, контур заметнее */
+.nav:hover {
+  background: rgba(15,17,20,0.52);
+  backdrop-filter: saturate(150%) blur(10px);
+  -webkit-backdrop-filter: saturate(150%) blur(10px);
+  border-bottom-color: rgba(255,255,255,0.18);
+}
+
+/* --------- Links: underline from center + lift --------- */
+.nav__links a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: var(--nav-h);
+  gap: 8px;
+  padding: 0 2px; /* чтобы было куда рисовать подчёркивание */
+  transform: translateY(0);
+  transition: color .25s ease, transform .25s ease, opacity .25s ease;
+}
+
+/* Тонкая линия, которая «вырастает» из центра */
+.nav__links a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 14px;            /* чуть выше низа шапки — смотри как нравится */
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #fff, rgba(255,255,255,.6));
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: width .28s ease;
+  opacity: 0.9;
+}
+
+.nav__links a:hover,
+.nav__links a:focus-visible {
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.nav__links a:hover::after,
+.nav__links a:focus-visible::after {
+  width: 64%;
+}
+
+/* Активная ссылка — тонкая постоянная метка */
+.nav__links a[aria-current="page"]::after,
+.nav__links a.active::after {
+  width: 36%;
+  opacity: 0.75;
+}
+
+/* --------- Brand: lift + shine sweep --------- */
+.brand {
+  position: relative;
+  padding: 6px 8px;
+  border-radius: 10px;
+  isolation: isolate;            /* чтобы блик был сверху */
+  transform: translateZ(0);
+  transition: transform .25s ease, background-color .25s ease, box-shadow .25s ease;
+  will-change: transform;
+}
+
+/* лёгкий лифт и микроскруглённая подсветка фона под лого */
+.brand:hover,
+.brand:focus-visible {
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.04);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* Блик: быстрый «shine» по диагонали */
+.brand::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  translate: -120% 0;            /* старт слева */
+  background: linear-gradient(
+    75deg,
+    rgba(255,255,255,0) 42%,
+    rgba(255,255,255,0.28) 48%,
+    rgba(255,255,255,0.06) 54%,
+    rgba(255,255,255,0) 60%
+  );
+  filter: blur(1px);
+  transform: skewX(-12deg);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.brand:hover::after,
+.brand:focus-visible::after {
+  animation: brand-shine 900ms ease forwards;
+  opacity: 1;
+}
+
+@keyframes brand-shine {
+  0%   { translate: -120% 0; opacity: 0; }
+  12%  { opacity: 1; }
+  100% { translate: 120% 0; opacity: 0; }
+}
+
+/* Лого чуть «оживает» отдельно */
+.brand__logo {
+  transition: transform .25s ease, filter .25s ease;
+  transform-origin: center;
+}
+.brand:hover .brand__logo,
+.brand:focus-visible .brand__logo {
+  transform: translateY(-1px) scale(1.02);
+  filter: drop-shadow(0 1px 6px rgba(0,0,0,.25));
+}
+
+/* Подтягиваем подпись бренда — микро-акцент */
+.brand:hover .brand__sub,
+.brand:focus-visible .brand__sub {
+  opacity: .95;
+}
+
+/* --------- Accessibility / reduced motion --------- */
+@media (prefers-reduced-motion: reduce) {
+  .nav, .nav__links a, .brand, .brand__logo { transition: none !important; }
+  .nav__links a::after { transition: none !important; }
+  .brand::after { animation: none !important; opacity: 0 !important; }
+}
