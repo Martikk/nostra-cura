@@ -258,3 +258,34 @@ textarea:focus {
 
 /* якорный скролл с учётом шапки и заголовка секции */
 #contact { scroll-margin-top: calc(var(--nav-h) + 16px); }
+
+
+/* БАЗА */
+.contactcard{
+  width: min(900px, calc(100vw - var(--gutter) * 2));
+  padding: clamp(24px, 4vw, 50px);
+  margin-inline: auto;       /* центрируем по оси X */
+  border-radius: 22px;
+}
+
+/* ≤ 900px — одна колонка, но без переполнения */
+@media (max-width: 900px){
+  .contactcard{
+    grid-template-columns: 1fr;
+    width: min(680px, calc(100vw - var(--gutter) * 2));
+    padding: clamp(16px, 5vw, 28px);
+    border-radius: 16px;
+    margin-top: clamp(56px, 10vw, 92px);
+  }
+}
+
+/* ≤ 560px — чуточку больше «воздуха» по бокам */
+@media (max-width: 560px){
+  :root{ --gutter: clamp(18px, 6vw, 28px); } /* шире зазоры на телефонах */
+  .contactcard{
+    width: calc(100vw - var(--gutter) * 2);
+    padding: clamp(14px, 4.5vw, 20px);
+    border-radius: 14px;
+    margin-top: clamp(52px, 12vw, 84px);
+  }
+}

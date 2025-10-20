@@ -83,7 +83,7 @@ export default function YourStories() {
         <span>❯</span>
       </button>
 
-      <div
+            <div
         className="storycard"
         role="region"
         aria-roledescription="carousel"
@@ -92,11 +92,7 @@ export default function YourStories() {
         tabIndex={0}
         onKeyDown={onKeyDown}
         onMouseEnter={() => setPaused(true)}
-        // 🔧 объединяем две реакции на mouseleave в одну пропсу
-        onMouseLeave={() => {
-          setPaused(false);
-          onUp();
-        }}
+        onMouseLeave={() => { setPaused(false); onUp(); }}
         onFocus={() => setPaused(true)}
         onBlur={() => setPaused(false)}
         onMouseDown={(e) => onDown(e.clientX)}
@@ -123,9 +119,10 @@ export default function YourStories() {
           <em>{current.text}</em>
         </p>
 
+        {/* точки для десктопа (внутри карточки) */}
         <div className="svc__dots" role="tablist" aria-label="Story tabs">
           {stories.map((_, i) => {
-            const active = i === clamp(index);
+            const active = i === ((index % len) + len) % len;
             return (
               <button
                 key={i}
@@ -140,6 +137,43 @@ export default function YourStories() {
             );
           })}
         </div>
+      </div>
+
+      {/* нижняя панель для мобилки */}
+      <div className="stories__controls" aria-label="Carousel controls">
+        <button
+          className="stories__btn stories__btn--prev"
+          onClick={() => go(-1)}
+          aria-label="Previous"
+        >
+          <span>❮</span>
+        </button>
+
+        <div className="stories__dots" role="tablist" aria-label="Story tabs (mobile)">
+          {stories.map((_, i) => {
+            const active = i === ((index % len) + len) % len;
+            return (
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                className={"dot" + (active ? " active" : "")}
+                aria-label={`Go to story ${i + 1}`}
+                aria-selected={active}
+                tabIndex={active ? 0 : -1}
+                onClick={() => setIndex(i)}
+              />
+            );
+          })}
+        </div>
+
+        <button
+          className="stories__btn stories__btn--next"
+          onClick={() => go(1)}
+          aria-label="Next"
+        >
+          <span>❯</span>
+        </button>
       </div>
     </section>
   );
