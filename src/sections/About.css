@@ -240,3 +240,18 @@
   .about::before{ animation: none !important; }
   .about__card{ animation: none !important; }
 }
+
+
+
+/* БОЛЬШЕ ЗАЗОРЫ ТОЛЬКО НА МЕЛКИХ ЭКРАНАХ */
+@media (max-width: 900px){
+  .about__card{
+    width: 88vw;   /* было 92vw → станет ~6vw зазора с каждой стороны */
+  }
+}
+
+@media (max-width: 560px){
+  .about__card{
+    width: 86vw;   /* телефоны → ~7vw зазора с каждой стороны (≈30px на ширине 430px) */
+  }
+}
