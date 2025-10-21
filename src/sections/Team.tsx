@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./Team.css";
 import { useAutoAdvance } from "../hooks/useAutoAdvance";
+import { Link } from "react-router-dom";
 
 type Member = {
   name?: string;
