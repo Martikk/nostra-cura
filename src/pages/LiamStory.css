@@ -429,3 +429,43 @@ input::placeholder, textarea::placeholder{ color: rgba(255,255,255,.55); }
 .liam--light .liam__quote--plain{
   border: 0 !important;
 }
+
+/* ---------- Fix: dark theme text color for badges/pills ---------- */
+
+/* делаем цвет текста явным */
+.badge,
+.pill {
+  color: var(--text);               /* в тёмной теме — #fff, в светлой — #171a1f */
+}
+
+/* если элемент сделан ссылкой/кнопкой — наследуем цвет и для интерактивного состояния */
+.badge,
+.pill,
+.badge a,
+.pill a,
+.badge button,
+.pill button {
+  color: inherit !important;
+}
+
+/* подправим вторые строки в бейджах */
+.badge em {
+  color: rgba(255,255,255,.85);
+}
+.liam--light .badge em {
+  color: rgba(23,26,31,.70);
+}
+
+/* на всякий случай жёстко фиксируем для тёмной темы */
+.liam--dark .badge,
+.liam--dark .pill {
+  color: #fff !important;
+}
+
+/* и чтобы hover/focus не перекрашивали текст */
+.badge:hover,
+.badge:focus-visible,
+.pill:hover,
+.pill:focus-visible {
+  color: inherit !important;
+}

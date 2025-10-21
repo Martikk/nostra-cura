@@ -28,7 +28,7 @@ const slidesData: Member[] = [
     photo:
       "https://res.cloudinary.com/dzytbkc5l/image/upload/v1760984212/liam/68ee59cb1509a05d8708757d_main_Liam_ewlmpq.jpg",
     ctaLabel: "Read More",
-    ctaHref: "#contact",
+    ctaHref: "/liam",
   },
   // CTA финальный слайд
   {
