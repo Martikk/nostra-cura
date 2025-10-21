@@ -12,9 +12,11 @@
     <link rel="canonical" href="https://nostracura.ca/" />
 
     <!-- Favicon / PWA -->
-    <link rel="icon" type="image/png" href="https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto/v1760976793/liam/Logo_32x32_qdhx3o.png" />
-    <link rel="manifest" href="/manifest.json" />
+    <!-- ОСТАВЛЯЕМ ТОЛЬКО ОДИН manifest -->
+    <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="theme-color" content="#ffd166" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_32,h_32,c_fill/liam/Logo_32x32_qdhx3o.png" />
+    <link rel="apple-touch-icon" href="https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_180,h_180,c_fill/liam/Logo_32x32_qdhx3o.png" />
 
     <!-- Open Graph / Twitter -->
     <meta property="og:site_name" content="Nostra Cura" />
@@ -29,15 +31,29 @@
     <link rel="preconnect" href="https://res.cloudinary.com" />
     <link rel="dns-prefetch" href="https://res.cloudinary.com" />
 
+    <!-- (опционально) Google Search Console -->
+    <!-- <meta name="google-site-verification" content="PASTE_YOUR_TOKEN_HERE" /> -->
   </head>
+
   <body>
+    <!-- Регистрация форм для Netlify (SPA) -->
     <form name="contact-main" netlify netlify-honeypot="bot-field" hidden>
-  <input type="text" name="name" />
-  <input type="email" name="email" />
-  <input type="tel" name="phone" />
-  <textarea name="message"></textarea>
-</form>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <textarea name="message"></textarea>
+    </form>
+
+    <form name="contact-liam" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <textarea name="message"></textarea>
+    </form>
+
     <div id="root"></div>
+
+    <!-- В DEV — Vite, в PROD — сборочные assets; если билд, Vite сам подставит /assets/... -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
