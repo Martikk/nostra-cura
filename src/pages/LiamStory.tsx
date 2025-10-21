@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Footer from "../components/layout/Footer";
 import "./LiamStory.css";
+import { Toaster, toast } from 'react-hot-toast';
 
 /* === Typewriter (без дёрганья макета) === */
 function Typewriter({
@@ -154,20 +155,20 @@ export default function LiamStory() {
 
   // ===== форма =====
   const [sent, setSent] = useState(false);
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    const name = String(fd.get("name") || "").trim();
-    const email = String(fd.get("email") || "").trim();
-    const message = String(fd.get("message") || "").trim();
-    if (!name || !email || !message) {
-      alert("Please fill in Name, Email and Message.");
-      return;
-    }
-    // TODO: отправка на ваш бэкенд / Netlify Forms
-    setSent(true);
-    (e.currentTarget as HTMLFormElement).reset();
-  };
+  // const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const fd = new FormData(e.currentTarget);
+  //   const name = String(fd.get("name") || "").trim();
+  //   const email = String(fd.get("email") || "").trim();
+  //   const message = String(fd.get("message") || "").trim();
+  //   if (!name || !email || !message) {
+  //     alert("Please fill in Name, Email and Message.");
+  //     return;
+  //   }
+  //   // TODO: отправка на ваш бэкенд / Netlify Forms
+  //   setSent(true);
+  //   (e.currentTarget as HTMLFormElement).reset();
+  // };
 
   return (
     <div
@@ -414,49 +415,141 @@ export default function LiamStory() {
               Thanks! Your message has been sent. I’ll get back to you shortly.
             </div>
           ) : (
-            <form className="contact__form" onSubmit={onSubmit} noValidate>
-              <div className="field">
-                <label htmlFor="name">Name*</label>
-                <div className="input-wrap">
-                  <input id="name" name="name" type="text" required placeholder="Your name" />
-                </div>
-              </div>
+            // <form className="contact__form" onSubmit={onSubmit} noValidate>
+            //   <div className="field">
+            //     <label htmlFor="name">Name*</label>
+            //     <div className="input-wrap">
+            //       <input id="name" name="name" type="text" required placeholder="Your name" />
+            //     </div>
+            //   </div>
 
-              <div className="field two">
-                <div className="field">
-                  <label htmlFor="email">Email*</label>
-                  <div className="input-wrap">
-                    <input id="email" name="email" type="email" required placeholder="you@example.com" />
-                  </div>
-                </div>
-                <div className="field">
-                  <label htmlFor="phone">Phone</label>
-                  <div className="input-wrap">
-                    <input id="phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" />
-                  </div>
-                </div>
-              </div>
+            //   <div className="field two">
+            //     <div className="field">
+            //       <label htmlFor="email">Email*</label>
+            //       <div className="input-wrap">
+            //         <input id="email" name="email" type="email" required placeholder="you@example.com" />
+            //       </div>
+            //     </div>
+            //     <div className="field">
+            //       <label htmlFor="phone">Phone</label>
+            //       <div className="input-wrap">
+            //         <input id="phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" />
+            //       </div>
+            //     </div>
+            //   </div>
 
-              <div className="field">
-                <label htmlFor="message">How can I help?*</label>
-                <div className="input-wrap textarea">
-                  <textarea id="message" name="message" required placeholder="Write your text here" rows={6} />
-                </div>
-              </div>
+            //   <div className="field">
+            //     <label htmlFor="message">How can I help?*</label>
+            //     <div className="input-wrap textarea">
+            //       <textarea id="message" name="message" required placeholder="Write your text here" rows={6} />
+            //     </div>
+            //   </div>
 
-              <div className="actions">
-                <button type="submit" className="btn btn--primary">
-                  Send
-                </button>
-                <a className="btn btn--ghost" href="/#services">
-                  See our services
-                </a>
-              </div>
-            </form>
+            //   <div className="actions">
+            //     <button type="submit" className="btn btn--primary">
+            //       Send
+            //     </button>
+            //     <a className="btn btn--ghost" href="/#services">
+            //       See our services
+            //     </a>
+            //   </div>
+            // </form>
+
+<form
+  name="contact-liam"
+  method="POST"
+  data-netlify="true"
+  data-netlify-honeypot="bot-field"
+  className="contact__form"
+  onSubmit={async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+
+    // валидация перед отправкой
+    const name = fd.get('name')?.toString().trim();
+    const email = fd.get('email')?.toString().trim();
+    const message = fd.get('message')?.toString().trim();
+    if (!name || !email || !message) {
+      toast.error('Please fill in all required fields.');
+      return;
+    }
+
+    toast.loading('Sending...');
+
+    try {
+      // ОБЯЗАТЕЛЬНО для Netlify Forms
+      fd.append('form-name', 'contact-liam');
+
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(fd as any).toString(),
+      });
+
+      toast.dismiss();
+      if (!res.ok) throw new Error('Submit failed');
+
+      toast.success('Message sent successfully!');
+      setSent(true);
+      form.reset();
+    } catch (err) {
+      toast.dismiss();
+      toast.error('Failed to send. Try again later.');
+    }
+  }}
+  noValidate
+>
+  {/* honeypot для антиспама */}
+  <p hidden>
+    <label>Don’t fill this out: <input name="bot-field" /></label>
+  </p>
+
+  <div className="field">
+    <label htmlFor="name">Name*</label>
+    <div className="input-wrap">
+      <input id="name" name="name" type="text" required placeholder="Your name" />
+    </div>
+  </div>
+
+  <div className="field two">
+    <div className="field">
+      <label htmlFor="email">Email*</label>
+      <div className="input-wrap">
+        <input id="email" name="email" type="email" required placeholder="you@example.com" />
+      </div>
+    </div>
+    <div className="field">
+      <label htmlFor="phone">Phone</label>
+      <div className="input-wrap">
+        <input id="phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" />
+      </div>
+    </div>
+  </div>
+
+  <div className="field">
+    <label htmlFor="message">How can I help?*</label>
+    <div className="input-wrap textarea">
+      <textarea id="message" name="message" required placeholder="Write your text here" rows={6} />
+    </div>
+  </div>
+
+  {/* скрытое имя формы (дублируем для надёжности) */}
+  <input type="hidden" name="form-name" value="contact-liam" />
+
+  {/* reCAPTCHA — ОБЯЗАТЕЛЬНО перед кнопками */}
+  <div data-netlify-recaptcha="true"></div>
+
+  <div className="actions">
+    <button type="submit" className="btn btn--primary">Send</button>
+    <a className="btn btn--ghost" href="/#services">See our services</a>
+  </div>
+</form>
+
           )}
         </div>
       </section>
-
+<Toaster position="top-right" />
       <Footer />
     </div>
   );

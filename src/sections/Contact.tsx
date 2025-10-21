@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { Toaster, toast } from "react-hot-toast";
 import "./Contact.css";
 
 type FormData = {
@@ -13,12 +14,37 @@ export default function Contact() {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors, isSubmitSuccessful, isSubmitting },
   } = useForm<FormData>();
 
-  const onSubmit = (data: FormData) => {
-    console.log("Submitted data:", data);
-    reset();
+  // helper: url-encode
+  const encode = (data: Record<string, string>) =>
+    Object.keys(data)
+      .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(data[k] ?? ""))
+      .join("&");
+
+  const onSubmit = async (data: FormData) => {
+    // (опц.) toast.loading("Sending...");
+    const payload = {
+      "form-name": "contact-main", // ОБЯЗАТЕЛЬНО: имя формы для Netlify
+      ...data,
+    };
+
+    try {
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode(payload),
+      });
+      if (!res.ok) throw new Error("Submit failed");
+
+      // (опц.) toast.dismiss(); toast.success("Message sent!");
+      reset();
+    } catch (e) {
+      toast.dismiss(); toast.error("Failed to send. Try again later.");
+      console.error(e);
+      alert("Failed to send. Try again later.");
+    }
   };
 
   return (
@@ -28,9 +54,7 @@ export default function Contact() {
       <div className="contactcard">
         <div className="contactcard__info">
           <h3>Get in touch</h3>
-          <p>
-            Let’s talk. Submit your details in this form and we will get back to you ASAP.
-          </p>
+          <p>Let’s talk. Submit your details in this form and we will get back to you ASAP.</p>
 
           <h3>Contact</h3>
           <a href="mailto:info@nostracura.ca" className="contactcard__email">
@@ -38,7 +62,24 @@ export default function Contact() {
           </a>
         </div>
 
-        <form className="contactcard__form" onSubmit={handleSubmit(onSubmit)}>
+        {/* ВАЖНО: имя формы и атрибуты Netlify */}
+        <form
+          name="contact-main"
+          method="POST"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          className="contactcard__form"
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+        >
+          {/* honeypot */}
+          <p hidden>
+            <label>Don’t fill this out: <input name="bot-field" /></label>
+          </p>
+
+          {/* скрытое поле form-name для Netlify */}
+          <input type="hidden" name="form-name" value="contact-main" />
+
           <label>
             Name
             <input
@@ -58,7 +99,7 @@ export default function Contact() {
                   message: "Invalid phone format",
                 },
               })}
-              placeholder="+ 1 (000) - 000 - 0000"
+              placeholder="+1 (000) 000-0000"
             />
             {errors.phone && <span className="error">{errors.phone.message}</span>}
           </label>
@@ -74,6 +115,9 @@ export default function Contact() {
                 },
               })}
               placeholder="Email address"
+              type="email"
+              inputMode="email"
+              autoComplete="email"
             />
             {errors.email && <span className="error">{errors.email.message}</span>}
           </label>
@@ -88,8 +132,11 @@ export default function Contact() {
             {errors.message && <span className="error">{errors.message.message}</span>}
           </label>
 
-          <button type="submit" className="btn btn--submit">
-            Submit
+          {/* (опц.) reCAPTCHA — перед кнопкой */}
+          <div data-netlify-recaptcha="true"></div>
+
+          <button type="submit" className="btn btn--submit" disabled={isSubmitting}>
+            {isSubmitting ? "Sending..." : "Submit"}
           </button>
 
           {isSubmitSuccessful && (
@@ -97,6 +144,8 @@ export default function Contact() {
           )}
         </form>
       </div>
+
+      <Toaster position="top-right" />
     </section>
   );
 }
