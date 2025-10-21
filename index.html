@@ -29,10 +29,14 @@
     <link rel="preconnect" href="https://res.cloudinary.com" />
     <link rel="dns-prefetch" href="https://res.cloudinary.com" />
 
-    <!-- GSC верификация (позже подставишь токен) -->
-    <!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" /> -->
   </head>
   <body>
+    <form name="contact-main" netlify netlify-honeypot="bot-field" hidden>
+  <input type="text" name="name" />
+  <input type="email" name="email" />
+  <input type="tel" name="phone" />
+  <textarea name="message"></textarea>
+</form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
