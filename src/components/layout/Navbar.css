@@ -229,7 +229,7 @@
 }
 
 /* ===== Utilities ===== */
-.no-scroll { overflow: hidden; }
+.no-scroll { overflow: visible; }
 
 /* Красивый якорный скролл с учётом шапки (дополнительно к JS) */
 section[id] { scroll-margin-top: calc(var(--nav-h) + 12px); }
