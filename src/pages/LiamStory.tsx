@@ -194,15 +194,20 @@ export default function LiamStory() {
       {/* ===== WELCOME (split) ===== */}
       <section className="liam__welcome">
         <div className="welcome__inner container">
-          <div
-            className="welcome__photo"
-            role="img"
-            aria-label="Portrait of Liam Dillon"
-            style={{
-              backgroundImage:
-                'url("https://res.cloudinary.com/dzytbkc5l/image/upload/v1760984212/liam/68ee59cb1509a05d8708757d_main_Liam_ewlmpq.jpg")',
-            }}
-          />
+<div className="welcome__photo">
+  <img
+    src="https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_700,dpr_auto/liam/68ee59cb1509a05d8708757d_main_Liam_ewlmpq.jpg"
+    srcSet="
+      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_480,dpr_auto/liam/68ee59cb1509a05d8708757d_main_Liam_ewlmpq.jpg 480w,
+      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_700,dpr_auto/liam/68ee59cb1509a05d8708757d_main_Liam_ewlmpq.jpg 700w,
+      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_980,dpr_auto/liam/68ee59cb1509a05d8708757d_main_Liam_ewlmpq.jpg 980w
+    "
+    sizes="(max-width: 980px) 60vw, 520px"
+    alt="Liam Dillon portrait"
+    loading="eager"
+    decoding="async"
+  />
+</div>
 
           <div className="welcome__content">
             <span className="chip">Welcome</span>
@@ -320,15 +325,21 @@ export default function LiamStory() {
       <section className="liam__chapters">
         <div className="container">
           <article className="chapter reveal fade">
-            <div className="chapter__media">
-              <div
-                className="ph-img"
-                style={{
-                  backgroundImage:
-                    'url("https://res.cloudinary.com/dzytbkc5l/image/upload/v1760984212/liam/68ee59cb1509a05d8708757d_main_Liam_ewlmpq.jpg")',
-                }}
-              />
-            </div>
+<div className="chapter__media">
+<img
+  className="ph-img"
+  src="https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,dpr_auto,w_1000/liam/68ee59cb0deae2deb8dba77b_2_Liam_bwumbk.jpg"
+  srcSet="
+    https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,dpr_auto,w_640/liam/68ee59cb0deae2deb8dba77b_2_Liam_bwumbk.jpg 640w,
+    https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,dpr_auto,w_1000/liam/68ee59cb0deae2deb8dba77b_2_Liam_bwumbk.jpg 1000w,
+    https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,dpr_auto,w_1400/liam/68ee59cb0deae2deb8dba77b_2_Liam_bwumbk.jpg 1400w
+  "
+  sizes="(max-width:980px) 92vw, 52vw"
+  alt=""
+  loading="lazy"
+  decoding="async"
+/>
+</div>
             <div className="chapter__content">
               <h3>Where I Started</h3>
               <p>
@@ -340,15 +351,21 @@ export default function LiamStory() {
           </article>
 
           <article className="chapter chapter--rtl reveal fade">
-            <div className="chapter__media">
-              <div
-                className="ph-img"
-                style={{
-                  backgroundImage:
-                    'url("https://res.cloudinary.com/dzytbkc5l/image/upload/v1760984212/liam/68ee59cb1509a05d8708757d_main_Liam_ewlmpq.jpg")',
-                }}
-              />
-            </div>
+<div className="chapter__media">
+  <img
+    className="ph-img"
+    src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg"
+    srcSet="
+      https://res.cloudinary.com/dzytbkc5l/image/upload/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg 640w,
+      https://res.cloudinary.com/dzytbkc5l/image/upload/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg 1000w,
+      https://res.cloudinary.com/dzytbkc5l/image/upload/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg 1400w
+    "
+    sizes="(max-width:980px) 92vw, 52vw"
+    alt=""
+    loading="lazy"
+    decoding="async"
+  />
+</div>
             <div className="chapter__content">
               <h3>Losing My Way</h3>
               <p>
@@ -360,15 +377,21 @@ export default function LiamStory() {
           </article>
 
           <article className="chapter reveal fade">
-            <div className="chapter__media">
-              <div
-                className="ph-img"
-                style={{
-                  backgroundImage:
-                    'url("https://res.cloudinary.com/dzytbkc5l/image/upload/v1760984212/liam/68ee59cb1509a05d8708757d_main_Liam_ewlmpq.jpg")',
-                }}
-              />
-            </div>
+<div className="chapter__media">
+  <img
+    className="ph-img"
+    src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg"
+    srcSet="
+      https://res.cloudinary.com/dzytbkc5l/image/upload/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg 640w,
+      https://res.cloudinary.com/dzytbkc5l/image/upload/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg 1000w,
+      https://res.cloudinary.com/dzytbkc5l/image/upload/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg 1400w
+    "
+    sizes="(max-width:980px) 92vw, 52vw"
+    alt=""
+    loading="lazy"
+    decoding="async"
+  />
+</div>
             <div className="chapter__content">
               <h3>Rebuilding</h3>
               <p>
