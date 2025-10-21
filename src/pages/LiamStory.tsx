@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import Footer from "../components/layout/Footer";
 import "./LiamStory.css";
 
-/* === Typewriter (JS) — без дёрганья макета === */
+/* === Typewriter (без дёрганья макета) === */
 function Typewriter({
   text,
-  speed = 95,      // мс на символ (увеличь для более медленного набора)
-  jitter = 35,     // небольшая рандомизация
+  speed = 95,
+  jitter = 35,
   className = "",
   ariaLabel,
 }: {
@@ -22,7 +22,10 @@ function Typewriter({
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
   useEffect(() => {
-    if (prefReduce) { setI(text.length); return; }
+    if (prefReduce) {
+      setI(text.length);
+      return;
+    }
     let idx = 0;
     let alive = true;
     let timer = 0 as unknown as number;
@@ -38,37 +41,54 @@ function Typewriter({
     };
 
     timer = window.setTimeout(tick, speed) as unknown as number;
-    return () => { alive = false; window.clearTimeout(timer); };
+    return () => {
+      alive = false;
+      window.clearTimeout(timer);
+    };
   }, [text, speed, jitter, prefReduce]);
 
   return (
     <span className={`typewriter ${className}`} aria-label={ariaLabel ?? text}>
-      <span className="typewriter__ghost" aria-hidden>{text}</span>
+      <span className="typewriter__ghost" aria-hidden>
+        {text}
+      </span>
       <span className="typewriter__text">{text.slice(0, i)}</span>
       {i < text.length && <span className="typewriter__caret" aria-hidden />}
     </span>
   );
 }
 
-/* === магнитный интерактив для карточек/пиллов === */
+/* === Магнитные бейджи/пиллы — отключаем на тач, оптимизируем через rAF === */
 function useMagnetic() {
+  // детектим «наведение мышью» (десктопы/стилусы с hover)
+  const hoverCapable =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(hover: hover) and (pointer: fine)").matches;
+
+  // тач-девайсы: возвращаем no-op, чтобы не блокировать скролл
+  if (!hoverCapable) {
+    return {
+      onMove: () => {},
+      onLeave: () => {},
+    };
+  }
+
+  let raf = 0;
   const onMove = (e: React.PointerEvent<HTMLElement>) => {
     const el = e.currentTarget as HTMLElement;
     const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left;      // пиксели внутри
+    const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    const cx = x / rect.width;            // 0..1
-    const cy = y / rect.height;
 
-    // для градиента
-    el.style.setProperty("--x", `${x}px`);
-    el.style.setProperty("--y", `${y}px`);
-
-    // для наклона (центр в 0,0)
-    const mx = (cx - 0.5) * 2;            // -1..1
-    const my = (cy - 0.5) * 2;
-    el.style.setProperty("--mx", `${mx}`);
-    el.style.setProperty("--my", `${my}`);
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      el.style.setProperty("--x", `${x}px`);
+      el.style.setProperty("--y", `${y}px`);
+      const mx = (x / rect.width - 0.5) * 2; // -1..1
+      const my = (y / rect.height - 0.5) * 2;
+      el.style.setProperty("--mx", `${mx}`);
+      el.style.setProperty("--my", `${my}`);
+    });
   };
 
   const onLeave = (e: React.PointerEvent<HTMLElement>) => {
@@ -94,13 +114,15 @@ export default function LiamStory() {
         : null) as Theme | null;
     return saved ?? "light";
   });
-  useEffect(() => { localStorage.setItem("liamTheme", theme); }, [theme]);
+  useEffect(() => {
+    localStorage.setItem("liamTheme", theme);
+  }, [theme]);
   const toggleTheme = () => setTheme((t) => (t === "light" ? "dark" : "light"));
 
   // ===== Reveal + parallax =====
   useEffect(() => {
     const root = rootRef.current;
-    if (!root) return;
+    if (!root || typeof window === "undefined") return;
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -135,7 +157,6 @@ export default function LiamStory() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
-    // простая проверка
     const name = String(fd.get("name") || "").trim();
     const email = String(fd.get("email") || "").trim();
     const message = String(fd.get("message") || "").trim();
@@ -143,7 +164,7 @@ export default function LiamStory() {
       alert("Please fill in Name, Email and Message.");
       return;
     }
-    // TODO: отправка на ваш бэкенд/Netlify Forms
+    // TODO: отправка на ваш бэкенд / Netlify Forms
     setSent(true);
     (e.currentTarget as HTMLFormElement).reset();
   };
@@ -161,8 +182,12 @@ export default function LiamStory() {
         aria-label={theme === "light" ? "Switch to dark theme" : "Switch to light theme"}
       >
         <span className="theme-toggle__knob" />
-        <span className="theme-toggle__sun" aria-hidden>☀️</span>
-        <span className="theme-toggle__moon" aria-hidden>🌙</span>
+        <span className="theme-toggle__sun" aria-hidden>
+          ☀️
+        </span>
+        <span className="theme-toggle__moon" aria-hidden>
+          🌙
+        </span>
       </button>
 
       {/* ===== WELCOME (split) ===== */}
@@ -191,13 +216,14 @@ export default function LiamStory() {
               clarity, resilience, and growth.
             </p>
 
-            {/* typing (JS) */}
             <div className="welcome__quote">
-              <span className="quote-mark" aria-hidden>“</span>
+              <span className="quote-mark" aria-hidden>
+                “
+              </span>
               <Typewriter
                 className="welcome__type"
                 text={`For over 15 years, I’ve helped turn struggle into growth—so people can build not only projects, but fulfilling lives.`}
-                speed={110}   // медленнее печать
+                speed={110}
                 jitter={25}
                 ariaLabel="For over 15 years, I’ve helped turn struggle into growth—so people can build not only projects, but fulfilling lives."
               />
@@ -207,11 +233,8 @@ export default function LiamStory() {
       </section>
 
       {/* ===== HERO ===== */}
-      <section className="liam__hero" style={{ minHeight: '380px' }}>
-        <div
-          className="liam__hero-bg"
-          aria-hidden
-        />
+      <section className="liam__hero" style={{ minHeight: "380px" }}>
+        <div className="liam__hero-bg" aria-hidden />
         <div className="liam__hero-glow" aria-hidden />
         <div className="liam__hero-inner reveal up">
           <p className="eyebrow">Liam Dillon — My Story</p>
@@ -221,7 +244,6 @@ export default function LiamStory() {
           </h1>
 
           <div className="liam__badges">
-            {/* интерактивные бейджи */}
             <button
               type="button"
               className="badge is-magnetic"
@@ -373,23 +395,19 @@ export default function LiamStory() {
           </article>
         </div>
       </section>
-      
+
       {/* ===== QUOTE ===== */}
       <section className="liam__quote liam__quote--plain reveal up">
         <div className="container">
-          <blockquote>
-            “I was working — <em>but I wasn’t fulfilled.</em>”
-          </blockquote>
+          <blockquote>“I was working — <em>but I wasn’t fulfilled.</em>”</blockquote>
         </div>
       </section>
 
-           {/* ===== CONTACT LIAM (форма вместо CTA) ===== */}
+      {/* ===== CONTACT ===== */}
       <section className="liam__contact" id="contact-liam">
         <div className="container">
           <h3>Contact Liam</h3>
-          <p className="contact__sub">
-            Tell me a little about you and how I can help.
-          </p>
+          <p className="contact__sub">Tell me a little about you and how I can help.</p>
 
           {sent ? (
             <div className="contact__success" role="status">
@@ -427,8 +445,12 @@ export default function LiamStory() {
               </div>
 
               <div className="actions">
-                <button type="submit" className="btn btn--primary">Send</button>
-                <a className="btn btn--ghost" href="/#services">See our services</a>
+                <button type="submit" className="btn btn--primary">
+                  Send
+                </button>
+                <a className="btn btn--ghost" href="/#services">
+                  See our services
+                </a>
               </div>
             </form>
           )}
