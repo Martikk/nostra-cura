@@ -9,7 +9,7 @@
 }
 
 /* ===== Base (dark by default) ===== */
-.liam{ color:var(--text); background:#0f1114; overflow-x:hidden; }
+.liam{ color:var(--text); background:#0f1114; }
 .container{
   width: min(1100px, 80%);
   margin-inline: auto;
@@ -478,3 +478,7 @@ input::placeholder, textarea::placeholder{ color: rgba(255,255,255,.55); }
 }
 
 
+html, body {
+  overflow-y: auto !important;
+  overscroll-behavior-y: none;
+}
