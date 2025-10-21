@@ -207,7 +207,7 @@ export default function LiamStory() {
       </section>
 
       {/* ===== HERO ===== */}
-      <section className="liam__hero">
+      <section className="liam__hero" style={{ minHeight: '380px' }}>
         <div
           className="liam__hero-bg"
           aria-hidden

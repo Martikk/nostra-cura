@@ -10,7 +10,13 @@
 
 /* ===== Base (dark by default) ===== */
 .liam{ color:var(--text); background:#0f1114; overflow-x:hidden; }
-.container{ width:min(1100px, 92vw); margin-inline:auto; }
+.container{
+  width: min(1100px, 80%);
+  margin-inline: auto;
+  padding-inline: var(--gutter);   /* фиксированные поля слева/справа */
+  box-sizing: border-box;     
+}
+
 
 /* ===== WELCOME (split) ===== */
 .liam__welcome{
@@ -91,6 +97,7 @@
   background:linear-gradient(180deg,#fff 0%, #dfe9ff 100%); -webkit-background-clip:text; background-clip:text; color:transparent;
   text-shadow:0 6px 30px rgba(0,0,0,.35); position:relative;
 }
+
 .liam__title::after{
   content:""; position:absolute; inset:0; pointer-events:none;
   background:linear-gradient(120deg, transparent 0%, rgba(255,255,255,.35) 25%, transparent 50%);
@@ -469,3 +476,5 @@ input::placeholder, textarea::placeholder{ color: rgba(255,255,255,.55); }
 .pill:focus-visible {
   color: inherit !important;
 }
+
+
