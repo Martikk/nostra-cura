@@ -1,0 +1,18 @@
+# HTTP -> HTTPS + все на apex .ca
+[[redirects]]
+  from = "http://*"
+  to = "https://nostracura.ca/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.nostracura.ca/*"
+  to = "https://nostracura.ca/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://*.netlify.app/*"
+  to = "https://nostracura.ca/:splat"
+  status = 301
+  force = true
