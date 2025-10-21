@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 const SECTIONS = ["home", "about", "services", "team", "stories", "contact"] as const;
@@ -21,8 +22,13 @@ export default function Navbar() {
   const btnRef = useRef<HTMLButtonElement>(null);
   const NAV_OFFSET = useNavOffset();
 
-  // Подсветка текущей секции
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHome = location.pathname === "/";
+
+  // Подсветка текущей секции (работает только на главной)
   useEffect(() => {
+    if (!isHome) return;
     const observers: IntersectionObserver[] = [];
 
     SECTIONS.forEach((id) => {
@@ -41,7 +47,7 @@ export default function Navbar() {
     });
 
     return () => observers.forEach((o) => o.disconnect());
-  }, [NAV_OFFSET]);
+  }, [NAV_OFFSET, isHome]);
 
   // Блокируем скролл страницы при открытом меню
   useEffect(() => {
@@ -63,7 +69,7 @@ export default function Navbar() {
     if (!open && btnRef.current) btnRef.current.focus();
   }, [open]);
 
-  // Скролл с учётом высоты хедера
+  // Локальный скролл по секции (на главной)
   const scrollToId = (id: SectionId) => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -71,24 +77,26 @@ export default function Navbar() {
     window.scrollTo({ top, behavior: "smooth" });
   };
 
-  const onLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, id: SectionId) => {
-    e.preventDefault();
+  // Универсальный обработчик: если мы НЕ на главной — уходим на /#id, иначе плавно скроллим
+  const goTo = (id: SectionId, e?: React.MouseEvent) => {
+    e?.preventDefault();
     setOpen(false);
-    scrollToId(id);
+    if (isHome) {
+      scrollToId(id);
+    } else {
+      navigate(`/#${id}`); // Router-переход на главную с hash
+    }
   };
 
   return (
     <header className="nav">
       <div className="nav__inner">
-        {/* Бренд */}
-        <a
+        {/* Бренд → домой */}
+        <Link
           className="brand"
-          href="#home"
+          to="/#home"
           aria-label="Nostra Cura — Home"
-          onClick={(e) => {
-            e.preventDefault();
-            onLinkClick(e as unknown as React.MouseEvent<HTMLAnchorElement>, "home");
-          }}
+          onClick={(e) => goTo("home", e)}
         >
           <img
             className="brand__logo"
@@ -104,20 +112,20 @@ export default function Navbar() {
             width={200}
             height={32}
           />
-        </a>
+        </Link>
 
         {/* Десктоп-меню */}
         <nav className="nav__links nav__links--desktop" aria-label="Primary">
           {SECTIONS.map((id) => (
-            <a
+            <Link
               key={id}
-              href={`#${id}`}
-              className={active === id ? "active" : ""}
-              aria-current={active === id ? "page" : undefined}
-              onClick={(e) => onLinkClick(e, id)}
+              to={`/#${id}`}
+              className={active === id && isHome ? "active" : ""}
+              aria-current={active === id && isHome ? "page" : undefined}
+              onClick={(e) => goTo(id, e)}
             >
               {id.charAt(0).toUpperCase() + id.slice(1)}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -152,15 +160,15 @@ export default function Navbar() {
       >
         <nav className="nav__links nav__links--mobile">
           {SECTIONS.map((id) => (
-            <a
+            <Link
               key={id}
-              href={`#${id}`}
-              className={active === id ? "active" : ""}
-              aria-current={active === id ? "page" : undefined}
-              onClick={(e) => onLinkClick(e, id)}
+              to={`/#${id}`}
+              className={active === id && isHome ? "active" : ""}
+              aria-current={active === id && isHome ? "page" : undefined}
+              onClick={(e) => goTo(id, e)}
             >
               {id.charAt(0).toUpperCase() + id.slice(1)}
-            </a>
+            </Link>
           ))}
         </nav>
       </div>

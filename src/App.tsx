@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Hero from "./sections/Hero";
 import About from "./sections/About";
@@ -7,15 +7,19 @@ import Team from "./sections/Team";
 import YourStories from "./sections/YourStories";
 import Contact from "./sections/Contact";
 import Footer from "./components/layout/Footer";
-import LiamStory from "./pages/LiamStory"; // 👈 импорт новой страницы
+import LiamStory from "./pages/LiamStory";
+import { useHashScroll } from "./hooks/useHashScroll";
 
 export default function App() {
+  // смещение под высоту навигации (подбери под свой header)
+  useHashScroll(84);
+
   return (
-    <Router>
+    <>
       <Navbar />
 
       <Routes>
-        {/* Главная страница */}
+        {/* Главная */}
         <Route
           path="/"
           element={
@@ -33,9 +37,9 @@ export default function App() {
           }
         />
 
-        {/* Страница Liam */}
+        {/* Отдельная страница Liam */}
         <Route path="/liam" element={<LiamStory />} />
       </Routes>
-    </Router>
+    </>
   );
 }
