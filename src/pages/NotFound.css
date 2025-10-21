@@ -1,0 +1,145 @@
+:root{
+  /* используем те же токены сайта */
+  --nav-h:72px;
+  --text:#fff;
+  --muted: rgba(255,255,255,.8);
+  --glass: rgba(15,17,20,.55);
+  --brd: rgba(255,255,255,.15);
+  --glow: 160, 200, 255;
+  --brand: #ffd166;
+  --gutter: clamp(16px, 4vw, 28px);
+  --radius-lg: 18px;
+}
+
+/* базовая раскладка */
+.nf{
+  position: relative;
+  min-height: calc(100svh - var(--nav-h));
+  padding-top: calc(var(--nav-h) + 24px);
+  padding-bottom: 40px;
+  color: var(--text);
+  background: radial-gradient(140% 100% at 50% -30%, #0f1114 0%, #0f1114 60%, #0d0f13 100%);
+  overflow: clip;
+}
+
+/* центрированная карточка */
+.container{
+  width: min(1100px, 92vw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  box-sizing: border-box;
+}
+
+.nf__card{
+  position: relative;
+  margin-inline: auto;
+  width: min(860px, 100%);
+  padding: clamp(20px, 4vw, 28px);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--brd);
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(10px) saturate(140%);
+  text-align: center;
+  box-shadow: 0 30px 80px rgba(0,0,0,.35);
+}
+
+.nf__eyebrow{
+  display:inline-block;
+  font-weight:800;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  opacity:.9;
+  margin-bottom: 6px;
+}
+
+.nf__title{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: clamp(8px, 1.8vw, 16px);
+  font-size: clamp(56px, 12vw, 120px);
+  line-height: .9;
+  margin: .2rem 0 .4rem 0;
+  background: linear-gradient(180deg,#fff 0%, #dfe9ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 10px 40px rgba(0,0,0,.35);
+}
+
+.nf__num{ display:inline-block; transform: translateZ(0); }
+
+.nf__zero{
+  display:inline-grid; place-items:center;
+  width: 1em; height: 1em; border-radius: 50%;
+  background: radial-gradient(60% 60% at 50% 35%, rgba(var(--glow),.22), transparent 60%);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.08);
+}
+.nf__svg{ width: 75%; height: 75%; filter: drop-shadow(0 6px 18px rgba(0,0,0,.35)); }
+
+.nf__lead{
+  font-size: clamp(16px, 2.1vw, 20px);
+  color: var(--muted);
+  margin: .3rem 0 1rem;
+}
+
+.nf__actions{
+  display:flex; gap:12px; justify-content:center; flex-wrap:wrap;
+  margin-top:.4rem;
+}
+
+/* кнопки используют стили проекта */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:.85rem 1.2rem; border-radius:999px; font-weight:800; letter-spacing:.02em;
+  text-decoration:none; transition:transform .2s, box-shadow .2s, background .2s, color .2s;
+  box-shadow:0 14px 36px rgba(0,0,0,.35);
+}
+.btn--primary{ background:var(--brand); color:#111; }
+.btn--primary:hover{ transform:translateY(-1px) scale(1.02); }
+.btn--ghost{ background:#fff; color:#111; }
+.btn--ghost:hover{ transform:translateY(-1px) scale(1.02); }
+
+.nf__hint{
+  margin-top: 12px;
+  font-size: 14px;
+  color: rgba(255,255,255,.6);
+}
+
+/* фоновые элементы */
+.nf__bg{
+  position:absolute; inset:-10%;
+  background:
+    radial-gradient(40% 30% at 80% 15%, rgba(var(--glow),.25), transparent 60%),
+    radial-gradient(40% 30% at 20% 65%, rgba(255,220,120,.18), transparent 60%);
+  mix-blend-mode: screen;
+  opacity:.6;
+}
+
+.nf__stars{
+  position:absolute; inset:0; pointer-events:none; mask-image: radial-gradient(120% 80% at 50% 0%, #000 50%, transparent 100%);
+  background-image:
+    radial-gradient(2px 2px at 10% 30%, rgba(255,255,255,.7) 50%, transparent 50%),
+    radial-gradient(2px 2px at 40% 70%, rgba(255,255,255,.6) 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 70% 20%, rgba(255,255,255,.55) 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 85% 55%, rgba(255,255,255,.55) 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 25% 55%, rgba(255,255,255,.55) 50%, transparent 50%);
+  animation: drift 22s linear infinite;
+  opacity:.5;
+}
+@keyframes drift{ to { transform: translateX(-60px); } }
+
+/* светлая тема */
+.liam--light .nf{
+  color:#171a1f;
+  background: radial-gradient(140% 100% at 50% -30%, #ffffff 0%, #f5f7fb 60%, #eef2f7 100%);
+}
+.liam--light .nf__card{
+  background:#fff; border-color:#e7eaf0; box-shadow: 0 20px 60px rgba(22,26,33,.08);
+}
+.liam--light .nf__title{
+  background: linear-gradient(180deg,#1f2430 0%, #3b4252 100%); color: transparent; text-shadow:none;
+}
+.liam--light .nf__lead{ color:#4b5563; }
+.liam--light .nf__hint{ color:#6b7280; }

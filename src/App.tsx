@@ -9,6 +9,7 @@ import Contact from "./sections/Contact";
 import Footer from "./components/layout/Footer";
 import LiamStory from "./pages/LiamStory";
 import { useHashScroll } from "./hooks/useHashScroll";
+import NotFound from "./pages/NotFound";
 
 export default function App() {
   // смещение под высоту навигации (подбери под свой header)
@@ -39,6 +40,7 @@ export default function App() {
 
         {/* Отдельная страница Liam */}
         <Route path="/liam" element={<LiamStory />} />
+          <Route path="*" element={<NotFound />} />   {/* ← сюда */}
       </Routes>
     </>
   );
