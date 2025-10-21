@@ -6,6 +6,8 @@
   --gold: #c9a227;
   --error: #ff6b6b;
   --success: #4caf50;
+    --card-max: 820px;                   /* было 900px */
+  --gutter: clamp(24px, 6vw, 48px);    /* базовые боковые поля */
 }
 
 .contact {
@@ -221,71 +223,66 @@ textarea:focus {
   }
 }
 
-/* <= 560px: ещё компактнее типографика и отступы */
-@media (max-width: 560px) {
-  .contactcard {
-    width: 94vw;
-    padding: clamp(14px, 4.5vw, 20px);
-    gap: clamp(12px, 3.5vw, 18px);
-    border-radius: 14px;
-    margin-top: clamp(52px, 12vw, 84px);
-  }
-
-  .contactcard__info h3 { font-size: 1.1rem; }
-  .contactcard__info p { font-size: .95rem; }
-
-  .contactcard__form label { font-size: .95rem; }
-  input, textarea { font-size: .98rem; }
-}
-
-/* <= 400px: минимальные размеры, но удобные тач-таргеты */
-@media (max-width: 400px) {
-  .contact__title {
-    font-size: clamp(22px, 7vw, 28px);
-    top: calc(var(--nav-h) + 8px);
-  }
-
-  .contactcard {
-    padding: 14px;
-    gap: 12px;
-    border-radius: 12px;
-    margin-top: 64px;
-  }
-
-  input, textarea { padding: .7rem .85rem; }
-  .btn--submit { padding: .85rem 1rem; font-size: .98rem; }
-}
-
-/* якорный скролл с учётом шапки и заголовка секции */
-#contact { scroll-margin-top: calc(var(--nav-h) + 16px); }
-
-
-/* БАЗА */
-.contactcard{
-  width: min(900px, calc(100vw - var(--gutter) * 2));
-  padding: clamp(24px, 4vw, 50px);
-  margin-inline: auto;       /* центрируем по оси X */
-  border-radius: 22px;
-}
-
-/* ≤ 900px — одна колонка, но без переполнения */
-@media (max-width: 900px){
+/* ==== ULTRA-COMPACT MOBILE (<=700px) ==== */
+/* PHONE: фикс. размеры всей карточки (вместе с padding/border) */
+@media (max-width: 700px){
   .contactcard{
-    grid-template-columns: 1fr;
-    width: min(680px, calc(100vw - var(--gutter) * 2));
-    padding: clamp(16px, 5vw, 28px);
-    border-radius: 16px;
-    margin-top: clamp(56px, 10vw, 92px);
+    box-sizing: border-box;
+    width: 90%;  /* пример: твой кейс 300 контент + 2*(20 паддинг + 1 бордер) = 342 */
+    height: 680px;  /* 450 контент + 2*(15 паддинг + 1 бордер) = 482 */
+    margin-inline: auto;
+    overflow: auto; /* если внутри не влезет — появится аккуратный скролл */
+    padding: 15px 20px; /* чтобы совпало с расчётом выше */
+    border-width: 1px;
   }
+  /* заголовок секции ближе к верху (минимум воздуха) */
+  .contact { padding-top: calc(var(--nav-h) + 2px); }
+  .contact__title{
+    top: calc(var(--nav-h) + 2px);
+    font-size: clamp(22px, 6vw, 28px);
+  }
+  /* // Если нужно ещё ниже – раскомментируй:
+  .contact__title { display:none; }
+  */
+
+  /* форма максимально плотная, но кликабельная */
+  .contactcard__form{ gap: .3rem; }
+  .contactcard__form label{
+    font-size: .9rem;
+    line-height: 1.15;
+    gap: .15rem;
+    margin: 0;
+  }
+
+  input, textarea{
+    padding: .42rem .6rem;
+    font-size: .9rem;
+    line-height: 1.15;
+    border-radius: 8px;
+  }
+
+  textarea{
+    min-height: 56px;
+    max-height: 80px;
+    resize: vertical;
+  }
+
+  .btn--submit{
+    padding: .5rem .9rem;
+    font-size: .9rem;
+    align-self: stretch;   /* на всю ширину */
+  }
+
+  /* мелкие тексты */
+  .error, .success{ font-size: .82rem; }
 }
 
-/* ≤ 560px — чуточку больше «воздуха» по бокам */
-@media (max-width: 560px){
-  :root{ --gutter: clamp(18px, 6vw, 28px); } /* шире зазоры на телефонах */
-  .contactcard{
-    width: calc(100vw - var(--gutter) * 2);
-    padding: clamp(14px, 4.5vw, 20px);
-    border-radius: 14px;
-    margin-top: clamp(52px, 12vw, 84px);
-  }
+/* ещё чуть плотнее на очень узких экранах */
+@media (max-width: 400px){
+  .contactcard{ padding: 8px 12px; gap: 8px; border-radius: 10px; }
+  input, textarea{ padding: .4rem .55rem; font-size: .88rem; }
+  .btn--submit{ padding: .48rem .8rem; font-size: .88rem; }
 }
+
+
+

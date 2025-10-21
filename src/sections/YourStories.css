@@ -189,7 +189,7 @@
   .stories__title { font-size: clamp(22px, 7vw, 34px); }
 
   .storycard {
-    width: 100%;
+    width: 90%;
     padding: clamp(14px, 4.2vw, 20px);
     border-radius: 14px;
   }
