@@ -6,6 +6,7 @@
   --brd: rgba(255,255,255,.15);
   --glow: 160, 200, 255;
   --brand: #ffd166; /* soft gold */
+  --gutter: clamp(16px, 4vw, 28px); /* отступы слева/справа страницы */
 }
 
 /* ===== Base (dark by default) ===== */
@@ -197,17 +198,6 @@
 }
 
 /* ===== QUOTE ===== */
-.liam__quote{
-  padding: clamp(30px, 7vw, 90px) 0;
-  background:
-    radial-gradient(40% 60% at 50% 0%, rgba(var(--glow),.18), transparent 60%),
-    linear-gradient(to bottom, rgba(255,255,255,.06), rgba(255,255,255,0) 40%);
-  border-top:1px solid var(--brd); border-bottom:1px solid var(--brd);
-}
-.liam__quote blockquote{ margin:0; text-align:center; font-size:clamp(22px,5.2vw,40px); font-weight:900; letter-spacing:.01em; }
-.liam__quote em{ color:var(--brand); font-style:normal; }
-
-* ===== QUOTE ===== */
 .liam__quote{ padding: clamp(30px, 7vw, 90px) 0; background: radial-gradient(40% 60% at 50% 0%, rgba(var(--glow),.18), transparent 60%), linear-gradient(to bottom, rgba(255,255,255,.06), rgba(255,255,255,0) 40%); border-top:1px solid var(--brd); border-bottom:px solid var(--brd); }
 .liam__quote blockquote{ margin:0; text-align:center; font-size:clamp(22px,5.2vw,40px); font-weight:900; letter-spacing:.01em; }
 .liam__quote em{ color:var(--brand); font-style:normal; }
@@ -477,3 +467,50 @@ input::placeholder, textarea::placeholder{ color: rgba(255,255,255,.55); }
 .pill:focus-visible {
   color: inherit !important;
 }
+
+
+
+/* ОБЁРТКА */
+.marquee{
+  position: absolute;
+  left: 0; right: 0; bottom: 10px;
+  width: 100%;
+  overflow: clip;            /* вместо hidden — стабильнее на iOS */
+  contain: layout paint;     /* изоляция, не влияет на страницу */
+  will-change: transform;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ТРЕК */
+.marquee__track{
+  display: inline-flex;
+  gap: 2rem;
+  white-space: nowrap;
+  transform: translate3d(0,0,0);         /* GPU слой */
+  animation: marquee 22s linear infinite;
+  backface-visibility: hidden;
+}
+
+/* Бесконечный цикл ровно на половину контента — без «рывка» */
+@keyframes marquee {
+  from { transform: translate3d(0,0,0);    }
+  to   { transform: translate3d(-50%,0,0); }
+}
+
+/* Мягкие края (опционально) */
+.liam--light .marquee::before,
+.liam .marquee::before{
+  content:"";
+  position:absolute; inset:0;
+  pointer-events:none;
+  /* светлой/тёмной теме подойдёт такой «fade» */
+  mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+
+/* На очень узких экранах можно снизить скорость или отключить */
+@media (max-width: 700px){
+  .marquee__track{ animation-duration: 28s; } /* или: animation: none; */
+}
+
+.liam__hero{ overflow-x: clip; }
