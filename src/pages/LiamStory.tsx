@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import Footer from "../components/layout/Footer";
 import "./LiamStory.css";
 
-/* === Typewriter (JS) === */
+/* === Typewriter (JS) — без дёрганья макета === */
 function Typewriter({
   text,
-  speed = 90,          // мс на символ (медленнее = больше число)
-  jitter = 30,         // небольшая рандомизация, чтобы «живее»
+  speed = 95,      // мс на символ (увеличь для более медленного набора)
+  jitter = 35,     // небольшая рандомизация
   className = "",
   ariaLabel,
 }: {
@@ -17,12 +17,15 @@ function Typewriter({
   ariaLabel?: string;
 }) {
   const [i, setI] = useState(0);
-  const prefReduce = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const prefReduce =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
   useEffect(() => {
     if (prefReduce) { setI(text.length); return; }
     let idx = 0;
     let alive = true;
+    let timer = 0 as unknown as number;
 
     const tick = () => {
       if (!alive) return;
@@ -30,23 +33,53 @@ function Typewriter({
       setI(idx);
       if (idx < text.length) {
         const next = speed + (Math.random() * jitter - jitter / 2);
-        timer = window.setTimeout(tick, Math.max(30, next));
+        timer = window.setTimeout(tick, Math.max(30, next)) as unknown as number;
       }
     };
 
-    let timer = window.setTimeout(tick, speed);
+    timer = window.setTimeout(tick, speed) as unknown as number;
     return () => { alive = false; window.clearTimeout(timer); };
   }, [text, speed, jitter, prefReduce]);
 
-  // видимый набираемый слой + «призрак» для фиксации размера
   return (
     <span className={`typewriter ${className}`} aria-label={ariaLabel ?? text}>
       <span className="typewriter__ghost" aria-hidden>{text}</span>
       <span className="typewriter__text">{text.slice(0, i)}</span>
-      {/* курсор */}
       {i < text.length && <span className="typewriter__caret" aria-hidden />}
     </span>
   );
+}
+
+/* === магнитный интерактив для карточек/пиллов === */
+function useMagnetic() {
+  const onMove = (e: React.PointerEvent<HTMLElement>) => {
+    const el = e.currentTarget as HTMLElement;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;      // пиксели внутри
+    const y = e.clientY - rect.top;
+    const cx = x / rect.width;            // 0..1
+    const cy = y / rect.height;
+
+    // для градиента
+    el.style.setProperty("--x", `${x}px`);
+    el.style.setProperty("--y", `${y}px`);
+
+    // для наклона (центр в 0,0)
+    const mx = (cx - 0.5) * 2;            // -1..1
+    const my = (cy - 0.5) * 2;
+    el.style.setProperty("--mx", `${mx}`);
+    el.style.setProperty("--my", `${my}`);
+  };
+
+  const onLeave = (e: React.PointerEvent<HTMLElement>) => {
+    const el = e.currentTarget as HTMLElement;
+    el.style.removeProperty("--x");
+    el.style.removeProperty("--y");
+    el.style.removeProperty("--mx");
+    el.style.removeProperty("--my");
+  };
+
+  return { onMove, onLeave };
 }
 
 export default function LiamStory() {
@@ -64,7 +97,7 @@ export default function LiamStory() {
   useEffect(() => { localStorage.setItem("liamTheme", theme); }, [theme]);
   const toggleTheme = () => setTheme((t) => (t === "light" ? "dark" : "light"));
 
-  // ===== Reveal + light parallax =====
+  // ===== Reveal + parallax =====
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
@@ -94,6 +127,26 @@ export default function LiamStory() {
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
+
+  const magnet = useMagnetic();
+
+  // ===== форма =====
+  const [sent, setSent] = useState(false);
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    // простая проверка
+    const name = String(fd.get("name") || "").trim();
+    const email = String(fd.get("email") || "").trim();
+    const message = String(fd.get("message") || "").trim();
+    if (!name || !email || !message) {
+      alert("Please fill in Name, Email and Message.");
+      return;
+    }
+    // TODO: отправка на ваш бэкенд/Netlify Forms
+    setSent(true);
+    (e.currentTarget as HTMLFormElement).reset();
+  };
 
   return (
     <div
@@ -144,22 +197,19 @@ export default function LiamStory() {
               <Typewriter
                 className="welcome__type"
                 text={`For over 15 years, I’ve helped turn struggle into growth—so people can build not only projects, but fulfilling lives.`}
-                speed={95}   // медленнее → увеличивай, например 110–130
-                jitter={35}
+                speed={110}   // медленнее печать
+                jitter={25}
                 ariaLabel="For over 15 years, I’ve helped turn struggle into growth—so people can build not only projects, but fulfilling lives."
               />
             </div>
           </div>
         </div>
       </section>
+
       {/* ===== HERO ===== */}
       <section className="liam__hero">
         <div
           className="liam__hero-bg"
-          style={{
-            backgroundImage:
-              'url("hhttps://res.cloudinary.com/dzytbkc5l/image/upload/v1760984212/liam/68ee59cb1509a05d8708757d_main_Liam_ewlmpq.jpg")',
-          }}
           aria-hidden
         />
         <div className="liam__hero-glow" aria-hidden />
@@ -171,18 +221,43 @@ export default function LiamStory() {
           </h1>
 
           <div className="liam__badges">
-            <span className="badge reveal up" style={{ animationDelay: "120ms" }}>
+            {/* интерактивные бейджи */}
+            <button
+              type="button"
+              className="badge is-magnetic"
+              onPointerMove={magnet.onMove}
+              onPointerLeave={magnet.onLeave}
+              aria-label="15+ Years in Construction"
+            >
               15+ Years <em>in Construction</em>
-            </span>
-            <span className="badge reveal up" style={{ animationDelay: "220ms" }}>
+            </button>
+            <button
+              type="button"
+              className="badge is-magnetic"
+              onPointerMove={magnet.onMove}
+              onPointerLeave={magnet.onLeave}
+              aria-label="Red Seal Refrigeration Mechanic"
+            >
               Red Seal <em>Refrigeration Mechanic</em>
-            </span>
-            <span className="badge reveal up" style={{ animationDelay: "320ms" }}>
+            </button>
+            <button
+              type="button"
+              className="badge is-magnetic"
+              onPointerMove={magnet.onMove}
+              onPointerLeave={magnet.onLeave}
+              aria-label="PMP Project Manager"
+            >
               PMP <em>Project Manager</em>
-            </span>
-            <span className="badge reveal up" style={{ animationDelay: "420ms" }}>
+            </button>
+            <button
+              type="button"
+              className="badge is-magnetic"
+              onPointerMove={magnet.onMove}
+              onPointerLeave={magnet.onLeave}
+              aria-label="Advocate Mental Health and Growth"
+            >
               Advocate <em>Mental Health & Growth</em>
-            </span>
+            </button>
           </div>
         </div>
 
@@ -278,19 +353,29 @@ export default function LiamStory() {
                 into leadership. Mentorship, structure, and accountability rebuilt my life
                 and career.
               </p>
+
               <ul className="pill-grid">
-                <li className="pill">Integrity</li>
-                <li className="pill">People First</li>
-                <li className="pill">Quality</li>
-                <li className="pill">Growth</li>
+                {["Integrity", "People First", "Quality", "Growth"].map((v) => (
+                  <li key={v}>
+                    <button
+                      type="button"
+                      className="pill is-magnetic"
+                      onPointerMove={magnet.onMove}
+                      onPointerLeave={magnet.onLeave}
+                      aria-label={v}
+                    >
+                      {v}
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
           </article>
         </div>
       </section>
-
+      
       {/* ===== QUOTE ===== */}
-      <section className="liam__quote reveal up">
+      <section className="liam__quote liam__quote--plain reveal up">
         <div className="container">
           <blockquote>
             “I was working — <em>but I wasn’t fulfilled.</em>”
@@ -298,19 +383,55 @@ export default function LiamStory() {
         </div>
       </section>
 
-      {/* ===== CTA BOTTOM ===== */}
-      <section className="liam__cta-bottom reveal up">
+           {/* ===== CONTACT LIAM (форма вместо CTA) ===== */}
+      <section className="liam__contact" id="contact-liam">
         <div className="container">
-          <h3>Ready to build something meaningful?</h3>
-          <p>Reach out—let’s talk about leadership, culture and healthier teams.</p>
-          <div className="liam__cta">
-            <a className="btn btn--primary" href="/#contact">
-              Contact Liam
-            </a>
-            <a className="btn btn--ghost" href="/#services">
-              See our services
-            </a>
-          </div>
+          <h3>Contact Liam</h3>
+          <p className="contact__sub">
+            Tell me a little about you and how I can help.
+          </p>
+
+          {sent ? (
+            <div className="contact__success" role="status">
+              Thanks! Your message has been sent. I’ll get back to you shortly.
+            </div>
+          ) : (
+            <form className="contact__form" onSubmit={onSubmit} noValidate>
+              <div className="field">
+                <label htmlFor="name">Name*</label>
+                <div className="input-wrap">
+                  <input id="name" name="name" type="text" required placeholder="Your name" />
+                </div>
+              </div>
+
+              <div className="field two">
+                <div className="field">
+                  <label htmlFor="email">Email*</label>
+                  <div className="input-wrap">
+                    <input id="email" name="email" type="email" required placeholder="you@example.com" />
+                  </div>
+                </div>
+                <div className="field">
+                  <label htmlFor="phone">Phone</label>
+                  <div className="input-wrap">
+                    <input id="phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="field">
+                <label htmlFor="message">How can I help?*</label>
+                <div className="input-wrap textarea">
+                  <textarea id="message" name="message" required placeholder="Write your text here" rows={6} />
+                </div>
+              </div>
+
+              <div className="actions">
+                <button type="submit" className="btn btn--primary">Send</button>
+                <a className="btn btn--ghost" href="/#services">See our services</a>
+              </div>
+            </form>
+          )}
         </div>
       </section>
 
