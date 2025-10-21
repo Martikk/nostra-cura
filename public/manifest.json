@@ -1,0 +1,26 @@
+{
+  "name": "Liam Dillon — Coaching & Leadership",
+  "short_name": "Liam Dillon",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f1114",
+  "theme_color": "#ffd166",
+  "description": "From the trades to leadership — discover Liam’s story of growth, purpose, and resilience.",
+  "icons": [
+    {
+      "src": "https://res.cloudinary.com/dzytbkc5l/image/upload/v1760976793/liam/Logo_32x32_qdhx3o.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "https://res.cloudinary.com/dzytbkc5l/image/upload/v1760976793/liam/Logo_32x32_qdhx3o.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://res.cloudinary.com/dzytbkc5l/image/upload/v1760976793/liam/Logo_32x32_qdhx3o.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
