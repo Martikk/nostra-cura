@@ -98,18 +98,18 @@ export default function Navbar() {
           aria-label="Nostra Cura — Home"
           onClick={(e) => goTo("home", e)}
         >
-          <img
-            className="brand__logo"
-            src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1760976794/liam/Logo_kp1mab.png"
-            alt="Nostra Cura logo"
-            width={70}
-            height={40}
-          />
+<img 
+className="brand__logo"
+  src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1761234663/12_lhiys5.png"
+  alt="Nostra Cura logo"
+  width={60}
+  height={50}
+/>
           <img
             className="brand__logo_text"
-            src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1760976792/liam/image_hk1hq2.png"
+            src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1761235802/Nostra_Cura_text-removebg-preview_anewtd.png"
             alt="NOSTRA CURA"
-            width={200}
+            width={220}
             height={32}
           />
         </Link>

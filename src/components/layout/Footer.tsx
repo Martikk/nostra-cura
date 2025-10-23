@@ -45,7 +45,7 @@ export default function Footer() {
         <a className="brand brand--footer" href="/" aria-label="Nostra Cura home">
           <img
             className="brand__mark"
-            src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1760976794/liam/Logo_kp1mab.png"
+            src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1761234663/12_lhiys5.png"
             alt=""
             width={56}
             height={32}
@@ -54,7 +54,7 @@ export default function Footer() {
           />
           <img
             className="brand__wordmark"
-            src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1760976792/liam/image_hk1hq2.png"
+            src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1761235802/Nostra_Cura_text-removebg-preview_anewtd.png"
             alt="NOSTRA CURA — Consulting Group"
             width={220}
             height={32}
