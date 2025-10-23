@@ -109,8 +109,8 @@ className="brand__logo"
             className="brand__logo_text"
             src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1761235802/Nostra_Cura_text-removebg-preview_anewtd.png"
             alt="NOSTRA CURA"
-            width={220}
-            height={32}
+            width={200}
+            height={42}
           />
         </Link>
 
