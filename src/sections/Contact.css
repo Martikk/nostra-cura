@@ -26,7 +26,7 @@
 /* ===== заголовок поверх, но место уже зарезервировано паддингом секции ===== */
 .contact__title {
   position:absolute;
-  top: calc(var(--nav-h) + clamp(20px, 2vw, 90px));
+top: calc(var(--nav-h) - 20px);
   left:50%;
   transform:translateX(-50%);
   z-index:2;
@@ -241,9 +241,7 @@ textarea:focus {
     top: calc(var(--nav-h) + 2px);
     font-size: clamp(22px, 6vw, 28px);
   }
-  /* // Если нужно ещё ниже – раскомментируй:
-  .contact__title { display:none; }
-  */
+
 
   /* форма максимально плотная, но кликабельная */
   .contactcard__form{ gap: .3rem; }
