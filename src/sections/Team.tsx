@@ -5,10 +5,9 @@ import { useAutoAdvance } from "../hooks/useAutoAdvance";
 type Member = {
   name?: string;
   role?: string;
-  photo?: string;      // url
+  photo?: string;
   ctaLabel?: string;
   ctaHref?: string;
-  // если это CTA-слайд
   isCta?: boolean;
   titleCta?: string;
   textCta?: string;
@@ -24,12 +23,10 @@ const slidesData: Member[] = [
   {
     name: "Liam Dillon",
     role: "Consultant & Coach",
-    photo:
-      "https://res.cloudinary.com/dzytbkc5l/image/upload/v1760984212/liam/68ee59cb1509a05d8708757d_main_Liam_ewlmpq.jpg",
+    photo: "https://res.cloudinary.com/dzytbkc5l/image/upload/v1760984212/liam/68ee59cb1509a05d8708757d_main_Liam_ewlmpq.jpg",
     ctaLabel: "Read More",
     ctaHref: "/liam",
   },
-  // CTA финальный слайд
   {
     isCta: true,
     titleCta: "Join our team",
@@ -41,7 +38,7 @@ const slidesData: Member[] = [
 ];
 
 export default function Team() {
-  const slides = useMemo(
+  const slides = useMemo<Member[]>(
     () => (Array.isArray(slidesData) && slidesData.length ? slidesData.filter(Boolean) : [FALLBACK]),
     []
   );
@@ -49,20 +46,27 @@ export default function Team() {
 
   const [index, setIndex] = useState(0);
   const [animKey, setAnimKey] = useState(0);
+
   const cardRef = useRef<HTMLDivElement>(null);
   const drag = useRef({ startX: 0, dx: 0, dragging: false });
 
   const clamp = useCallback((i: number) => ((i % len) + len) % len, [len]);
 
-  useEffect(() => setIndex(i => clamp(i)), [len, clamp]);
+  useEffect(() => setIndex((i) => clamp(i)), [len, clamp]);
 
-  const go = useCallback((dir: 1 | -1) => {
-    setIndex(i => clamp(i + dir));
-    setAnimKey(k => k + 1);
-  }, [clamp]);
+  const go = useCallback(
+    (dir: 1 | -1) => {
+      setIndex((i) => clamp(i + dir));
+      setAnimKey((k) => k + 1);
+    },
+    [clamp]
+  );
 
-  // авто-листание
-  const { setPaused } = useAutoAdvance(() => go(1), { interval: 6000 });
+  // автоплей + пауза при фокусе/hover
+  const auto = (typeof useAutoAdvance === "function")
+    ? useAutoAdvance(() => go(1), { interval: 6000, respectVisibility: true })
+    : { setPaused: undefined as ((p: boolean) => void) | undefined };
+  const { setPaused } = auto;
 
   const current = slides[clamp(index)] ?? FALLBACK;
 
@@ -91,125 +95,97 @@ export default function Team() {
     <section
       id="team"
       className="team"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
+      onMouseEnter={() => setPaused?.(true)}
+      onMouseLeave={() => setPaused?.(false)}
+      onFocus={() => setPaused?.(true)}
+      onBlur={() => setPaused?.(false)}
     >
       <h2 className="team__title">OUR TEAM</h2>
 
-      {/* контейнер: стрелка — карточка — стрелка */}
       <div className="team__container">
-        <button className="navbtn navbtn--left" aria-label="Previous" onClick={() => go(-1)}>
-          <span>❮</span>
-        </button>
+        {/* ряд: стрелка — карточка — стрелка (desktop) */}
+        <div className="team__row">
+          <button type="button" className="navbtn navbtn--left" aria-label="Previous" onClick={() => go(-1)}>
+            <span>❮</span>
+          </button>
 
-        <div
-          ref={cardRef}
-          className="teamcard"
-          key={animKey}
-          role="region"
-          aria-roledescription="carousel"
-          aria-label="Team"
-          tabIndex={0}
-          onKeyDown={onKey}
-          onMouseDown={(e) => onDown(e.clientX)}
-          onMouseMove={(e) => onMove(e.clientX)}
-          onMouseLeave={onUp}
-          onMouseUp={onUp}
-          onTouchStart={(e) => onDown(e.touches[0].clientX)}
-          onTouchMove={(e) => onMove(e.touches[0].clientX)}
-          onTouchEnd={onUp}
-        >
-        {current.isCta ? (
-          <div className="teamcard__cta">
-            <h3 className="cta__title">{current.titleCta}</h3>
-            <p className="cta__text"><em>{current.textCta}</em></p>
-            {current.ctaHref && (
-              <a href={current.ctaHref} className="btn">
-                {current.ctaLabel ?? "Contact"}
-              </a>
+          <div
+            ref={cardRef}
+            className="teamcard"
+            key={animKey}
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Team"
+            tabIndex={0}
+            onKeyDown={onKey}
+            onMouseDown={(e) => onDown(e.clientX)}
+            onMouseMove={(e) => onMove(e.clientX)}
+            onMouseLeave={onUp}
+            onMouseUp={onUp}
+            onTouchStart={(e) => onDown(e.touches[0].clientX)}
+            onTouchMove={(e) => onMove(e.touches[0].clientX)}
+            onTouchEnd={onUp}
+          >
+            {current.isCta ? (
+              <div className="teamcard__cta">
+                <h3 className="cta__title">{current.titleCta}</h3>
+                <p className="cta__text"><em>{current.textCta}</em></p>
+                {current.ctaHref && (
+                  <a href={current.ctaHref} className="btn">
+                    {current.ctaLabel ?? "Contact"}
+                  </a>
+                )}
+              </div>
+            ) : (
+              <div className="teamcard__grid">
+                <div className="teamcard__photo">
+                  <img
+                    src={current.photo}
+                    alt={current.name ? `${current.name} portrait` : ""}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div className="teamcard__info">
+                  <h3 className="teamcard__name">{current.name ?? "—"}</h3>
+                  <p className="teamcard__role">{current.role ?? ""}</p>
+                  {current.ctaHref && (
+                    <a href={current.ctaHref} className="btn">
+                      {current.ctaLabel ?? "Read More"}
+                    </a>
+                  )}
+                </div>
+              </div>
             )}
           </div>
-        ) : (
-          <div className="teamcard__grid">
-            <div className="teamcard__photo">
-              <img
-                src={current.photo}
-                alt={current.name ? `${current.name} portrait` : ""}
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            <div className="teamcard__info">
-              <h3 className="teamcard__name">{current.name ?? "—"}</h3>
-              <p className="teamcard__role">{current.role ?? ""}</p>
-              {current.ctaHref && (
-                <a href={current.ctaHref} className="btn">
-                  {current.ctaLabel ?? "Read More"}
-                </a>
-              )}
-            </div>
+
+          <button type="button" className="navbtn navbtn--right" aria-label="Next" onClick={() => go(1)}>
+            <span>❯</span>
+          </button>
+        </div>
+
+        {/* нижние контролы (мобилка/планшет) */}
+        <div className="team__controls" aria-label="Carousel controls">
+          <button className="team__btn team__btn--prev" onClick={() => go(-1)} aria-label="Previous"><span>❮</span></button>
+          <div className="team__dots" role="tablist" aria-label="Team tabs">
+            {slides.map((s, i) => {
+              const active = i === clamp(index);
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  role="tab"
+                  className={"dot" + (active ? " active" : "")}
+                  aria-label={s.isCta ? "Join our team" : s.name ?? `Slide ${i + 1}`}
+                  aria-current={active ? 'true' : undefined}
+                  tabIndex={active ? 0 : -1}
+                  onClick={() => { setIndex(i); setAnimKey(k => k + 1); }}
+                />
+              );
+            })}
           </div>
-        )}
-
-        {/* точки — для десктопа (внутри карточки) */}
-        <div className="svc__dots" role="tablist" aria-label="Team tabs">
-          {slides.map((s, i) => (
-            <button
-              key={i}
-              type="button"
-              role="tab"
-              className={"dot" + (i === clamp(index) ? " active" : "")}
-              aria-label={s.isCta ? "Join our team" : s.name ?? `Slide ${i + 1}`}
-              aria-current={i === clamp(index) ? 'true' : undefined}
-              tabIndex={i === clamp(index) ? 0 : -1}
-              onClick={() => { setIndex(i); setAnimKey(k => k + 1); }}
-            />
-          ))}
+          <button className="team__btn team__btn--next" onClick={() => go(1)} aria-label="Next"><span>❯</span></button>
         </div>
-        </div>
-
-        <button className="navbtn navbtn--right" aria-label="Next" onClick={() => go(1)}>
-          <span>❯</span>
-        </button>
-      </div>
-
-      {/* нижняя панель — для мобилки */}
-      <div className="team__controls" aria-label="Carousel controls">
-        <button
-          className="team__btn team__btn--prev"
-          onClick={() => go(-1)}
-          aria-label="Previous"
-        >
-          <span>❮</span>
-        </button>
-
-        <div className="team__dots" role="tablist" aria-label="Team tabs (mobile)">
-          {slides.map((_, i) => {
-            const active = i === clamp(index);
-            return (
-              <button
-                key={i}
-                type="button"
-                role="tab"
-                className={"dot" + (active ? " active" : "")}
-                aria-label={`Go to slide ${i + 1}`}
-                aria-current={active ? 'true' : undefined}
-                tabIndex={active ? 0 : -1}
-                onClick={() => { setIndex(i); setAnimKey(k => k + 1); }}
-              />
-            );
-          })}
-        </div>
-
-        <button
-          className="team__btn team__btn--next"
-          onClick={() => go(1)}
-          aria-label="Next"
-        >
-          <span>❯</span>
-        </button>
       </div>
     </section>
   );
