@@ -129,41 +129,44 @@ export default function Services() {
 >
   <h2 className="services__title">OUR SERVICES</h2>
 
-  {/* боковые стрелки (для десктопа) — как в YourStories */}
-  <button type="button" className="navbtn navbtn--left" aria-label="Previous" onClick={() => go(-1)}>
-    <span>❮</span>
-  </button>
-  <button type="button" className="navbtn navbtn--right" aria-label="Next" onClick={() => go(1)}>
-    <span>❯</span>
-  </button>
-
   <div className="services__container">
-    {/* карточка */}
-    <div
-      ref={containerRef}
-      className="svc"
-      key={animKey}
-      role="region"
-      aria-roledescription="carousel"
-      aria-label="Services"
-      tabIndex={0}
-      onKeyDown={onKey}
-      onMouseDown={(e) => onDown(e.clientX)}
-      onMouseMove={(e) => onMove(e.clientX)}
-      onMouseLeave={onUp}
-      onMouseUp={onUp}
-      onTouchStart={(e) => onDown(e.touches[0].clientX)}
-      onTouchMove={(e) => onMove(e.touches[0].clientX)}
-      onTouchEnd={onUp}
-    >
-      <div className="svc__head">
-        <h3 className="svc__title">
-          {current.title}
-          {current.icon && <span className="svc__iconwrap">{current.icon}</span>}
-        </h3>
+    {/* ряд: стрелка — карточка — стрелка (desktop) */}
+    <div className="services__row">
+      <button type="button" className="navbtn navbtn--left" aria-label="Previous" onClick={() => go(-1)}>
+        <span>❮</span>
+      </button>
+
+      {/* карточка */}
+      <div
+        ref={containerRef}
+        className="svc"
+        key={animKey}
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Services"
+        tabIndex={0}
+        onKeyDown={onKey}
+        onMouseDown={(e) => onDown(e.clientX)}
+        onMouseMove={(e) => onMove(e.clientX)}
+        onMouseLeave={onUp}
+        onMouseUp={onUp}
+        onTouchStart={(e) => onDown(e.touches[0].clientX)}
+        onTouchMove={(e) => onMove(e.touches[0].clientX)}
+        onTouchEnd={onUp}
+      >
+        <div className="svc__head">
+          <h3 className="svc__title">
+            {current.title}
+            {current.icon && <span className="svc__iconwrap">{current.icon}</span>}
+          </h3>
+        </div>
+        <p className="svc__text"><em>{current.text}</em></p>
+        {/* (если нужны точки внутри карточки для десктопа — оставляй) */}
       </div>
-      <p className="svc__text"><em>{current.text}</em></p>
-      {/* (если нужны точки внутри карточки для десктопа — оставляй) */}
+
+      <button type="button" className="navbtn navbtn--right" aria-label="Next" onClick={() => go(1)}>
+        <span>❯</span>
+      </button>
     </div>
 
     {/* нижние контролы (мобилка) */}

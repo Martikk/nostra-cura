@@ -98,30 +98,29 @@ export default function Team() {
     >
       <h2 className="team__title">OUR TEAM</h2>
 
-      <button className="navbtn navbtn--left" aria-label="Previous" onClick={() => go(-1)}>
-        <span>❮</span>
-      </button>
-      <button className="navbtn navbtn--right" aria-label="Next" onClick={() => go(1)}>
-        <span>❯</span>
-      </button>
+      {/* контейнер: стрелка — карточка — стрелка */}
+      <div className="team__container">
+        <button className="navbtn navbtn--left" aria-label="Previous" onClick={() => go(-1)}>
+          <span>❮</span>
+        </button>
 
-            <div
-        ref={cardRef}
-        className="teamcard"
-        key={animKey}
-        role="region"
-        aria-roledescription="carousel"
-        aria-label="Team"
-        tabIndex={0}
-        onKeyDown={onKey}
-        onMouseDown={(e) => onDown(e.clientX)}
-        onMouseMove={(e) => onMove(e.clientX)}
-        onMouseLeave={onUp}
-        onMouseUp={onUp}
-        onTouchStart={(e) => onDown(e.touches[0].clientX)}
-        onTouchMove={(e) => onMove(e.touches[0].clientX)}
-        onTouchEnd={onUp}
-      >
+        <div
+          ref={cardRef}
+          className="teamcard"
+          key={animKey}
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Team"
+          tabIndex={0}
+          onKeyDown={onKey}
+          onMouseDown={(e) => onDown(e.clientX)}
+          onMouseMove={(e) => onMove(e.clientX)}
+          onMouseLeave={onUp}
+          onMouseUp={onUp}
+          onTouchStart={(e) => onDown(e.touches[0].clientX)}
+          onTouchMove={(e) => onMove(e.touches[0].clientX)}
+          onTouchEnd={onUp}
+        >
         {current.isCta ? (
           <div className="teamcard__cta">
             <h3 className="cta__title">{current.titleCta}</h3>
@@ -163,12 +162,17 @@ export default function Team() {
               role="tab"
               className={"dot" + (i === clamp(index) ? " active" : "")}
               aria-label={s.isCta ? "Join our team" : s.name ?? `Slide ${i + 1}`}
-              aria-selected={i === clamp(index)}
+              aria-current={i === clamp(index) ? 'true' : undefined}
               tabIndex={i === clamp(index) ? 0 : -1}
               onClick={() => { setIndex(i); setAnimKey(k => k + 1); }}
             />
           ))}
         </div>
+        </div>
+
+        <button className="navbtn navbtn--right" aria-label="Next" onClick={() => go(1)}>
+          <span>❯</span>
+        </button>
       </div>
 
       {/* нижняя панель — для мобилки */}
@@ -191,7 +195,7 @@ export default function Team() {
                 role="tab"
                 className={"dot" + (active ? " active" : "")}
                 aria-label={`Go to slide ${i + 1}`}
-                aria-selected={active}
+                aria-current={active ? 'true' : undefined}
                 tabIndex={active ? 0 : -1}
                 onClick={() => { setIndex(i); setAnimKey(k => k + 1); }}
               />

@@ -66,24 +66,18 @@ export default function YourStories() {
     <section className="stories" id="stories">
       <h2 className="stories__title">YOUR STORIES</h2>
 
-      <button
-        type="button"
-        className="navbtn navbtn--left"
-        aria-label="Previous"
-        onClick={() => go(-1)}
-      >
-        <span>❮</span>
-      </button>
-      <button
-        type="button"
-        className="navbtn navbtn--right"
-        aria-label="Next"
-        onClick={() => go(1)}
-      >
-        <span>❯</span>
-      </button>
+      {/* контейнер: стрелка — карточка — стрелка (desktop) */}
+      <div className="stories__row">
+        <button
+          type="button"
+          className="navbtn navbtn--left"
+          aria-label="Previous"
+          onClick={() => go(-1)}
+        >
+          <span>❮</span>
+        </button>
 
-            <div
+        <div
         className="storycard"
         role="region"
         aria-roledescription="carousel"
@@ -130,13 +124,23 @@ export default function YourStories() {
                 role="tab"
                 className={"dot" + (active ? " active" : "")}
                 aria-label={`Go to story ${i + 1}`}
-                aria-selected={active}
+                aria-current={active ? 'true' : undefined}
                 tabIndex={active ? 0 : -1}
                 onClick={() => setIndex(i)}
               />
             );
           })}
         </div>
+      </div>
+
+      <button
+        type="button"
+        className="navbtn navbtn--right"
+        aria-label="Next"
+        onClick={() => go(1)}
+      >
+        <span>❯</span>
+      </button>
       </div>
 
       {/* нижняя панель для мобилки */}
@@ -159,7 +163,7 @@ export default function YourStories() {
                 role="tab"
                 className={"dot" + (active ? " active" : "")}
                 aria-label={`Go to story ${i + 1}`}
-                aria-selected={active}
+                aria-current={active ? 'true' : undefined}
                 tabIndex={active ? 0 : -1}
                 onClick={() => setIndex(i)}
               />

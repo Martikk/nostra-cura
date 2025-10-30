@@ -20,6 +20,18 @@
   overflow: hidden;
 }
 
+/* desktop row: стрелка — карточка — стрелка */
+.stories__row {
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(10px, 2.6vw, 22px);
+}
+
 .stories::before {
   content: "";
   position: absolute;
@@ -49,6 +61,7 @@
 
 /* ===== Карточка ===== */
 .storycard {
+  --dx: 0px;
   width: min(960px, 100%);
   margin-top: clamp(28px, 7vw, 70px);
   border-radius: 22px;
@@ -60,8 +73,13 @@
   padding: clamp(18px, 3.4vw, 42px);
   text-align: center;
   z-index: 1;
+  transform: translateX(var(--dx)) translateZ(0);
   animation: cardEnter .6s cubic-bezier(.2,.9,.2,1);
+  touch-action: pan-y;
+  cursor: grab;
 }
+
+.storycard:active { cursor: grabbing; }
 
 @keyframes cardEnter {
   from { opacity: 0; transform: translateY(24px) scale(.98); }
@@ -92,9 +110,8 @@
 
 /* ===== Боковые стрелки (десктоп) ===== */
 .navbtn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  position: static;
+  transform: none;
   z-index: 2;
   width: 64px;
   height: 64px;
@@ -110,11 +127,11 @@
 }
 
 .navbtn span { font-size: 28px; line-height: 1; }
-.navbtn--left  { left:  clamp(8px, 3vw, 36px); }
-.navbtn--right { right: clamp(8px, 3vw, 36px); }
+.navbtn--left  { left:  auto; }
+.navbtn--right { right: auto; }
 
-.navbtn:hover { transform: translateY(-50%) scale(1.06); box-shadow: 0 18px 50px rgba(0,0,0,.45); }
-.navbtn:active{ transform: translateY(-50%) scale(.98); }
+.navbtn:hover { transform: scale(1.06); box-shadow: 0 18px 50px rgba(0,0,0,.45); }
+.navbtn:active{ transform: scale(.98); }
 
 /* ===== Точки (внутри карточки — десктоп) ===== */
 .svc__dots {
@@ -183,6 +200,12 @@
     padding: clamp(16px, 3.8vw, 28px);
     border-radius: 18px;
   }
+
+  /* применяем мобильный паттерн управления на планшетах */
+  .stories .navbtn { display: none !important; }
+  .stories .stories__controls { display: flex; }
+  /* чтобы точки не дублировались: внутри карточки скрываем */
+  .storycard > .svc__dots { display: none; }
 }
 
 @media (max-width: 560px) {
