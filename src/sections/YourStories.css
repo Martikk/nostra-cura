@@ -24,8 +24,6 @@
 .stories__row {
   width: 100%;
   box-sizing: border-box;
-  padding-left: var(--gutter);
-  padding-right: var(--gutter);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -159,8 +157,9 @@
   align-items: center;
   justify-content: center;
   gap: clamp(14px, 4vw, 28px);
-  margin-top: clamp(12px, 3.6vw, 22px);
+  margin-top: 22px;
   z-index: 1;
+  width: 100%;
 }
 
 .stories__btn {
@@ -196,10 +195,12 @@
     100% { transform: scale(1.04)  translate3d(.3%, .3%, 0); }
   }
   .storycard {
-    width: min(900px, 94vw);
+    width: min(900px, 100%);
     padding: clamp(16px, 3.8vw, 28px);
     border-radius: 18px;
   }
+
+  /* на планшете: как в Services — без принудительного max-width */
 
   /* применяем мобильный паттерн управления на планшетах */
   .stories .navbtn { display: none !important; }
