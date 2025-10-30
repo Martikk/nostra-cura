@@ -33,7 +33,7 @@
   100%{ transform: scale(1.06) translate3d(.6%,.6%,0); }
 }
 
-/* заголовок (1-в-1 как в Services, фикс z-index) */
+/* заголовок */
 .team__title{
   position:absolute;
   top: calc(var(--nav-h) + env(safe-area-inset-top,0px) + clamp(8px, 2.8vw, 24px));
@@ -49,17 +49,16 @@
 }
 @keyframes titleDrop{ from{opacity:0;transform:translate(-50%,-30px)} to{opacity:1;transform:translate(-50%,0)} }
 
-/* внутренний контейнер с ровными полями */
+/* внутренний контейнер */
 .team__container{
   width: 100%;
   box-sizing: border-box;
   padding-left: var(--gutter);
   padding-right: var(--gutter);
-
   display: grid;
   justify-items: center;
   align-content: start;
-  overflow-x: hidden; /* страховка */
+  overflow-x: hidden;
 }
 
 /* ряд: стрелка — карточка — стрелка */
@@ -69,16 +68,16 @@
   align-items:center;
   justify-content:center;
   gap: clamp(10px, 2.6vw, 22px);
-  overflow-x: hidden; /* страховка */
+  overflow-x: hidden;
 }
 
-/* карточка (центр + корректная ширина) */
+/* карточка */
 .teamcard{
   --dx:0px;
   width: min(1120px, 100%);
   margin-top: clamp(28px, 7vw, 70px);
-  margin-inline: auto;           /* центрируем */
-  box-sizing: border-box;        /* паддинги в ширину */
+  margin-inline: auto;
+  box-sizing: border-box;
   border-radius:22px;
   background:var(--glass);
   border:1px solid var(--glass-brd);
@@ -89,11 +88,15 @@
   z-index:1;
   padding: clamp(18px, 3.4vw, 42px);
   overflow:hidden;
+
   transform: translateX(var(--dx)) translateZ(0);
-  transition: transform .18s ease-out; /* мягкий возврат после свайпа */
+  transition: transform .18s ease-out;
   animation: cardEnter .6s cubic-bezier(.2,.9,.2,1);
 
-  touch-action: pan-y; /* лучшая работа свайпа */
+  /* для тача/свайпа */
+  touch-action: pan-y;        /* вертикальный скролл — нативный; горизонталь — наша */
+  user-select: none;          /* не выделять текст при свайпе */
+  -webkit-user-drag: none;    /* iOS: не “таскать” блок */
   cursor: grab;
 }
 .teamcard:active{ cursor: grabbing; }
@@ -108,9 +111,12 @@
 }
 .teamcard__photo{ flex: 0 0 min(420px, 42%); }
 .teamcard__photo img{
-  width:100%; height:auto; display:block;
+  width:100%;
+  height:auto;
+  display:block;
   border-radius:18px;
   box-shadow:0 18px 52px rgba(0,0,0,.35);
+  -webkit-user-drag: none;  /* iOS Safari: не перетаскивать изображение */
 }
 .teamcard__info{
   flex:1 1 auto;
@@ -138,24 +144,52 @@
 }
 
 /* CTA состояние */
-.teamcard__cta{ max-width:920px; margin:0 auto; text-align:center; }
-.cta__title{ margin:0 0 .6rem; font-size:clamp(28px,4.8vw,56px); font-weight:800; text-shadow:0 2px 10px rgba(0,0,0,.35); }
-.cta__text{ margin:0 auto 1.4rem; width:min(980px,90%); font-size:clamp(16px,2.2vw,26px); line-height:1.6; color:rgba(255,255,255,.95); text-shadow:0 2px 10px rgba(0,0,0,.35); }
+.teamcard__cta{
+  max-width:920px;
+  margin:0 auto;
+  text-align:center;
+}
+.cta__title{
+  margin:0 0 .6rem;
+  font-size:clamp(28px,4.8vw,56px);
+  font-weight:800;
+  text-shadow:0 2px 10px rgba(0,0,0,.35);
+}
+.cta__text{
+  margin:0 auto 1.4rem;
+  width:min(980px,90%);
+  font-size:clamp(16px,2.2vw,26px);
+  line-height:1.6;
+  color:rgba(255,255,255,.95);
+  text-shadow:0 2px 10px rgba(0,0,0,.35);
+}
 
 /* кнопка */
 .btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  padding:.7rem 1.1rem;border-radius:999px;background:#fff;color:#111;
-  font-weight:700;text-decoration:none;
+  position: relative;          /* чтобы наверняка лежала поверх декораций */
+  z-index: 3;
+  pointer-events: auto;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:.7rem 1.1rem;
+  border-radius:999px;
+  background:#fff;
+  color:#111;
+  font-weight:700;
+  text-decoration:none;
   box-shadow:0 14px 36px rgba(0,0,0,.35);
-  transition:transform .25s,box-shadow .25s,background .25s;
+  transition:transform .25s, box-shadow .25s, background .25s;
+  -webkit-user-drag: none;
 }
-.btn:hover{transform:translateY(-1px) scale(1.03);box-shadow:0 18px 50px rgba(0,0,0,.45)}
-.btn:active{transform:translateY(0) scale(.98)}
+.btn:hover{ transform:translateY(-1px) scale(1.03); box-shadow:0 18px 50px rgba(0,0,0,.45) }
+.btn:active{ transform:translateY(0) scale(.98) }
 
 /* стрелки desktop/планшет */
 .navbtn{
-  position:static; transform:none;
+  position:static;
+  transform:none;
   z-index:2;
   width:64px; height:64px; border-radius:50%; border:none;
   background:#fff; color:#111; display:grid; place-items:center; cursor:pointer;
@@ -212,12 +246,11 @@
     100%{ transform: scale(1.04) translate3d(.3%,.3%,0); }
   }
   .teamcard{
-    width: min(900px, 100%);  /* вместо 94vw */
+    width: min(900px, 100%);
     padding: clamp(16px, 3.8vw, 28px);
     border-radius:18px;
   }
 
-  /* как в Services: на планшетах прячем боковые стрелки, показываем нижнюю панель */
   .team .navbtn{ display:none !important; }
   .team .team__controls{ display:flex; }
 }
@@ -227,25 +260,19 @@
   .teamcard__photo{ order:-1; flex-basis:auto; width:100%; }
 }
 @media (min-width: 768px) and (max-width: 1024px) {
-  .teamcard {
-    width: min(900px, 70%);
-  }
+  .teamcard { width: min(900px, 70%); }
 }
-
 @media (max-width: 560px){
   .team__title{ font-size: clamp(22px, 7vw, 34px); }
   .teamcard{
-    width: 100%; /* строго 100% контейнера */
+    width: 100%;
     padding: clamp(14px, 4.2vw, 20px);
     border-radius:14px;
   }
-
   .team .navbtn{ display:none !important; }
   .team .team__controls{ display:flex; }
-
   .team__btn{ width:48px; height:48px; min-width:48px; min-height:48px; }
   .team__btn span{ font-size:20px; }
-
   .dot{ width:10px; height:10px; }
 }
 
@@ -257,4 +284,3 @@
 @media (prefers-reduced-motion: reduce){
   .team::before, .teamcard, .team__title{ animation:none !important; }
 }
-

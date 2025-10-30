@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./Team.css";
 import { useAutoAdvance } from "../hooks/useAutoAdvance";
+// Если используешь react-router-dom, можешь раскомментировать ниже и заменить <a> на <Link>
+// import { Link } from "react-router-dom";
 
 type Member = {
   name?: string;
@@ -23,7 +25,8 @@ const slidesData: Member[] = [
   {
     name: "Liam Dillon",
     role: "Consultant & Coach",
-    photo: "https://res.cloudinary.com/dzytbkc5l/image/upload/v1760984212/liam/68ee59cb1509a05d8708757d_main_Liam_ewlmpq.jpg",
+    photo:
+      "https://res.cloudinary.com/dzytbkc5l/image/upload/v1760984212/liam/68ee59cb1509a05d8708757d_main_Liam_ewlmpq.jpg",
     ctaLabel: "Read More",
     ctaHref: "/liam",
   },
@@ -51,7 +54,6 @@ export default function Team() {
   const drag = useRef({ startX: 0, dx: 0, dragging: false });
 
   const clamp = useCallback((i: number) => ((i % len) + len) % len, [len]);
-
   useEffect(() => setIndex((i) => clamp(i)), [len, clamp]);
 
   const go = useCallback(
@@ -63,27 +65,73 @@ export default function Team() {
   );
 
   // автоплей + пауза при фокусе/hover
-  const auto = (typeof useAutoAdvance === "function")
-    ? useAutoAdvance(() => go(1), { interval: 6000, respectVisibility: true })
-    : { setPaused: undefined as ((p: boolean) => void) | undefined };
+  const auto =
+    typeof useAutoAdvance === "function"
+      ? useAutoAdvance(() => go(1), { interval: 6000, respectVisibility: true })
+      : { setPaused: undefined as ((p: boolean) => void) | undefined };
   const { setPaused } = auto;
 
   const current = slides[clamp(index)] ?? FALLBACK;
 
-  // drag/swipe
-  const onDown = (x: number) => { drag.current = { startX: x, dx: 0, dragging: true }; };
-  const onMove = (x: number) => {
-    if (!drag.current.dragging) return;
-    drag.current.dx = x - drag.current.startX;
-    cardRef.current?.style.setProperty("--dx", `${drag.current.dx}px`);
+  // ---- swipe/drag (Pointer Events) ----
+  const DRAG_ACTIVATE_PX = 8;
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    // мышь: только ЛКМ; тач/стилус: всегда
+    if (e.pointerType === "mouse" && e.buttons !== 1) return;
+
+    const t = e.target as Element | null;
+    if (t && t.closest("a, button, [role='button'], .btn")) {
+      // если клик по интерактиву — НЕ стартуем drag
+      drag.current = { startX: 0, dx: 0, dragging: false };
+      return;
+    }
+
+    (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+    drag.current = { startX: e.clientX, dx: 0, dragging: false };
   };
-  const onUp = () => {
-    if (!drag.current.dragging) return;
-    const { dx } = drag.current;
-    drag.current.dragging = false;
+
+  const onPointerMove = (e: React.PointerEvent) => {
+    const d = drag.current;
+    if (!d.startX && !d.dragging) return;
+    d.dx = e.clientX - d.startX;
+
+    if (!d.dragging && Math.abs(d.dx) >= DRAG_ACTIVATE_PX) d.dragging = true;
+    if (d.dragging) {
+      cardRef.current?.style.setProperty("--dx", `${d.dx}px`);
+    }
+  };
+
+  const endPointer = (e?: React.PointerEvent) => {
+    const d = drag.current;
     cardRef.current?.style.setProperty("--dx", `0px`);
+
+    if (!d.dragging) {
+      // клику по ссылке/кнопке даём пройти
+      drag.current = { startX: 0, dx: 0, dragging: false };
+      if (e) (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
+      return;
+    }
+
+    const { dx } = d;
+    drag.current = { startX: 0, dx: 0, dragging: false };
+
     if (dx > 80) go(-1);
     else if (dx < -80) go(1);
+
+    if (e) (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
+  };
+
+  const onPointerUp = (e: React.PointerEvent) => endPointer(e);
+  const onPointerCancel = (e: React.PointerEvent) => endPointer(e);
+
+  // helper: навешиваем на интерактивы, чтобы гарантированно не стартовать drag
+  const stopDragOnPointerDown = {
+    onPointerDown: (e: React.PointerEvent) => {
+      e.stopPropagation();
+      drag.current = { startX: 0, dx: 0, dragging: false };
+      cardRef.current?.style.setProperty("--dx", `0px`);
+    },
   };
 
   const onKey = (e: React.KeyboardEvent) => {
@@ -118,22 +166,23 @@ export default function Team() {
             aria-label="Team"
             tabIndex={0}
             onKeyDown={onKey}
-            onMouseDown={(e) => onDown(e.clientX)}
-            onMouseMove={(e) => onMove(e.clientX)}
-            onMouseLeave={onUp}
-            onMouseUp={onUp}
-            onTouchStart={(e) => onDown(e.touches[0].clientX)}
-            onTouchMove={(e) => onMove(e.touches[0].clientX)}
-            onTouchEnd={onUp}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={onPointerUp}
+            onPointerCancel={onPointerCancel}
           >
             {current.isCta ? (
               <div className="teamcard__cta">
                 <h3 className="cta__title">{current.titleCta}</h3>
-                <p className="cta__text"><em>{current.textCta}</em></p>
+                <p className="cta__text">
+                  <em>{current.textCta}</em>
+                </p>
                 {current.ctaHref && (
-                  <a href={current.ctaHref} className="btn">
+                  // <Link to={current.ctaHref} className="btn" draggable={false} {...stopDragOnPointerDown}>
+                  <a href={current.ctaHref} className="btn" draggable={false} {...stopDragOnPointerDown}>
                     {current.ctaLabel ?? "Contact"}
                   </a>
+                  // </Link>
                 )}
               </div>
             ) : (
@@ -144,15 +193,18 @@ export default function Team() {
                     alt={current.name ? `${current.name} portrait` : ""}
                     loading="lazy"
                     decoding="async"
+                    draggable={false}
                   />
                 </div>
                 <div className="teamcard__info">
                   <h3 className="teamcard__name">{current.name ?? "—"}</h3>
                   <p className="teamcard__role">{current.role ?? ""}</p>
                   {current.ctaHref && (
-                    <a href={current.ctaHref} className="btn">
+                    // <Link to={current.ctaHref} className="btn" draggable={false} {...stopDragOnPointerDown}>
+                    <a href={current.ctaHref} className="btn" draggable={false} {...stopDragOnPointerDown}>
                       {current.ctaLabel ?? "Read More"}
                     </a>
+                    // </Link>
                   )}
                 </div>
               </div>
@@ -166,7 +218,10 @@ export default function Team() {
 
         {/* нижние контролы (мобилка/планшет) */}
         <div className="team__controls" aria-label="Carousel controls">
-          <button className="team__btn team__btn--prev" onClick={() => go(-1)} aria-label="Previous"><span>❮</span></button>
+          <button className="team__btn team__btn--prev" onClick={() => go(-1)} aria-label="Previous">
+            <span>❮</span>
+          </button>
+
           <div className="team__dots" role="tablist" aria-label="Team tabs">
             {slides.map((s, i) => {
               const active = i === clamp(index);
@@ -177,14 +232,20 @@ export default function Team() {
                   role="tab"
                   className={"dot" + (active ? " active" : "")}
                   aria-label={s.isCta ? "Join our team" : s.name ?? `Slide ${i + 1}`}
-                  aria-current={active ? 'true' : undefined}
+                  aria-current={active ? "true" : undefined}
                   tabIndex={active ? 0 : -1}
-                  onClick={() => { setIndex(i); setAnimKey(k => k + 1); }}
+                  onClick={() => {
+                    setIndex(i);
+                    setAnimKey((k) => k + 1);
+                  }}
                 />
               );
             })}
           </div>
-          <button className="team__btn team__btn--next" onClick={() => go(1)} aria-label="Next"><span>❯</span></button>
+
+          <button className="team__btn team__btn--next" onClick={() => go(1)} aria-label="Next">
+            <span>❯</span>
+          </button>
         </div>
       </div>
     </section>
