@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./Team.css";
 import { useAutoAdvance } from "../hooks/useAutoAdvance";
-// Если используешь react-router-dom, можешь раскомментировать ниже и заменить <a> на <Link>
-// import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom"; // если используешь SPA-навигацию — замени <a> на <Link>
 
 type Member = {
   name?: string;
@@ -80,9 +79,9 @@ export default function Team() {
     // мышь: только ЛКМ; тач/стилус: всегда
     if (e.pointerType === "mouse" && e.buttons !== 1) return;
 
+    // если старт по интерактиву — НЕ запускаем drag и НЕ берём capture
     const t = e.target as Element | null;
     if (t && t.closest("a, button, [role='button'], .btn")) {
-      // если клик по интерактиву — НЕ стартуем drag
       drag.current = { startX: 0, dx: 0, dragging: false };
       return;
     }
@@ -107,7 +106,6 @@ export default function Team() {
     cardRef.current?.style.setProperty("--dx", `0px`);
 
     if (!d.dragging) {
-      // клику по ссылке/кнопке даём пройти
       drag.current = { startX: 0, dx: 0, dragging: false };
       if (e) (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
       return;
@@ -125,7 +123,7 @@ export default function Team() {
   const onPointerUp = (e: React.PointerEvent) => endPointer(e);
   const onPointerCancel = (e: React.PointerEvent) => endPointer(e);
 
-  // helper: навешиваем на интерактивы, чтобы гарантированно не стартовать drag
+  // стопим старт drag на интерактивах
   const stopDragOnPointerDown = {
     onPointerDown: (e: React.PointerEvent) => {
       e.stopPropagation();
@@ -151,7 +149,6 @@ export default function Team() {
       <h2 className="team__title">OUR TEAM</h2>
 
       <div className="team__container">
-        {/* ряд: стрелка — карточка — стрелка (desktop) */}
         <div className="team__row">
           <button type="button" className="navbtn navbtn--left" aria-label="Previous" onClick={() => go(-1)}>
             <span>❮</span>
@@ -174,9 +171,7 @@ export default function Team() {
             {current.isCta ? (
               <div className="teamcard__cta">
                 <h3 className="cta__title">{current.titleCta}</h3>
-                <p className="cta__text">
-                  <em>{current.textCta}</em>
-                </p>
+                <p className="cta__text"><em>{current.textCta}</em></p>
                 {current.ctaHref && (
                   // <Link to={current.ctaHref} className="btn" draggable={false} {...stopDragOnPointerDown}>
                   <a href={current.ctaHref} className="btn" draggable={false} {...stopDragOnPointerDown}>
@@ -216,11 +211,8 @@ export default function Team() {
           </button>
         </div>
 
-        {/* нижние контролы (мобилка/планшет) */}
         <div className="team__controls" aria-label="Carousel controls">
-          <button className="team__btn team__btn--prev" onClick={() => go(-1)} aria-label="Previous">
-            <span>❮</span>
-          </button>
+          <button className="team__btn team__btn--prev" onClick={() => go(-1)} aria-label="Previous"><span>❮</span></button>
 
           <div className="team__dots" role="tablist" aria-label="Team tabs">
             {slides.map((s, i) => {
@@ -234,18 +226,13 @@ export default function Team() {
                   aria-label={s.isCta ? "Join our team" : s.name ?? `Slide ${i + 1}`}
                   aria-current={active ? "true" : undefined}
                   tabIndex={active ? 0 : -1}
-                  onClick={() => {
-                    setIndex(i);
-                    setAnimKey((k) => k + 1);
-                  }}
+                  onClick={() => { setIndex(i); setAnimKey((k) => k + 1); }}
                 />
               );
             })}
           </div>
 
-          <button className="team__btn team__btn--next" onClick={() => go(1)} aria-label="Next">
-            <span>❯</span>
-          </button>
+          <button className="team__btn team__btn--next" onClick={() => go(1)} aria-label="Next"><span>❯</span></button>
         </div>
       </div>
     </section>

@@ -284,3 +284,55 @@
 @media (prefers-reduced-motion: reduce){
   .team::before, .teamcard, .team__title{ animation:none !important; }
 }
+
+
+.teamcard a.btn{
+  position: relative;
+  z-index: 3;
+  pointer-events: auto;
+}
+
+/* было: z-index:1; */
+.teamcard{
+  z-index: 5; /* карта выше заголовка и фона */
+}
+
+
+.team__title{
+  z-index: 2;          /* ок */
+  pointer-events: none; /* не перекрывает клики по кнопкам под ним */
+}
+
+.team::before{
+  pointer-events: none;
+}
+
+
+/* === Анимация кнопок навигации и управления === */
+
+/* Начальное состояние — лёгкое дыхание */
+button.navbtn,
+button.team__btn {
+  animation: navPulse 3s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* При наведении — пульс ускоряется и добавляется свечение */
+button.navbtn:hover,
+button.team__btn:hover {
+  animation: navPulseHover 1.4s ease-in-out infinite;
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.4),
+              0 0 36px rgba(255, 255, 255, 0.2);
+}
+
+/* Плавный пульс */
+@keyframes navPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+/* Быстрее и чуть ярче при hover */
+@keyframes navPulseHover {
+  0%, 100% { transform: scale(1.02); }
+  50% { transform: scale(1.12); }
+}
