@@ -410,3 +410,8 @@ button.team__btn:hover {
 .btn:active {
   transform: scale(.96);
 }
+
+.team{ overflow: hidden; }            /* ок для фона */
+@media (min-width:1025px){
+  .team__row{ overflow: visible; }    /* но ряд не режем */
+}
