@@ -75,7 +75,6 @@
 
   /* лучшая работа свайпа */
   touch-action: pan-y;
-  user-select: none;
   cursor: grab;
 }
 .svc:active{ cursor: grabbing; }
@@ -209,64 +208,22 @@
 @media (max-width:560px){
   .svc{ width: 100%; border-radius:14px; padding: clamp(14px, 4.2vw, 20px); }
 }
-.navbtn--left{  left: var(--gutter); }
-.navbtn--right{ right: var(--gutter); }
 
-:root{
-  /* твои переменные */
-  --gutter: clamp(16px, 4vw, 48px);
-}
-
-/* Новый внутренний контейнер: даёт ровные боковые поля
-   и при этом вообще не влияет на позицию заголовка */
+/* Внутренний контейнер для ровных боковых полей */
 .services__container{
   width: 100%;
   box-sizing: border-box;
   padding-left: var(--gutter);
   padding-right: var(--gutter);
 
-  /* чтобы все внутренности были по центру */
+  /* центрируем контент, не влияя на позицию стрелок */
   display: grid;
   justify-items: center;
-  /* даём контенту расти вниз, не прижимая к центру по вертикали */
   align-content: start;
-
-  /* позиционируем стрелки внутри контейнера, а не всей секции,
-     чтобы они не уползали к краям экрана */
-  position: relative;
 }
 
 /* Карточка берёт доступную ширину с учётом паддингов контейнера */
 .svc{
   width: min(1120px, 100%);
   
-}
-
-.navbtn--left{  left: var(--gutter); }
-.navbtn--right{ right: var(--gutter); }
-
-
-
-
-/* ==== DESKTOP: увести стрелки от рамки карточки ==== */
-:root{
-  --svc-btn-size: 64px;                 /* размер круглой кнопки */
-  --svc-btn-gap: 14px;                  /* зазор между кнопкой и рамкой карточки */
-}
-
-/* На десктопе показываем боковые стрелки и сдвигаем их НАРУЖУ от карточки */
-@media (min-width: 561px){
-  .services .navbtn{
-    width: var(--svc-btn-size);
-    height: var(--svc-btn-size);
-  }
-
-  /* ВАЖНО: центр кнопки больше не на “gutter”.
-     Мы уводим всю кнопку наружу: на её полный размер + зазор */
-  .services .navbtn--left{
-    left: calc(var(--gutter) - var(--svc-btn-size) - var(--svc-btn-gap)) !important;
-  }
-  .services .navbtn--right{
-    right: calc(var(--gutter) - var(--svc-btn-size) - var(--svc-btn-gap)) !important;
-  }
 }

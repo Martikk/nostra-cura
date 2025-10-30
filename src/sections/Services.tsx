@@ -31,9 +31,7 @@ const items: Item[] = [
       />
     ),
     text:
-      "With our years of experience in construction management we understand the struggles... " +
-      "We offer strategies that let the company perform at its peak. Our goal is to create an environment " +
-      "where everyone is supported to be the best version of themselves.",
+      "With our years of experience in construction management we understand the struggles that not only companies are facing but also the struggles that the people are encountering daily. We have  been there. With this knowledge and experience we can offer strategies that will ultimately allow  the company to perform at its peak. Our goal is to create an environment where everyone at the  organization is supported to be the best version of themselves. People are an organization’s most  important asset. When the people are encouraged to grow, thecompany grows with them. ",
   },
   {
     title: "Coaching",
@@ -49,8 +47,7 @@ const items: Item[] = [
       />
     ),
     text:
-      "Our focus is the individual. We help people find meaning, bring out their best and lead fulfilling lives. " +
-      "Using our experience we can work with anyone to make changes aimed at improving their overall well-being.",
+      "Our focus is the individual person. Our main goal is to help everyone find meaning, bring out their best and lead fulfilling lives. Our experience ranges from just getting started in the industry, working in the field and progressing all the way to operations management. This allows us to relate to anyone at any level. We understand the challenges that people are facing on any given day, at any stage, and in any area of the construction industry. Using our experience and applying our techniques we can work with anyone to help them make changes aimed at improving their overall well-being. Once you start personal growth it never stops. Whatever point you feel that you  are at, we can help.",
   },
   {
     title: "Workshops",
@@ -132,15 +129,15 @@ export default function Services() {
 >
   <h2 className="services__title">OUR SERVICES</h2>
 
-  <div className="services__container">
-    {/* боковые стрелки (для десктопа) */}
-    <button type="button" className="navbtn navbtn--left" aria-label="Previous" onClick={() => go(-1)}>
-      <span>❮</span>
-    </button>
-    <button type="button" className="navbtn navbtn--right" aria-label="Next" onClick={() => go(1)}>
-      <span>❯</span>
-    </button>
+  {/* боковые стрелки (для десктопа) — как в YourStories */}
+  <button type="button" className="navbtn navbtn--left" aria-label="Previous" onClick={() => go(-1)}>
+    <span>❮</span>
+  </button>
+  <button type="button" className="navbtn navbtn--right" aria-label="Next" onClick={() => go(1)}>
+    <span>❯</span>
+  </button>
 
+  <div className="services__container">
     {/* карточка */}
     <div
       ref={containerRef}
@@ -182,7 +179,7 @@ export default function Services() {
               role="tab"
               className={"dot" + (active ? " active" : "")}
               aria-label={`Go to ${s.title}`}
-              aria-selected={active}
+              aria-current={active ? 'true' : undefined}
               tabIndex={active ? 0 : -1}
               onClick={() => { setIndex(i); setAnimKey(k => k + 1); }}
             />
