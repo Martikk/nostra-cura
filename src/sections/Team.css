@@ -63,7 +63,7 @@
 
 /* ряд: стрелка — карточка — стрелка */
 .team__row{
-  width: 100%;
+  width: 80%;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -335,4 +335,78 @@ button.team__btn:hover {
 @keyframes navPulseHover {
   0%, 100% { transform: scale(1.02); }
   50% { transform: scale(1.12); }
+}
+
+/* Пружинное дыхание */
+.navbtn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #111;
+  width: 64px;
+  height: 64px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 12px 36px rgba(0,0,0,.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+}
+
+/* Дыхание */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+.navbtn {
+  animation: breathe 3s ease-in-out infinite;
+}
+
+/* Hover — пульс + свечение */
+.navbtn:hover {
+  transform: scale(1.1) rotate(3deg);
+  box-shadow: 0 0 22px rgba(255,255,255,.4), 0 0 60px rgba(255,255,255,.2);
+}
+.navbtn:hover span {
+  animation: spinHint 0.9s ease-in-out;
+}
+
+/* Мгновенное “подмигивание” иконки */
+@keyframes spinHint {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(-15deg); }
+  50%  { transform: rotate(10deg); }
+  75%  { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .7rem 1.3rem;
+  border-radius: 999px;
+  background: #fff;
+  color: #111;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, .35);
+  transition: transform .25s cubic-bezier(.2,.9,.2,1), 
+              box-shadow .25s ease, 
+              background .25s ease, 
+              color .25s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 20px 50px rgba(255,255,255,0.2), 0 0 18px rgba(255,255,255,0.3);
+  background: #111;
+  color: #fff;
+}
+
+.btn:active {
+  transform: scale(.96);
 }
