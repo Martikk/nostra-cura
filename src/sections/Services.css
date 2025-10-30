@@ -171,6 +171,12 @@
     padding: clamp(16px, 3.8vw, 28px);
     border-radius:18px;
   }
+
+  /* применяем мобильный паттерн управления на планшетах */
+  .services .navbtn{ display:none !important; }
+  .services .svc__controls{ display:flex; }
+  /* точки внутри карточки на планшетах не дублируем */
+  .svc > .svc__dots{ display:none; }
 }
 
 @media (max-width: 560px){
