@@ -49,10 +49,20 @@ const items: Item[] = [
   },
   {
     title: "Workshops",
-    icon: <span className="svc__icon" aria-hidden>📚</span>,
+    icon: (
+      <img
+        className="svc__icon-img"
+        src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1764181821/output-onlinepngtools_rwbevd.png"
+        alt=""
+        width={64}
+        height={64}
+        loading="lazy"
+        decoding="async"
+      />
+    ),
     text:
-      "Hands-on workshops that remove stigma and expand mental-health awareness across crews and leadership. " +
-      "Practical tools you can use the same week on site.",
+      "Our workshops are built around the same people-focused approach we bring to our consulting and coaching. With real experience across the construction industry, we understand the daily pressures, communication challenges, and demands that crews and leaders face. Each session offers practical tools that can be applied immediately—on the job site, in the office, and in everyday life." +
+      "We create a supportive environment where people feel comfortable learning, asking questions, and building confidence. When individuals grow, teams strengthen and organizations benefit. Our goal is to help people show up as their best selves by developing skills that improve communication, well-being, and overall performance. No matter where your team is starting from, our workshops provide meaningful guidance to move forward. "
   },
 ];
 
