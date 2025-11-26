@@ -1,8 +1,6 @@
 import React, { useMemo, useRef, useState, useCallback, useEffect } from "react";
 import "./Services.css";
 
-// (Опционально) автоплей. Если хука нет — компонент всё равно работает.
-// import { useAutoAdvance } from "../hooks/useAutoAdvance";
 
 type Item = {
   title: string;
@@ -86,11 +84,6 @@ export default function Services() {
     [clampIndex]
   );
 
-  // Автоплей (если хук подключён)
-  // const auto = (typeof useAutoAdvance === "function")
-  //   ? useAutoAdvance(() => go(1), { interval: 6000, respectVisibility: true })
-  //   : { setPaused: undefined as ((p: boolean) => void) | undefined };
-  // const { setPaused } = auto;
 
   const current = slides[clampIndex(index)] ?? FALLBACK;
 
@@ -122,17 +115,18 @@ export default function Services() {
     <section
       className="services"
       id="services"
-      onMouseEnter={() => setPaused?.(true)}
-      onMouseLeave={() => setPaused?.(false)}
-      onFocus={() => setPaused?.(true)}
-      onBlur={() => setPaused?.(false)}
     >
       <h2 className="services__title">OUR SERVICES</h2>
 
       <div className="services__container">
         {/* ряд: стрелка — карточка — стрелка (desktop) */}
         <div className="services__row">
-          <button type="button" className="navbtn navbtn--left" aria-label="Previous" onClick={() => go(-1)}>
+          <button
+            type="button"
+            className="navbtn navbtn--left"
+            aria-label="Previous"
+            onClick={() => go(-1)}
+          >
             <span>❮</span>
           </button>
 
@@ -157,24 +151,39 @@ export default function Services() {
             <div className="svc__head">
               <h3 className="svc__title">
                 {current.title}
-                {current.icon && <span className="svc__iconwrap">{current.icon}</span>}
+                {current.icon && (
+                  <span className="svc__iconwrap">{current.icon}</span>
+                )}
               </h3>
             </div>
-            <p className="svc__text"><em>{current.text}</em></p>
-            {/* (если нужны точки внутри карточки для десктопа — оставляй) */}
+            <p className="svc__text">
+              <em>{current.text}</em>
+            </p>
           </div>
 
-          <button type="button" className="navbtn navbtn--right" aria-label="Next" onClick={() => go(1)}>
+          <button
+            type="button"
+            className="navbtn navbtn--right"
+            aria-label="Next"
+            onClick={() => go(1)}
+          >
             <span>❯</span>
           </button>
         </div>
 
         {/* нижние контролы (мобилка) */}
         <div className="svc__controls" aria-label="Carousel controls">
-          <button className="svc__btn svc__btn--prev" onClick={() => go(-1)} aria-label="Previous"><span>❮</span></button>
+          <button
+            className="svc__btn svc__btn--prev"
+            onClick={() => go(-1)}
+            aria-label="Previous"
+          >
+            <span>❮</span>
+          </button>
           <div className="svc__dots" role="tablist" aria-label="Service tabs">
             {slides.map((s, i) => {
-              const active = i === ((index % slides.length) + slides.length) % slides.length;
+              const active =
+                i === ((index % slides.length) + slides.length) % slides.length;
               return (
                 <button
                   key={i}
@@ -182,16 +191,26 @@ export default function Services() {
                   role="tab"
                   className={"dot" + (active ? " active" : "")}
                   aria-label={`Go to ${s.title}`}
-                  aria-current={active ? 'true' : undefined}
+                  aria-current={active ? "true" : undefined}
                   tabIndex={active ? 0 : -1}
-                  onClick={() => { setIndex(i); setAnimKey(k => k + 1); }}
+                  onClick={() => {
+                    setIndex(i);
+                    setAnimKey((k) => k + 1);
+                  }}
                 />
               );
             })}
           </div>
-          <button className="svc__btn svc__btn--next" onClick={() => go(1)} aria-label="Next"><span>❯</span></button>
+          <button
+            className="svc__btn svc__btn--next"
+            onClick={() => go(1)}
+            aria-label="Next"
+          >
+            <span>❯</span>
+          </button>
         </div>
       </div>
     </section>
   );
+
 }
