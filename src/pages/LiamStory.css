@@ -540,3 +540,48 @@ input::placeholder, textarea::placeholder{ color: rgba(255,255,255,.55); }
   opacity: 1;
   transform: translateX(0);
 }
+
+
+
+/* ===== Form typography: one size + one font everywhere ===== */
+.liam__contact {
+  --form-font: 16px;
+  --form-line: 1.2;
+  --form-weight: 500;          /* общий вес текста */
+  --label-weight: 500;         /* хочешь чуть жирнее — поставь 600/700 */
+}
+
+.liam__contact .contact__form,
+.liam__contact label,
+.liam__contact input,
+.liam__contact textarea,
+.liam__contact input::placeholder,
+.liam__contact textarea::placeholder {
+  font-family: inherit;
+  font-size: var(--form-font);
+  line-height: var(--form-line);
+}
+
+/* Label */
+.liam__contact .field label{
+  font-weight: var(--label-weight);
+  margin: 0;                   /* на всякий */
+}
+
+/* Inputs */
+.liam__contact input,
+.liam__contact textarea{
+  font-weight: var(--form-weight);
+}
+
+/* Placeholder — тот же размер/шрифт, только цвет “приглушён” */
+.liam__contact input::placeholder,
+.liam__contact textarea::placeholder{
+  font-weight: var(--form-weight);
+  opacity: 1;                  /* чтобы браузер не делал меньше/бледнее сам */
+  color: rgba(255,255,255,.55);
+}
+.liam--light .liam__contact input::placeholder,
+.liam--light .liam__contact textarea::placeholder{
+  color: #9aa4b2;
+}
