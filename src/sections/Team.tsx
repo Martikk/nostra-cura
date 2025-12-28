@@ -63,7 +63,7 @@ export default function Team() {
   );
 
   // // автоплей + пауза при фокусе/hover
-const setPaused = undefined as ((p: boolean) => void) | undefined;
+
 
   const current = slides[clamp(index)] ?? FALLBACK;
 
@@ -136,10 +136,10 @@ const setPaused = undefined as ((p: boolean) => void) | undefined;
     <section
       id="team"
       className="team"
-      onMouseEnter={() => setPaused?.(true)}
-      onMouseLeave={() => setPaused?.(false)}
-      onFocus={() => setPaused?.(true)}
-      onBlur={() => setPaused?.(false)}
+      // onMouseEnter={() => setPaused?.(true)}
+      // onMouseLeave={() => setPaused?.(false)}
+      // onFocus={() => setPaused?.(true)}
+      // onBlur={() => setPaused?.(false)}
     >
       <h2 className="team__title">OUR TEAM</h2>
 

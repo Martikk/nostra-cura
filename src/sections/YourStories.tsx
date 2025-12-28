@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback } from "react";
 import type { KeyboardEvent } from "react";
 import "./YourStories.css";
 
@@ -22,7 +22,6 @@ const stories: Story[] = [
 export default function YourStories() {
   const len = stories.length;
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
 
   const clamp = useCallback((i: number) => ((i % len) + len) % len, [len]);
   const go = useCallback((dir: 1 | -1) => setIndex((i) => clamp(i + dir)), [clamp]);
@@ -77,25 +76,22 @@ export default function YourStories() {
           <span>❮</span>
         </button>
 
-        <div
-        className="storycard"
-        role="region"
-        aria-roledescription="carousel"
-        aria-label="Stories"
-        aria-live="polite"
-        tabIndex={0}
-        onKeyDown={onKeyDown}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => { setPaused(false); onUp(); }}
-        onFocus={() => setPaused(true)}
-        onBlur={() => setPaused(false)}
-        onMouseDown={(e) => onDown(e.clientX)}
-        onMouseMove={(e) => onMove(e.clientX)}
-        onMouseUp={onUp}
-        onTouchStart={(e) => onDown(e.touches[0].clientX)}
-        onTouchMove={(e) => onMove(e.touches[0].clientX)}
-        onTouchEnd={onUp}
-      >
+<div
+  className="storycard"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="Stories"
+  aria-live="polite"
+  tabIndex={0}
+  onKeyDown={onKeyDown}
+  onMouseLeave={onUp}              // оставили onUp, чтобы свайп/drag нормально завершался
+  onMouseDown={(e) => onDown(e.clientX)}
+  onMouseMove={(e) => onMove(e.clientX)}
+  onMouseUp={onUp}
+  onTouchStart={(e) => onDown(e.touches[0].clientX)}
+  onTouchMove={(e) => onMove(e.touches[0].clientX)}
+  onTouchEnd={onUp}
+>
         <div className="storycard__stars" aria-hidden="true">
           {Array.from({ length: 5 }).map((_, i) => (
             <img
