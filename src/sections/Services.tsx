@@ -29,7 +29,7 @@ const items: Item[] = [
       />
     ),
     text:
-      "With our years of experience in construction management we understand the struggles that not only companies are facing but also the struggles that the people are encountering daily. We have  been there. With this knowledge and experience we can offer strategies that will ultimately allow  the company to perform at its peak. Our goal is to create an environment where everyone at the  organization is supported to be the best version of themselves. People are an organization’s most  important asset. When the people are encouraged to grow, thecompany grows with them. ",
+      "With our years of experience in construction management we understand the struggles that not only companies are facing but also the struggles that the people are encountering daily. We have  been there. With this knowledge and experience we can offer strategies that will ultimately allow  the company to perform at its peak. Our goal is to create an environment where everyone at the organization is supported to be the best version of themselves. People are an organization’s most important asset. When the people are encouraged to grow, the company grows with them.",
   },
   {
     title: "Coaching",
@@ -45,7 +45,7 @@ const items: Item[] = [
       />
     ),
     text:
-      "Our focus is the individual person. Our main goal is to help everyone find meaning, bring out their best and lead fulfilling lives. Our experience ranges from just getting started in the industry, working in the field and progressing all the way to operations management. This allows us to relate to anyone at any level. We understand the challenges that people are facing on any given day, at any stage, and in any area of the construction industry. Using our experience and applying our techniques we can work with anyone to help them make changes aimed at improving their overall well-being. Once you start personal growth it never stops. Whatever point you feel that you  are at, we can help.",
+      "Our focus is the individual person. Our main goal is to help everyone find meaning, bring out their best and lead fulfilling lives. Our experience ranges from just getting started in the industry, working in the field and progressing all the way to operations management. This allows us to relate to anyone at any level. We understand the challenges that people are facing on any given day, at any stage, and in any area of the construction industry. Using our experience and applying our techniques we can work with anyone to help them make changes aimed at improving their overall well-being. Once you start personal growth it never stops. Whatever point you feel that you are at, we can help.",
   },
   {
     title: "Workshops",
@@ -61,8 +61,7 @@ const items: Item[] = [
       />
     ),
     text:
-      "Our workshops are built around the same people-focused approach we bring to our consulting and coaching. With real experience across the construction industry, we understand the daily pressures, communication challenges, and demands that crews and leaders face. Each session offers practical tools that can be applied immediately—on the job site, in the office, and in everyday life." +
-      "We create a supportive environment where people feel comfortable learning, asking questions, and building confidence. When individuals grow, teams strengthen and organizations benefit. Our goal is to help people show up as their best selves by developing skills that improve communication, well-being, and overall performance. No matter where your team is starting from, our workshops provide meaningful guidance to move forward. "
+      "Our workshops are designed for both individuals and groups, using the same practical, people-focused approach we bring to consulting and coaching. Built on real experience in the construction industry, they address the daily pressures, communication challenges, and demands faced by workers and leaders alike. Each session provides tools that can be applied immediately—on site, in the office, and in everyday life. We create an environment where people feel comfortable engaging, asking questions, and building confidence. As individuals grow, teams strengthen. No matter where you are starting, our workshops provide clear, practical guidance to move forward."
   },
 ];
 
