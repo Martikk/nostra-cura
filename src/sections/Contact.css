@@ -108,20 +108,64 @@ top: calc(var(--nav-h) - 20px);
 input,
 textarea {
   margin-top: 0.4rem;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  padding: 0.6rem 0.8rem;
-  font-size: 1rem;
-  background: rgba(255, 255, 255, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  background: rgba(219, 44, 44, 0.773); /* <- "серость" */
   color: #fff;
+
+  padding: 0.75rem 0.9rem;
+  font-size: 1rem;
   outline: none;
-  transition: border 0.3s ease, background 0.3s ease;
+
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
 }
 
+/* плейсхолдер */
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* лёгкий hover (современно и понятно) */
+input:hover,
+textarea:hover {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.26);
+}
+
+
+/* modern focus: белая рамка + мягкий glow */
 input:focus,
-textarea:focus {
-  border-color: var(--gold);
-  background: rgba(255, 255, 255, 0.15);
+textarea:focus,
+input:focus-visible,
+textarea:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.70);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.14);
+}
+
+/* когда уже начали вводить (поле не пустое) — держим чуть “собранный” вид */
+input:not(:placeholder-shown),
+textarea:not(:placeholder-shown) {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.10);
+}
+
+/* если хочешь, чтобы подпись тоже реагировала */
+.contactcard__form label:focus-within {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* уважение к reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  input, textarea { transition: none; }
 }
 
 /* кнопка */
@@ -284,3 +328,81 @@ textarea:focus {
 
 
 
+input:-webkit-autofill,
+textarea:-webkit-autofill {
+  -webkit-text-fill-color: #fff;
+  -webkit-box-shadow: 0 0 0 1000px rgba(255,255,255,0.10) inset;
+  transition: background-color 9999s ease-out 0s;
+}
+
+
+.contactcard__form input,
+.contactcard__form textarea {
+  background-color: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.18);
+  color: #fff;
+
+  border-radius: 10px;
+  padding: .75rem .9rem;
+  outline: none;
+
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.contactcard__form input:hover,
+.contactcard__form textarea:hover {
+  background-color: rgba(255,255,255,.10);
+  border-color: rgba(255,255,255,.26);
+}
+
+.contactcard__form input:focus,
+.contactcard__form textarea:focus,
+.contactcard__form input:focus-visible,
+.contactcard__form textarea:focus-visible {
+  background-color: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.70);
+  box-shadow: 0 0 0 3px rgba(255,255,255,.14);
+}
+
+
+/* общий шрифт/размер для всего блока формы */
+.contactcard__form{
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+/* label текст = placeholder */
+.field__label{
+  font: inherit;                 /* = 1rem / 400 / тот же font-family */
+  color: rgba(255,255,255,.55);  /* как placeholder */
+  line-height: 1.15;
+}
+
+/* поля ввода тоже наследуют тот же шрифт */
+.contactcard__form input,
+.contactcard__form textarea{
+  font: inherit;
+}
+
+/* placeholder фиксируем (в Firefox есть opacity по умолчанию) */
+.contactcard__form input::placeholder,
+.contactcard__form textarea::placeholder{
+  font: inherit;
+  color: rgba(255,255,255,.55);
+  opacity: 1;
+}
+
+/* (опц.) чтобы на фокусе лейбл чуть “оживал” */
+.field:focus-within .field__label{
+  color: rgba(255,255,255,.92);
+}
+
+.btn--submit {
+  cursor: pointer;
+}
+
+.btn--submit:disabled {
+  cursor: not-allowed; /* или default */
+  opacity: 0.7;
+}

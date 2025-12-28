@@ -49,11 +49,11 @@ export default function Contact() {
 
   return (
     <section className="contact" id="contact">
-      <h2 className="contact__title">Get in touch</h2>
+      {/* <h2 className="contact__title">Get in touch</h2> */}
 
       <div className="contactcard">
         <div className="contactcard__info">
-          <h3>Get in touch</h3>
+          <h3>Get in Touch</h3>
           <p>Let’s talk. Submit your details in this form and we will get back to you ASAP.</p>
 
           <h3>Contact</h3>
