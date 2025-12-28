@@ -70,12 +70,20 @@ export default function Navbar() {
   }, [open]);
 
   // Локальный скролл по секции (на главной)
-  const scrollToId = (id: SectionId) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY - NAV_OFFSET;
-    window.scrollTo({ top, behavior: "smooth" });
-  };
+const EXTRA_UP = 120; // ← подбери: 40..180
+
+const scrollToId = (id: SectionId) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  const y = window.scrollY + el.getBoundingClientRect().top;
+
+  // было: y - NAV_OFFSET
+  // стало: прокручиваем чуть ДАЛЬШЕ вниз => секция визуально ВЫШЕ
+  const top = Math.max(0, y - NAV_OFFSET + EXTRA_UP);
+
+  window.scrollTo({ top, behavior: "smooth" });
+};
 
   // Универсальный обработчик: если мы НЕ на главной — уходим на /#id, иначе плавно скроллим
   const goTo = (id: SectionId, e?: React.MouseEvent) => {
