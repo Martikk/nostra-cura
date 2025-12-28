@@ -5,6 +5,7 @@
   --mx: 0;                 /* mouse x in -1..1 */
   --my: 0;                 /* mouse y in -1..1 */
   position: relative;
+    box-sizing: border-box;
   min-height: 100vh;
   padding-top: var(--nav-h);
   display: flex;
@@ -16,7 +17,7 @@
 .hero::before{
   content:"";
   position:absolute; inset:-2%;
-  background-image: url("https://res.cloudinary.com/dzytbkc5l/image/upload/v1760976794/liam/Main_q05afv.png");
+  background-image: url("https://res.cloudinary.com/dzytbkc5l/image/upload/v1766885184/liam/hero_2_m5kicm.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
