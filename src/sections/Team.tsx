@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./Team.css";
-import { useAutoAdvance } from "../hooks/useAutoAdvance";
 // import { Link } from "react-router-dom"; // если используешь SPA-навигацию — замени <a> на <Link>
 
 type Member = {
