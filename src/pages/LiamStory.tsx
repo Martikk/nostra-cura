@@ -223,15 +223,18 @@ export default function LiamStory() {
             </p>
 
             <div className="welcome__quote">
-              <span className="quote-mark" aria-hidden>
+              {/* <span className="quote-mark" aria-hidden>
+                “
+              </span> */}
+                            <span>
                 “
               </span>
               <Typewriter
                 className="welcome__type"
-                text={`For over 15 years, I’ve helped turn struggle into growth—so people can build not only projects, but fulfilling lives.`}
+                text={`For over 15 years, I’ve helped turn struggle into growth—so people can build not only projects, but fulfilling lives.“`}
                 speed={110}
                 jitter={25}
-                ariaLabel="For over 15 years, I’ve helped turn struggle into growth—so people can build not only projects, but fulfilling lives."
+                ariaLabel="For over 15 years, I’ve helped turn struggle into growth—so people can build not only projects, but fulfilling lives.“"
               />
             </div>
           </div>
