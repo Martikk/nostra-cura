@@ -63,12 +63,12 @@ export default function Team() {
     [clamp]
   );
 
-  // автоплей + пауза при фокусе/hover
-  const auto =
-    typeof useAutoAdvance === "function"
-      ? useAutoAdvance(() => go(1), { interval: 6000, respectVisibility: true })
-      : { setPaused: undefined as ((p: boolean) => void) | undefined };
-  const { setPaused } = auto;
+  // // автоплей + пауза при фокусе/hover
+  // const auto =
+  //   typeof useAutoAdvance === "function"
+  //     ? useAutoAdvance(() => go(1), { interval: 6000, respectVisibility: true })
+  //     : { setPaused: undefined as ((p: boolean) => void) | undefined };
+  // const { setPaused } = auto;
 
   const current = slides[clamp(index)] ?? FALLBACK;
 

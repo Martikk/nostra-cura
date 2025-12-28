@@ -28,16 +28,16 @@ export default function YourStories() {
   const go = useCallback((dir: 1 | -1) => setIndex((i) => clamp(i + dir)), [clamp]);
 
   // auto-advance (7s), уважает prefers-reduced-motion и видимость вкладки
-  useEffect(() => {
-    const media = window.matchMedia?.("(prefers-reduced-motion: reduce)");
-    if (media?.matches || paused) return;
+  // useEffect(() => {
+  //   const media = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+  //   if (media?.matches || paused) return;
 
-    const tick = () => {
-      if (document.visibilityState === "visible") go(1);
-    };
-    const id = window.setInterval(tick, 7000);
-    return () => window.clearInterval(id);
-  }, [go, paused]);
+  //   const tick = () => {
+  //     if (document.visibilityState === "visible") go(1);
+  //   };
+  //   const id = window.setInterval(tick, 7000);
+  //   return () => window.clearInterval(id);
+  // }, [go, paused]);
 
   // клавиатура
   const onKeyDown = (e: KeyboardEvent) => {
