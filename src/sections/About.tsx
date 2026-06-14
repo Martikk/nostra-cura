@@ -12,6 +12,8 @@ type AboutItem = {
   yellowTop?: string;
   text: string;
   yellowBottom?: string;
+  buttonLabel?: string;
+  buttonHref?: string;
 };
 
 const FALLBACK: AboutItem = {
