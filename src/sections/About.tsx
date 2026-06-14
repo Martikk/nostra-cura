@@ -30,16 +30,16 @@ const items: AboutItem[] = [
       "The construction industry helps shape the places where people live, work, and connect. Behind every project are individuals, families, teams, and leaders whose influence extends far beyond the job site.We believe that stronger communities begin with stronger people. When individuals and teams are better equipped to navigate decisions, responsibilities, and pressure with confidence, the positive impact reaches into their workplaces, homes, and communities. Our vision is a construction industry where people are supported not only in the work they do, but in the lives they build.",
   },
   {
+    title: "Our Mission",
+    yellowTop: "To reduce hidden strain in construction by helping individuals and teams create the conditions for clarity under pressure.",
+    text:
+      "Pressure exists at every level of the construction industry. It can affect how people think, communicate, lead, and make decisions, often without being fully recognized or understood. Our mission is to help individuals and teams slow things down, examine what matters, and better understand the decisions and responsibilities in front of them. Through conversation, observation, and practical tools, we create conditions where answers can emerge. We believe that when people are able to navigate pressure with greater awareness and confidence, meaningful change becomes possible.",
+  },
+  {
     title: "What We Do",
     yellowTop: "Creating conditions where answers can emerge.",
     text:
       "Many of the challenges people face are not caused by a lack of effort, ability, or commitment. Often, they are the result of operating under pressure for so long that important things become difficult to see. Our role is not to provide all the answers. Our role is to create space for individuals and teams to slow things down, examine what matters, and better understand the decisions and responsibilities in front of them. Through conversation, observation, reflection, and practical tools, we help create conditions where answers can emerge and meaningful progress can follow.",
-  },
-  {
-    title: "Why It Matters",
-    yellowTop: "Mental health cannot stay hidden on the jobsite.",
-    text:
-      "The construction industry faces real pressure, and too often people are expected to handle it alone. Stress, burnout, conflict, isolation, and personal struggles can affect safety, communication, leadership, and quality of life. Our work is focused on reducing stigma, opening dialogue, and helping people move forward with more clarity, confidence, and support.",
   },
 ];
 
