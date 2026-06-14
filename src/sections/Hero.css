@@ -94,12 +94,21 @@
 
 /* Контент ближе к краям */
 .hero__inner{
+
   position: relative;
-  z-index: 1;                 /* поверх фона и эффектов */
+
+  z-index: 1;
+
   width:100%;
-  padding-left:3vw; padding-right:3vw;
+
+  padding-left:3vw;
+
+  padding-right:3vw;
+
   color:#fff;
+
   perspective: 800px;
+
 }
 
 .hero__title{
@@ -166,4 +175,69 @@
 @media (prefers-reduced-motion: reduce){
   .hero::before, .hero__rays, .hero__glow { animation: none !important; }
   .hero__title, .hero__subtitle { transition: none !important; }
+}
+
+
+/* ===== Золотая надпись ===== */
+.hero__tagline{
+  position: absolute;
+  left: 50%;
+  bottom: 5.5vh;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  white-space: nowrap;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(18px, 2.4vw, 34px);
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: #d7ad38;
+
+  text-shadow:
+    0 2px 8px rgba(0,0,0,.65),
+    0 0 18px rgba(215,173,56,.22);
+
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero__tagline-line{
+  display: block;
+  width: clamp(50px, 7vw, 120px);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(215,173,56,0),
+    rgba(215,173,56,.95),
+    rgba(215,173,56,0)
+  );
+  box-shadow: 0 0 10px rgba(215,173,56,.35);
+}
+
+.hero__tagline::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -22px;
+  width: 28px;
+  height: 2px;
+  transform: translateX(-50%);
+  background: #d7ad38;
+  border-radius: 2px;
+  box-shadow: 0 0 12px rgba(215,173,56,.45);
+}
+/* Mobile fix */
+@media (max-width: 768px){
+  .hero__tagline{
+    bottom: 4vh;
+    gap: 14px;
+    letter-spacing: .04em;
+    font-size: clamp(14px, 4vw, 20px);
+  }
+
+  .hero__tagline-line{
+    width: 34px;
+  }
 }

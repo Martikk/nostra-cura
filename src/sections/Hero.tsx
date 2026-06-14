@@ -23,10 +23,19 @@ export default function Hero() {
           BUILDING BETTER<br />LIVES IN<br />CONSTRUCTION
         </h1>
         <p className="hero__subtitle">
-          Helping construction professionals thrive, find<br />
-          balance, and enjoy a healthier life.
+          Helping individuals and teams navigate decisions,<br />
+          responsibilities, and pressure with confidence.
         </p>
-      </div>
+  </div>
+    <div className="hero__tagline" aria-label="Slow Down. See Clearly. Live Better.">
+
+    <span className="hero__tagline-line" />
+
+    <span>Slow Down. See Clearly. Live Better.</span>
+
+    <span className="hero__tagline-line" />
+
+  </div>
     </section>
   );
 }
