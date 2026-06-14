@@ -24,10 +24,10 @@ const FALLBACK: AboutItem = {
 
 const items: AboutItem[] = [
   {
-    title: "Our Mission",
-    yellowTop: "To reduce hidden strain in construction by helping individuals and teams create the conditions for clarity under pressure.",
+    title: "Our Vision",
+    yellowTop: "Better communities built by people in construction.",
     text:
-      "Pressure exists at every level of the construction industry. It can affect how people think, communicate, lead, and make decisions, often without being fully recognized or understood. Our mission is to help individuals and teams slow things down, examine what matters, and better understand the decisions and responsibilities in front of them. Through conversation, observation, and practical tools, we create conditions where answers can emerge. We believe that when people are able to navigate pressure with greater awareness and confidence, meaningful change becomes possible.",
+      "The construction industry helps shape the places where people live, work, and connect. Behind every project are individuals, families, teams, and leaders whose influence extends far beyond the job site.We believe that stronger communities begin with stronger people. When individuals and teams are better equipped to navigate decisions, responsibilities, and pressure with confidence, the positive impact reaches into their workplaces, homes, and communities. Our vision is a construction industry where people are supported not only in the work they do, but in the lives they build.",
   },
   {
     title: "What We Do",
