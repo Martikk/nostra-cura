@@ -2,256 +2,511 @@
   --nav-h: 72px;
   --glass-bg: rgba(15, 17, 20, 0.55);
   --glass-brd: rgba(255, 255, 255, 0.18);
+  --title: #fff;
+  --gutter: clamp(16px, 4vw, 48px);
 }
 
-/* ===== Base ===== */
+/* ===== Section ===== */
 .about {
   position: relative;
   min-height: 100vh;
-  padding-top: var(--nav-h);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
+  padding-inline: var(--gutter);
+  display: grid;
+  place-items: center;
   color: #fff;
   overflow: hidden;
 }
 
-/* ===== Фон с мягкой анимацией (Ken Burns) ===== */
+#about {
+  scroll-margin-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 12px);
+}
+
+/* ===== Background ===== */
 .about::before {
   content: "";
   position: absolute;
   inset: -2%;
-  background-image: url("https://res.cloudinary.com/dzytbkc5l/image/upload/v1760976788/liam/2nd_dag9lb.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: url("https://res.cloudinary.com/dzytbkc5l/image/upload/v1760976788/liam/2nd_dag9lb.png")
+    center / cover no-repeat;
   z-index: 0;
+  animation: aboutZoom 24s ease-in-out infinite alternate;
   will-change: transform;
-  animation: about-zoom 24s ease-in-out infinite alternate;
-  transform-origin: center center;
 }
 
-/* ===== Ken Burns эффект ===== */
-@keyframes about-zoom {
+@keyframes aboutZoom {
   0% {
     transform: scale(1.02) translate3d(-0.5%, -0.5%, 0);
   }
+
   100% {
-    transform: scale(1.07) translate3d(0.5%, 0.5%, 0);
+    transform: scale(1.06) translate3d(0.6%, 0.6%, 0);
   }
 }
 
-/* Заголовок – идентично services__title */
-.about__title{
+/* ===== Main title ===== */
+.about__title {
   position: absolute;
-  top: calc(var(--nav-h) + 120px);   /* тот же оффсет, что в .services__title */
+  top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + clamp(8px, 2.8vw, 24px));
   left: 50%;
   transform: translateX(-50%);
-
   z-index: 2;
-  display: inline-block;             /* не тянется на всю ширину */
+
   margin: 0;
   text-align: center;
   white-space: nowrap;
-  line-height: 1;                    /* ровная оптика */
+  line-height: 1;
 
-  font-weight: 900;                  /* как в services */
+  font-weight: 900;
   font-size: clamp(28px, 5.8vw, 72px);
-  letter-spacing: .02em;
-  color: #fff;
-  text-shadow: 0 4px 12px rgba(0,0,0,.4);
+  letter-spacing: 0.02em;
+  color: var(--title);
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 
-  animation: titleDrop .9s cubic-bezier(.2,.9,.2,1) both;
+  animation: aboutTitleDrop 0.9s cubic-bezier(0.2, 0.9, 0.2, 1) both;
 }
 
-/* такая же анимация, как у services__title */
-@keyframes titleDrop{
-  from{ opacity:0; transform: translate(-50%,-30px); }
-  to  { opacity:1; transform: translate(-50%,0); }
+@keyframes aboutTitleDrop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 }
 
-/* Контейнер под заголовком — центр и ограничение */
-.about__inner{
+/* ===== Container ===== */
+.about__container {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 1200px;      /* контейнер секции */
-  margin: 0 auto;
-  padding: 200px 3vw 0;   /* отступ сверху под h1 + минимальные поля по бокам */
-  text-align: center;
+  box-sizing: border-box;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+
+  display: grid;
+  justify-items: center;
+  align-content: start;
 }
 
-/* Стеклянная карточка — НЕ на всю ширину */
-.about__card{
-  width: min(960px, 88vw);    /* ← ровно как на макете */
-  margin: 0 auto;             /* центрируем */
-  padding: 2.2rem 2.6rem;
+/* ===== Row ===== */
+.about__row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(10px, 2.6vw, 22px);
+}
+
+/* ===== Card ===== */
+.aboutcard {
+  --dx: 0px;
+
+  width: min(1120px, 100%);
+  margin-top: clamp(28px, 7vw, 70px);
+  padding: clamp(18px, 3.4vw, 42px);
+
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+
+  border-radius: 22px;
   background: var(--glass-bg);
   border: 1px solid var(--glass-brd);
-  border-radius: 16px;
+
   -webkit-backdrop-filter: blur(14px) saturate(150%);
   backdrop-filter: blur(14px) saturate(150%);
-  box-shadow: 0 20px 60px rgba(0,0,0,.35);
-  animation: slide-up 1.6s ease-out forwards;
-  transition: transform .8s ease, box-shadow .8s ease;
+
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.35);
+
+  transform: translateX(var(--dx)) translateZ(0);
+  animation: aboutCardEnter 0.6s cubic-bezier(0.2, 0.9, 0.2, 1);
+
+  touch-action: pan-y;
+  cursor: grab;
 }
 
-/* Эффект при наведении */
-.about__card:hover {
-  transform: translateY(-6px) scale(1.015);
-  box-shadow: 0 25px 80px rgba(255, 255, 255, 0.25);
+.aboutcard:active {
+  cursor: grabbing;
 }
 
-/* Подзаголовок */
-.about__subtitle {
-  font-size: clamp(26px, 4.6vw, 52px); /* как .svc__title */
+@keyframes aboutCardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===== Card title ===== */
+.aboutcard__title {
+  margin: 0 0 10px 0;
+
+  text-align: center;
+  font-size: clamp(26px, 4.6vw, 52px);
   font-weight: 800;
   color: #fff;
-  letter-spacing: .01em;
-  text-shadow: 0 2px 10px rgba(0,0,0,.35);
-  margin-bottom: 1rem;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
 }
 
-/* Текст */
-.about__text {
+/* ===== Yellow text ===== */
+.aboutcard__yellow {
+  margin-left: auto;
+  margin-right: auto;
+  width: min(980px, 90%);
+
+  color: #d6a315;
+  font-weight: 900;
+  text-align: center;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.aboutcard__yellow--top {
+  margin-top: 0;
+  margin-bottom: clamp(12px, 1.8vw, 22px);
+
+  font-size: clamp(20px, 3vw, 36px);
+  line-height: 1.2;
+}
+
+.aboutcard__yellow--bottom {
+  margin-top: clamp(16px, 2vw, 26px);
+  margin-bottom: clamp(18px, 2.4vw, 30px);
+
+  font-size: clamp(17px, 2.2vw, 28px);
+  line-height: 1.3;
+}
+
+/* ===== Text ===== */
+.aboutcard__text {
   margin: 0 auto;
   width: min(980px, 90%);
-  font-size: clamp(16px, 2.2vw, 26px); /* одинаково с .svc__text */
+
+  font-size: clamp(16px, 2.2vw, 26px);
   line-height: 1.6;
-  color: rgba(255, 255, 255, .95);
+  color: rgba(255, 255, 255, 0.95);
   text-align: center;
-  text-shadow: 0 2px 10px rgba(0,0,0,.35);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+
+  animation: aboutTextRise 0.7s 0.08s cubic-bezier(0.2, 0.9, 0.2, 1) both;
 }
 
-/* ===== Анимации появления ===== */
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+@keyframes aboutTextRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
 
-@keyframes slide-up {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slide-down {
-  from { opacity: 0; transform: translateY(-30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  .about__card {
-    padding: 1.5rem 1.6rem;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
+/* ===== Desktop arrows ===== */
+.aboutnav {
+  position: static;
+  z-index: 2;
 
-/* =========================
-   About — mobile adaptations
-   ========================= */
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
 
-/* якорный скролл с учётом хедера */
-#about { scroll-margin-top: calc(var(--nav-h) + 12px); }
+  background: #fff;
+  color: #111;
 
-/* iOS safe-area + общий верхний отступ */
-.about { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
+  display: grid;
+  place-items: center;
+  cursor: pointer;
 
-/* чуть компактнее «дыхание» фона на мобильных, чтобы не «качало» */
-@media (max-width: 1024px){
-  @keyframes about-zoom {
-    0%   { transform: scale(1.015) translate3d(-0.3%, -0.3%, 0); }
-    100% { transform: scale(1.04)  translate3d( 0.3%,  0.3%, 0); }
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.aboutnav span {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.aboutnav:hover {
+  transform: scale(1.06);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+
+.aboutnav:active {
+  transform: scale(0.98);
+}
+
+.aboutnav::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    120% 120% at 50% 50%,
+    rgba(0, 0, 0, 0.08),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.aboutnav:hover::after {
+  opacity: 1;
+}
+
+/* ===== Mobile controls ===== */
+.aboutcard__controls {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 4vw, 28px);
+  margin-top: 22px;
+  z-index: 1;
+}
+
+.aboutcard__btn {
+  position: static;
+
+  display: grid;
+  place-items: center;
+
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  min-height: 56px;
+
+  border-radius: 50%;
+  border: none;
+
+  background: #fff;
+  color: #111;
+
+  cursor: pointer;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.aboutcard__btn span {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.aboutcard__btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+
+.aboutcard__btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ===== Dots ===== */
+.aboutcard__dots {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.aboutdot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: none;
+
+  background: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.aboutdot.active {
+  background: #fff;
+  transform: scale(1.3);
+}
+
+/* ===== Button ===== */
+.aboutcard__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+
+  width: min(440px, 90%);
+  margin: clamp(22px, 2.6vw, 34px) auto 0;
+  padding: clamp(14px, 1.4vw, 18px) clamp(28px, 3vw, 44px);
+
+  border: 2px solid #c79213;
+  border-radius: 10px;
+
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0)),
+    rgba(8, 8, 8, 0.38);
+
+  color: #d6a315;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(18px, 2.2vw, 30px);
+  font-weight: 900;
+  letter-spacing: 0.045em;
+  text-decoration: none;
+  text-align: center;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 0 1px rgba(214, 163, 21, 0.22),
+    0 14px 36px rgba(0, 0, 0, 0.38),
+    0 0 22px rgba(214, 163, 21, 0.12);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.22s ease,
+    background 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.aboutcard__button span {
+  font-size: 1.35em;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+.aboutcard__button:hover {
+  transform: translateY(-2px);
+  color: #f1bd2e;
+  border-color: #e0a91d;
+
+  background:
+    linear-gradient(180deg, rgba(214, 163, 21, 0.12), rgba(214, 163, 21, 0.02)),
+    rgba(8, 8, 8, 0.45);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 0 1px rgba(214, 163, 21, 0.36),
+    0 18px 46px rgba(0, 0, 0, 0.46),
+    0 0 30px rgba(214, 163, 21, 0.2);
+}
+
+.aboutcard__button:active {
+  transform: translateY(0);
+}
+
+/* ===== Tablet ===== */
+@media (max-width: 1024px) {
+  @keyframes aboutZoom {
+    0% {
+      transform: scale(1.015) translate3d(-0.3%, -0.3%, 0);
+    }
+
+    100% {
+      transform: scale(1.04) translate3d(0.3%, 0.3%, 0);
+    }
+  }
+
+  .aboutcard {
+    width: min(900px, 94vw);
+    padding: clamp(16px, 3.8vw, 28px);
+    border-radius: 18px;
+  }
+
+  .about .aboutnav {
+    display: none !important;
+  }
+
+  .about .aboutcard__controls {
+    display: flex;
   }
 }
 
-/* <= 900px: опускаем карточку под заголовок, уменьшаем поля */
-@media (max-width: 900px){
-  .about__title{
-    top: calc(var(--nav-h) + clamp(18px, 3vw, 28px));
-    font-size: clamp(26px, 6.2vw, 42px);
+/* ===== Mobile ===== */
+@media (max-width: 560px) {
+  .about__title {
+    font-size: clamp(22px, 7vw, 34px);
   }
 
-  .about__inner{
-    /* добавляем расстояние под заголовок, чтобы карточка не наезжала */
-    padding-top: clamp(68px, 10vw, 92px);
+  .about__container {
+    padding-left: 0;
+    padding-right: 0;
   }
 
-  .about__card{
-    width: min(680px, 92vw);
+  .aboutcard {
+    width: 86vw;
+    padding: clamp(14px, 4.2vw, 20px);
     border-radius: 14px;
-    padding: clamp(16px, 4.5vw, 24px);
-    box-shadow: 0 18px 60px rgba(0,0,0,.35);
   }
 
-  .about__subtitle{
-    font-size: clamp(22px, 5.2vw, 32px);
-    margin-bottom: .7rem;
+  .aboutcard__title {
+    font-size: clamp(24px, 7vw, 34px);
   }
 
-  .about__text{
-    width: 100%;
-    font-size: clamp(15px, 2.6vw, 20px);
-    line-height: 1.6;
+  .aboutcard__yellow {
+    width: 94%;
+  }
+
+  .aboutcard__yellow--top {
+    font-size: clamp(18px, 5.4vw, 25px);
+  }
+
+  .aboutcard__yellow--bottom {
+    font-size: clamp(15px, 4.4vw, 19px);
+  }
+
+  .aboutcard__text {
+    width: 94%;
+    font-size: clamp(14px, 3.6vw, 18px);
+    line-height: 1.58;
+  }
+
+  .aboutcard__btn {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .aboutcard__btn span {
+    font-size: 20px;
+  }
+
+  .aboutdot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .aboutcard__button {
+    width: 94%;
+    min-width: 0;
+    gap: 18px;
+    font-size: clamp(16px, 5vw, 21px);
+    padding: 13px 18px;
   }
 }
 
-/* <= 560px: ещё компактнее карточка/шрифты, комфортные тач-таргеты */
-@media (max-width: 560px){
-  .about__title{
-    top: calc(var(--nav-h) + 10px);
-    font-size: clamp(22px, 7vw, 30px);
-  }
-
-  .about__inner{ padding-top: clamp(56px, 12vw, 80px); }
-
-  .about__card{
-    width: 92vw;
-    border-radius: 12px;
-    padding: clamp(14px, 4vw, 18px);
-    gap: 10px;
-  }
-
-  .about__subtitle{ font-size: clamp(20px, 5.8vw, 26px); }
-  .about__text{ font-size: clamp(14px, 3.2vw, 18px); }
-}
-
-/* <= 400px: минимальные размеры, чтобы всё дышало и не ломалось */
-@media (max-width: 400px){
-  .about__title{
-    top: calc(var(--nav-h) + 6px);
-    font-size: clamp(20px, 7.5vw, 26px);
-    white-space: normal;   /* разрешаем перенос при очень узкой ширине */
-  }
-
-  .about__inner{ padding-top: 56px; }
-
-  .about__card{
-    width: 94vw;
+@media (max-width: 360px) {
+  .aboutcard {
     padding: 12px 14px;
-    border-radius: 10px;
-  }
-
-  .about__text{ line-height: 1.55; }
-}
-
-/* Reduced motion — убираем крупное движение, оставляем деликатность */
-@media (prefers-reduced-motion: reduce){
-  .about::before{ animation: none !important; }
-  .about__card{ animation: none !important; }
-}
-
-
-
-/* БОЛЬШЕ ЗАЗОРЫ ТОЛЬКО НА МЕЛКИХ ЭКРАНАХ */
-@media (max-width: 900px){
-  .about__card{
-    width: 88vw;   /* было 92vw → станет ~6vw зазора с каждой стороны */
+    border-radius: 12px;
   }
 }
 
-@media (max-width: 560px){
-  .about__card{
-    width: 86vw;   /* телефоны → ~7vw зазора с каждой стороны (≈30px на ширине 430px) */
+/* ===== Reduce motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  .about::before,
+  .about__title,
+  .aboutcard,
+  .aboutcard__text {
+    animation: none !important;
   }
 }
