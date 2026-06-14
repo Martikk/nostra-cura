@@ -6,6 +6,10 @@ type Item = {
   title: string;
   icon?: React.ReactNode;
   text: string;
+  yellowTop?: string;
+  yellowBottom?: string;
+  buttonLabel?: string;
+  buttonHref?: string;
 };
 
 const FALLBACK: Item = {
@@ -16,7 +20,7 @@ const FALLBACK: Item = {
 
 const items: Item[] = [
   {
-    title: "Consulting",
+    title: "Individuals",
     icon: (
       <img
         className="svc__icon-img"
@@ -28,11 +32,16 @@ const items: Item[] = [
         decoding="async"
       />
     ),
-    text:
-      "With our years of experience in construction management we understand the struggles that not only companies are facing but also the struggles that the people are encountering daily. We have  been there. With this knowledge and experience we can offer strategies that will ultimately allow  the company to perform at its peak. Our goal is to create an environment where everyone at the organization is supported to be the best version of themselves. People are an organization’s most important asset. When the people are encouraged to grow, the company grows with them.",
-  },
+
+  yellowTop: "Pressure affects everyone differently.",
+
+  text:
+    "Sometimes it shows up in the decisions we make. Sometimes it shows up in what we carry, how we react, or the direction we find ourselves moving without fully understanding why. Our work with individuals is focused on creating space to slow down, reflect, and better understand what matters most. The goal is not to provide answers or tell people what to do. The goal is to create conditions where answers can emerge. When things slow down, it becomes easier to see what matters and move forward with confidence.",
+  buttonLabel: "Contact Us",
+  buttonHref: "/Contact-Us",
+},
   {
-    title: "Coaching",
+    title: "Teams",
     icon: (
       <img
         className="svc__icon-img"
@@ -44,25 +53,35 @@ const items: Item[] = [
         decoding="async"
       />
     ),
-    text:
-      "Our focus is the individual person. Our main goal is to help everyone find meaning, bring out their best and lead fulfilling lives. Our experience ranges from just getting started in the industry, working in the field and progressing all the way to operations management. This allows us to relate to anyone at any level. We understand the challenges that people are facing on any given day, at any stage, and in any area of the construction industry. Using our experience and applying our techniques we can work with anyone to help them make changes aimed at improving their overall well-being. Once you start personal growth it never stops. Whatever point you feel that you are at, we can help.",
-  },
-  {
-    title: "Workshops",
-    icon: (
-      <img
-        className="svc__icon-img"
-        src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1764181821/output-onlinepngtools_rwbevd.png"
-        alt=""
-        width={64}
-        height={64}
-        loading="lazy"
-        decoding="async"
-      />
-    ),
-    text:
-      "Our workshops are designed for both individuals and groups, using the same practical, people-focused approach we bring to consulting and coaching. Built on real experience in the construction industry, they address the daily pressures, communication challenges, and demands faced by workers and leaders alike. Each session provides tools that can be applied immediately—on site, in the office, and in everyday life. We create an environment where people feel comfortable engaging, asking questions, and building confidence. As individuals grow, teams strengthen. No matter where you are starting, our workshops provide clear, practical guidance to move forward."
-  },
+
+  yellowTop: "Every team experiences pressure.",
+
+  text:
+    "Deadlines, responsibilities, communication challenges, changing priorities, and constant demands can make it difficult to see what is really happening beneath the surface. Over time, teams can find themselves reacting to pressure rather than understanding what is driving it. Our approach is simple. We help teams slow things down, examine what matters, and better understand the relationships, responsibilities, and decisions that shape their work. Through conversation, observation, and practical tools, we create conditions where answers can emerge. When things slow down, it becomes easier to align around what matters and move forward together with confidence.",
+  buttonLabel: "Contact Us",
+  buttonHref: "/Contact-Us",
+},
+{
+  title: "Workbooks",
+  icon: (
+    <img
+      className="svc__icon-img"
+      src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1764181821/output-onlinepngtools_rwbevd.png"
+      alt=""
+      width={64}
+      height={64}
+      loading="lazy"
+      decoding="async"
+    />
+  ),
+
+  yellowTop: "Self-guided reflection and practical tools.",
+
+  text:
+    "Our workbooks are designed to help individuals and teams slow down, organize their thinking, and focus on what matters most. Each workbook provides simple frameworks, exercises, and questions that encourage reflection and support better decision-making. Built from real experience in construction, they are designed to be practical, approachable, and easy to apply in everyday life and work. Whether used independently or alongside our services, they create space to explore ideas, responsibilities, and opportunities for improvement. Sometimes the most important answers are already there—they simply need space to emerge.",
+  buttonLabel: "VIEW WORKBOOKS",
+  buttonHref: "/workbooks",
+},
 ];
 
 export default function Services() {
@@ -157,17 +176,36 @@ export default function Services() {
             onTouchMove={(e) => onMove(e.touches[0].clientX)}
             onTouchEnd={onUp}
           >
-            <div className="svc__head">
-              <h3 className="svc__title">
-                {current.title}
-                {current.icon && (
-                  <span className="svc__iconwrap">{current.icon}</span>
-                )}
-              </h3>
-            </div>
-            <p className="svc__text">
-              <em>{current.text}</em>
-            </p>
+<div className="svc__head">
+  <h3 className="svc__title">
+    {current.title}
+    {current.icon && (
+      <span className="svc__iconwrap">{current.icon}</span>
+    )}
+  </h3>
+</div>
+
+{current.yellowTop && (
+  <p className="svc__yellow svc__yellow--top">
+    {current.yellowTop}
+  </p>
+)}
+
+<p className="svc__text">
+  <em>{current.text}</em>
+</p>
+
+{current.yellowBottom && (
+  <p className="svc__yellow svc__yellow--bottom">
+    {current.yellowBottom}
+  </p>
+)}
+
+{current.buttonLabel && current.buttonHref && (
+  <a className="svc__button" href={current.buttonHref}>
+    {current.buttonLabel} <span>›</span>
+  </a>
+)}
           </div>
 
           <button
