@@ -10,7 +10,7 @@ function Chevron({ back = false }: { back?: boolean }) {
  return <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d={back ? "m15 5-7 7 7 7" : "m9 5 7 7-7 7"} /></svg>;
 }
 export function CardAction({ action }: { action: NonNullable<CarouselSlide["action"]> }) {
- return <a className="nc-action" href={action.href}>{action.label}<Chevron /></a>;
+ return <a className="nc-action" href={action.href} aria-label={action.label === "Read More" ? "Read More about Liam Dillon" : undefined}>{action.label}</a>;
 }
 export default function SectionCarousel({ id, title, background, slides }: {
  id: string; title: string; background: string; slides: CarouselSlide[];

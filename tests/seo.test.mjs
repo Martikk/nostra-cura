@@ -54,5 +54,5 @@ test('home prioritizes responsive hero images and defers section backgrounds', (
  assert.ok(home.includes('fetchpriority="high"'));
  assert.ok(home.includes('class="nc-section__background"'));
  assert.ok(home.includes('loading="lazy"'));
- assert.ok(!home.includes('Read More'));
+ assert.ok(home.includes('aria-label="Read More about Liam Dillon"'));
 });

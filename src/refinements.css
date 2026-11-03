@@ -113,3 +113,28 @@ body button.navbtn,body button.navbtn:hover,body button.team__btn,body button.te
   .liam .pill-grid li { min-width: 0; }
   .liam .pill { display: flex; align-items: center; justify-content: center; min-height: 44px; height: 100%; padding: 10px 12px; font-size: 16px; line-height: 1.4; text-align: center; transform: none; }
 }
+
+/* Shared white action pills, matching the carousel's directional controls. */
+.nc-action,.nc-action:visited,.liam .actions .btn,.contactcard__form .btn--submit {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: max-content; max-width: 100%; min-width: 144px; min-height: 48px;
+  padding: 12px 24px; border: 1px solid rgba(255,255,255,.8); border-radius: 999px;
+  background: #fff; color: #13181d; box-shadow: none;
+  font: 700 16px/1.35 Georgia,serif; letter-spacing: 0; text-decoration: none;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+@media (hover:hover) and (pointer:fine) {
+  .nc-action:hover,.liam .actions .btn:hover,.contactcard__form .btn--submit:hover { background: #f5e9c7; color: #13181d; box-shadow: none; transform: translateY(-1px); }
+}
+#team .nc-card__portrait { width: 220px; height: 220px; max-width: 100%; justify-self: center; }
+#team .nc-card__portrait img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; object-position: center 24%; }
+.contactcard { width: min(860px,100%); border-radius: 16px; padding: clamp(24px,3vw,40px); }
+.contactcard__info h2 { margin: 0 0 24px; font: 700 clamp(30px,3vw,42px)/1.15 Georgia,serif; max-width: 12ch; }
+.contactcard__info h2::after { content: ''; display: block; width: 36px; height: 2px; margin-top: 20px; background: #e6ba43; }
+.contactcard__info h3 { margin-top: 32px; font-size: 17px; color: #e6ba43; }
+.contactcard__info p { font-size: 16px; line-height: 1.65; }
+.contactcard__form label { color: #fff; }
+.contactcard__form input,.contactcard__form textarea { border-radius: 10px; padding: 12px 14px; }
+.contactcard__form .btn--submit { margin-top: 8px; }
+@media (min-width:701px) { .contactcard__form { padding-left: 28px; border-left: 1px solid rgba(255,255,255,.12); } }
+@media (max-width:600px) { #team .nc-card__portrait { width: 180px; height: 180px; } }

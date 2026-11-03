@@ -57,10 +57,10 @@ export default function Contact() {
 
       <div className="contactcard">
         <div className="contactcard__info">
-          <h3>Get in Touch</h3>
-          <p>Let’s talk. Submit your details in this form and we will get back to you ASAP.</p>
+          <h2>Start a Conversation</h2>
+          <p>Whether you have a question, an idea, or would like to learn more about our services, we would be happy to hear from you.</p>
 
-          <h3>Contact</h3>
+          <h3>Email</h3>
           <a href="mailto:info@nostracura.ca" className="contactcard__email">
             info@nostracura.ca
           </a>
@@ -88,7 +88,7 @@ export default function Contact() {
             Name
             <input
               {...register("name", { required: "Name is required" })}
-              placeholder="Name"
+              placeholder="Your name"
             />
             {errors.name && <span className="error">{errors.name.message}</span>}
           </label>
@@ -103,7 +103,7 @@ export default function Contact() {
                   message: "Invalid phone format",
                 },
               })}
-              placeholder="+1 (000) 000-0000"
+              placeholder="Your phone number"
             />
             {errors.phone && <span className="error">{errors.phone.message}</span>}
           </label>
@@ -127,10 +127,10 @@ export default function Contact() {
           </label>
 
           <label>
-            How can we help?
+            What would you like to discuss?
             <textarea
               {...register("message", { required: "Message is required" })}
-              placeholder="Write your text here"
+              placeholder="Tell us about your situation, question, or how we can help."
               rows={4}
             />
             {errors.message && <span className="error">{errors.message.message}</span>}
@@ -140,7 +140,7 @@ export default function Contact() {
 
 
           <button type="submit" className="btn btn--submit" disabled={isSubmitting}>
-            {isSubmitting ? "Sending..." : "Submit"}
+            {isSubmitting ? "Sending..." : "Send Message"}
           </button>
 
           {sent && (
