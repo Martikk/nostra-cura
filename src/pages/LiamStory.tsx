@@ -1,3 +1,4 @@
+import { FiMail, FiUsers, FiSend, FiLock } from "react-icons/fi";
 import Typewriter from "../components/Typewriter";
 import { useEffect, useRef, useState } from "react";
 import Footer from "../components/layout/Footer";
@@ -295,9 +296,14 @@ export default function LiamStory() {
 
       {/* ===== CONTACT ===== */}
       <section className="liam__contact" id="contact-liam">
-        <div className="container">
-          <h3>Contact Liam</h3>
-          <p className="contact__sub">Have a question, an idea, or something you'd like to discuss? I'd be happy to hear from you.</p>
+        <div className="container contactcard">
+          <div className="contactcard__info">
+            <h2>Contact Liam</h2>
+            <p>Have a question, an idea, or something you'd like to discuss? I'd be happy to hear from you.</p>
+            <div className="contactcard__email-row"><span className="contactcard__icon"><FiMail aria-hidden="true" /></span><div><h3>Email</h3><a className="contactcard__email" href="mailto:liam@nostracura.ca">liam@nostracura.ca</a></div></div>
+            <div className="contactcard__welcome"><FiUsers aria-hidden="true" /><div><p>We value every conversation and will respond as soon as possible.</p><strong>Thank you for reaching out.</strong></div></div>
+          </div>
+          <div className="liam-contact__fields">
 
           {sent ? (
             <div className="contact__success" role="status">
@@ -310,7 +316,7 @@ export default function LiamStory() {
   method="POST"
   data-netlify="true"
   data-netlify-honeypot="bot-field"
-  className="contact__form"
+  className="contact__form contactcard__form"
   onSubmit={async (e) => {
     e.preventDefault();
     if (sending) return;
@@ -382,7 +388,7 @@ export default function LiamStory() {
   <div className="field">
     <label htmlFor="message">What would you like to discuss?*</label>
     <div className="input-wrap textarea">
-      <textarea id="message" name="message" required placeholder="Tell me a little about what you’re looking for..." rows={6} />
+      <textarea id="message" name="message" required placeholder="Tell me a little about what you’re looking for..." rows={4} />
     </div>
   </div>
 
@@ -390,12 +396,14 @@ export default function LiamStory() {
   <input type="hidden" name="form-name" value="contact-liam" />
 
   <div className="actions">
-    <button type="submit" disabled={sending} className="btn btn--primary">{sending ? "Sending..." : "Send Message"}</button>
+    <button type="submit" disabled={sending} className="btn btn--primary btn--submit"><FiSend aria-hidden="true" />{sending ? "Sending..." : "Send Message"}</button>
     <a className="btn btn--ghost" href="/#services">Explore Our Services</a>
   </div>
+  <p className="contactcard__privacy"><FiLock aria-hidden="true" />Your information is safe with us. We respect your privacy.</p>
 </form>
 
           )}
+          </div>
         </div>
       </section>
 <Toaster position="top-right" />

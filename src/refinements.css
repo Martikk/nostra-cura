@@ -140,35 +140,51 @@ body button.navbtn,body button.navbtn:hover,body button.team__btn,body button.te
 @media (max-width:600px) { #team .nc-card__portrait { width: 180px; height: 180px; } }
 
 /* Contact reference: warm gold action and a calm two-column glass panel. */
-#contact .contactcard { width: min(1040px,100%); grid-template-columns: .8fr 1.2fr; gap: 40px; padding: 40px 48px; border-radius: 24px; background: rgba(13,21,27,.83); border: 1px solid rgba(255,255,255,.28); box-shadow: none; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); animation: none; }
-#contact .contactcard__info { display: flex; flex-direction: column; align-items: stretch; }
-#contact .contactcard__info h2 { font-size: clamp(32px,3.5vw,50px); line-height: 1.12; margin: 28px 0 28px; }
-#contact .contactcard__info h2::after { width: 54px; margin-top: 26px; background: #e3b63d; }
-#contact .contactcard__info > p { margin: 0; font-size: 17px; line-height: 1.7; }
-#contact .contactcard__email-row { display: flex; gap: 20px; align-items: center; margin-top: 36px; padding-top: 36px; border-top: 1px solid rgba(255,255,255,.2); }
-#contact .contactcard__icon { width: 56px; height: 56px; flex: 0 0 56px; display: grid; place-items: center; border: 1px solid #e3b63d; border-radius: 50%; font-size: 24px; color: #fff; }
-#contact .contactcard__email-row h3 { margin: 0 0 6px; font-size: 17px; color: #e3b63d; }
-#contact .contactcard__email { color: #fff; font-size: 16px; }
-#contact .contactcard__welcome { display: flex; gap: 20px; align-items: flex-start; margin-top: auto; padding-top: 48px; }
-#contact .contactcard__welcome > svg { flex: 0 0 40px; width: 40px; height: 40px; color: #e3b63d; }
-#contact .contactcard__welcome p { font-size: 16px; line-height: 1.65; margin: 0 0 16px; }
-#contact .contactcard__welcome strong { font-size: 16px; color: #e3b63d; }
-#contact .contactcard__form { gap: 22px; padding-left: 40px; border-left: 1px solid rgba(255,255,255,.13); }
-#contact .contactcard__form label { font: 700 17px/1.35 Georgia,serif; }
-#contact .contactcard__form input,#contact .contactcard__form textarea { margin-top: 9px; padding: 14px 18px; font: 400 17px/1.5 Georgia,serif; border-radius: 12px; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.09); color: #fff; }
-#contact .contactcard__form input { min-height: 52px; }
-#contact .contactcard__form textarea { min-height: 118px; resize: vertical; }
-#contact .contactcard__form input::placeholder,#contact .contactcard__form textarea::placeholder { color: #d0d1d2; }
-#contact .contactcard__form input:focus,#contact .contactcard__form textarea:focus { border-color: #e3b63d; outline: 2px solid #e3b63d; outline-offset: 2px; box-shadow: none; }
-#contact .contactcard__form .btn--submit { width: 100%; min-height: 52px; gap: 12px; background: #d5aa32; color: #101820; border-color: #d5aa32; font-size: 19px; margin: 6px 0 0; }
-#contact .contactcard__form .btn--submit:hover { background: #e3bb4d; transform: none; }
-#contact .contactcard__privacy { display: flex; align-items: center; justify-content: center; gap: 9px; color: #d0d1d2; font: 400 13px/1.5 Georgia,serif; margin: -4px 0 0; }
-#contact .contactcard__privacy svg { flex-shrink: 0; width: 15px; height: 15px; }
+:is(#contact,.liam__contact) .contactcard { width: min(1040px,100%); grid-template-columns: .8fr 1.2fr; gap: 40px; padding: 40px 48px; border-radius: 24px; background: rgba(13,21,27,.83); border: 1px solid rgba(255,255,255,.28); box-shadow: none; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); animation: none; }
+:is(#contact,.liam__contact) .contactcard__info { display: flex; flex-direction: column; align-items: stretch; }
+:is(#contact,.liam__contact) .contactcard__info h2 { font-size: clamp(32px,3.5vw,50px); line-height: 1.12; margin: 28px 0 28px; }
+:is(#contact,.liam__contact) .contactcard__info h2::after { width: 54px; margin-top: 26px; background: #e3b63d; }
+:is(#contact,.liam__contact) .contactcard__info > p { margin: 0; font-size: 17px; line-height: 1.7; }
+:is(#contact,.liam__contact) .contactcard__email-row { display: flex; gap: 20px; align-items: center; margin-top: 36px; padding-top: 36px; border-top: 1px solid rgba(255,255,255,.2); }
+:is(#contact,.liam__contact) .contactcard__icon { width: 56px; height: 56px; flex: 0 0 56px; display: grid; place-items: center; border: 1px solid #e3b63d; border-radius: 50%; font-size: 24px; color: #fff; }
+:is(#contact,.liam__contact) .contactcard__email-row h3 { margin: 0 0 6px; font-size: 17px; color: #e3b63d; }
+:is(#contact,.liam__contact) .contactcard__email { color: #fff; font-size: 16px; }
+:is(#contact,.liam__contact) .contactcard__welcome { display: flex; gap: 20px; align-items: flex-start; margin-top: auto; padding-top: 48px; }
+:is(#contact,.liam__contact) .contactcard__welcome > svg { flex: 0 0 40px; width: 40px; height: 40px; color: #e3b63d; }
+:is(#contact,.liam__contact) .contactcard__welcome p { font-size: 16px; line-height: 1.65; margin: 0 0 16px; }
+:is(#contact,.liam__contact) .contactcard__welcome strong { font-size: 16px; color: #e3b63d; }
+:is(#contact,.liam__contact) .contactcard__form { gap: 22px; padding-left: 40px; border-left: 1px solid rgba(255,255,255,.13); }
+:is(#contact,.liam__contact) .contactcard__form label { font: 700 17px/1.35 Georgia,serif; }
+:is(#contact,.liam__contact) .contactcard__form input,:is(#contact,.liam__contact) .contactcard__form textarea { margin-top: 9px; padding: 14px 18px; font: 400 17px/1.5 Georgia,serif; border-radius: 12px; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.09); color: #fff; }
+:is(#contact,.liam__contact) .contactcard__form input { min-height: 52px; }
+:is(#contact,.liam__contact) .contactcard__form textarea { min-height: 118px; resize: vertical; }
+:is(#contact,.liam__contact) .contactcard__form input::placeholder,:is(#contact,.liam__contact) .contactcard__form textarea::placeholder { color: #d0d1d2; }
+:is(#contact,.liam__contact) .contactcard__form input:focus,:is(#contact,.liam__contact) .contactcard__form textarea:focus { border-color: #e3b63d; outline: 2px solid #e3b63d; outline-offset: 2px; box-shadow: none; }
+:is(#contact,.liam__contact) .contactcard__form .btn--submit { width: 100%; min-height: 52px; gap: 12px; background: #d5aa32; color: #101820; border-color: #d5aa32; font-size: 19px; margin: 6px 0 0; }
+:is(#contact,.liam__contact) .contactcard__form .btn--submit:hover { background: #e3bb4d; transform: none; }
+:is(#contact,.liam__contact) .contactcard__privacy { display: flex; align-items: center; justify-content: center; gap: 9px; color: #d0d1d2; font: 400 13px/1.5 Georgia,serif; margin: -4px 0 0; }
+:is(#contact,.liam__contact) .contactcard__privacy svg { flex-shrink: 0; width: 15px; height: 15px; }
 @media (max-width:700px) {
- #contact .contactcard { grid-template-columns: 1fr; gap: 28px; padding: 28px 24px; border-radius: 20px; }
- #contact .contactcard__info h2 { margin-top: 0; max-width: 12ch; }
- #contact .contactcard__email-row { margin-top: 24px; padding-top: 24px; }
- #contact .contactcard__welcome { padding-top: 24px; }
- #contact .contactcard__form { padding: 28px 0 0; border-left: 0; border-top: 1px solid rgba(255,255,255,.16); }
- #contact .contactcard__privacy { align-items: flex-start; justify-content: flex-start; }
+ :is(#contact,.liam__contact) .contactcard { grid-template-columns: 1fr; gap: 28px; padding: 28px 24px; border-radius: 20px; }
+ :is(#contact,.liam__contact) .contactcard__info h2 { margin-top: 0; max-width: 12ch; }
+ :is(#contact,.liam__contact) .contactcard__email-row { margin-top: 24px; padding-top: 24px; }
+ :is(#contact,.liam__contact) .contactcard__welcome { padding-top: 24px; }
+ :is(#contact,.liam__contact) .contactcard__form { padding: 28px 0 0; border-left: 0; border-top: 1px solid rgba(255,255,255,.16); }
+ :is(#contact,.liam__contact) .contactcard__privacy { align-items: flex-start; justify-content: flex-start; }
 }
+
+/* Biography uses the same contact surface and controls as the home page. */
+.liam .liam__contact { padding: calc(var(--nav-h) + 32px) 20px 40px; color: #fff; }
+.liam .liam__contact .contactcard { margin-inline: auto; max-width: 1040px; color: #fff; }
+.liam .liam__contact .contactcard__info p { color: #ebebeb; }
+.liam .liam__contact .liam-contact__fields { min-width: 0; }
+.liam .liam__contact .contact__form { background: transparent; border: 0; border-left: 1px solid rgba(255,255,255,.13); border-radius: 0; padding: 0 0 0 40px; box-shadow: none; backdrop-filter: none; }
+.liam .liam__contact .field { gap: 0; }
+.liam .liam__contact .field.two { grid-template-columns: 1fr; gap: 22px; }
+.liam .liam__contact .input-wrap { display: block; height: auto; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
+.liam .liam__contact .field label { color: #fff; font-weight: 700; }
+.liam .liam__contact .field input,.liam .liam__contact .field textarea { height: auto; color: #fff; }
+.liam .liam__contact .actions { display: flex; flex-direction: column; align-items: stretch; margin-top: 0; }
+.liam .liam__contact .actions .btn--ghost { align-self: center; background: transparent; border: 0; color: #e3b63d; min-height: 44px; padding: 10px 12px; font-size: 15px; }
+.liam .liam__contact .contact__success { padding: 24px; }
+@media(max-width:700px) { .liam .liam__contact .contact__form { border-left: 0; border-top: 1px solid rgba(255,255,255,.16); padding: 28px 0 0; } }
