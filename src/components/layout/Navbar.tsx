@@ -59,6 +59,13 @@ export default function Navbar() {
     return () => root.classList.remove("no-scroll");
   }, [open]);
 
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 901px)");
+    const closeOnDesktop = () => { if (desktop.matches) setOpen(false); };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
+
   // Закрытие по ESC и возврат фокуса на кнопку
   useEffect(() => {
     if (!open) return;
@@ -67,7 +74,7 @@ export default function Navbar() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
       if (e.key === "Tab") {
-        const first = links[0], last = links[links.length - 1];
+        const first = btnRef.current, last = links[links.length - 1];
         if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
       }
@@ -77,7 +84,7 @@ export default function Navbar() {
   }, [open]);
 
   useEffect(() => {
-    if (!open && wasOpen.current) btnRef.current?.focus();
+    if (!open && wasOpen.current) btnRef.current?.focus({ preventScroll: true });
     wasOpen.current = open;
   }, [open]);
 
@@ -97,7 +104,8 @@ const scrollToId = scrollToSection;
   };
 
   return (
-    <header className="nav">
+    <>
+    <header className={"nav" + (open ? " nav--menu-open" : "")}>
       <div className="nav__inner">
         {/* Бренд → домой */}
         <Link
@@ -138,7 +146,8 @@ const scrollToId = scrollToSection;
         </button>
       </div>
 
-      {/* Подложка */}
+    </header>
+      {/* Overlays are siblings: header backdrop-filter must not contain fixed panels. */}
       <div
         className={"nav__backdrop" + (open ? " is-open" : "")}
         onClick={() => setOpen(false)}
@@ -149,7 +158,8 @@ const scrollToId = scrollToSection;
       <div
         id="mobile-sheet"
         className={"nav__sheet" + (open ? " is-open" : "")}
-        hidden={!open}
+        inert={!open}
+        aria-hidden={!open}
         role="dialog"
         aria-modal="true"
         aria-label="Mobile navigation"
@@ -168,6 +178,6 @@ const scrollToId = scrollToSection;
           ))}
         </nav>
       </div>
-    </header>
+    </>
   );
 }
