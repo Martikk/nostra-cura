@@ -273,9 +273,9 @@ textarea:not(:placeholder-shown) {
   .contactcard{
     box-sizing: border-box;
     width: 90%;  /* пример: твой кейс 300 контент + 2*(20 паддинг + 1 бордер) = 342 */
-    height: 680px;  /* 450 контент + 2*(15 паддинг + 1 бордер) = 482 */
+    height: auto;  /* 450 контент + 2*(15 паддинг + 1 бордер) = 482 */
     margin-inline: auto;
-    overflow: auto; /* если внутри не влезет — появится аккуратный скролл */
+    overflow: visible;
     padding: 15px 20px; /* чтобы совпало с расчётом выше */
     border-width: 1px;
   }

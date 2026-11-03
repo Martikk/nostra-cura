@@ -90,7 +90,7 @@ export default function Contact() {
             Name
             <input
               {...register("name", { required: "Name is required" })}
-              placeholder="Your name"
+              autoComplete="name" enterKeyHint="next" placeholder="Your name"
             />
             {errors.name && <span className="error">{errors.name.message}</span>}
           </label>
@@ -105,7 +105,7 @@ export default function Contact() {
                   message: "Invalid phone format",
                 },
               })}
-              placeholder="Your phone number"
+              type="tel" inputMode="tel" autoComplete="tel" enterKeyHint="next" placeholder="Your phone number"
             />
             {errors.phone && <span className="error">{errors.phone.message}</span>}
           </label>

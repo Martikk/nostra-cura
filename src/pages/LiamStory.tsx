@@ -366,7 +366,7 @@ export default function LiamStory() {
   <div className="field">
     <label htmlFor="name">Name*</label>
     <div className="input-wrap">
-      <input id="name" name="name" type="text" required placeholder="Your name" />
+      <input id="name" name="name" type="text" autoComplete="name" enterKeyHint="next" required placeholder="Your name" />
     </div>
   </div>
 
@@ -374,13 +374,13 @@ export default function LiamStory() {
     <div className="field">
       <label htmlFor="email">Email*</label>
       <div className="input-wrap">
-        <input id="email" name="email" type="email" required placeholder="Your email address" />
+        <input id="email" name="email" type="email" inputMode="email" autoComplete="email" enterKeyHint="next" required placeholder="Your email address" />
       </div>
     </div>
     <div className="field">
       <label htmlFor="phone">Phone</label>
       <div className="input-wrap">
-        <input id="phone" name="phone" type="tel" placeholder="Your phone number" />
+        <input id="phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" enterKeyHint="next" placeholder="Your phone number" />
       </div>
     </div>
   </div>

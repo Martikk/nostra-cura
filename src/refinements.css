@@ -188,3 +188,23 @@ body button.navbtn,body button.navbtn:hover,body button.team__btn,body button.te
 .liam .liam__contact .actions .btn--ghost { align-self: center; background: transparent; border: 0; color: #e3b63d; min-height: 44px; padding: 10px 12px; font-size: 15px; }
 .liam .liam__contact .contact__success { padding: 24px; }
 @media(max-width:700px) { .liam .liam__contact .contact__form { border-left: 0; border-top: 1px solid rgba(255,255,255,.16); padding: 28px 0 0; } }
+
+/* Forms grow with their fields: one page scroll, never a clipped inner scroller. */
+:is(#contact,.liam__contact) .contactcard { height: auto; max-height: none; overflow: visible; }
+:is(#contact,.liam__contact) input,:is(#contact,.liam__contact) textarea { scroll-margin-block: calc(var(--nav-h) + 24px) 100px; }
+@media(max-width:700px) {
+ .liam { position: relative; }
+ .liam .theme-toggle { position: absolute; top: calc(var(--nav-h) + 12px); }
+ :is(#contact,.liam__contact) .contactcard { padding: 24px 20px; gap: 24px; }
+ :is(#contact,.liam__contact) .contactcard__info h2 { margin: 0 0 18px; font-size: 30px; }
+ :is(#contact,.liam__contact) .contactcard__info h2::after { margin-top: 16px; width: 40px; }
+ :is(#contact,.liam__contact) .contactcard__info > p { font-size: 16px; line-height: 1.55; }
+ :is(#contact,.liam__contact) .contactcard__email-row { margin-top: 20px; padding-top: 20px; gap: 12px; }
+ :is(#contact,.liam__contact) .contactcard__icon { width: 40px; height: 40px; flex-basis: 40px; font-size: 20px; }
+ :is(#contact,.liam__contact) .contactcard__welcome { display: none; }
+ :is(#contact,.liam__contact) .contactcard__form { gap: 20px; }
+ :is(#contact,.liam__contact) .contactcard__form label { font-size: 16px; }
+ :is(#contact,.liam__contact) .contactcard__form input { min-height: 52px; font-size: 16px; }
+ :is(#contact,.liam__contact) .contactcard__form textarea { min-height: 140px; font-size: 16px; }
+ :is(#contact,.liam__contact) .contactcard__form .btn--submit { min-height: 52px; font-size: 17px; }
+}
