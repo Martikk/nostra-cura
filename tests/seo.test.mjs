@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 const home = await readFile(new URL('../dist/index.html', import.meta.url), 'utf8');
 const liam = await readFile(new URL('../dist/liam/index.html', import.meta.url), 'utf8');
 const notFound = await readFile(new URL('../dist/404.html', import.meta.url), 'utf8');
-for (const [name, html, path] of [['home',home,'/'],['liam',liam,'/liam']]) {
+for (const [name, html, path] of [['home',home,'/'],['liam',liam,'/liam/']]) {
   test(`${name}: crawlable HTML, unique heading and canonical`, () => {
     assert.equal((html.match(/<h1[ >]/g) || []).length, 1);
     assert.ok(html.includes(`rel="canonical" href="https://nostracura.ca${path}"`));
@@ -22,7 +22,7 @@ test('routes have distinct titles and descriptions before JavaScript runs', () =
 test('404 is excluded from indexing and sitemap has exactly the live routes', async () => {
   assert.ok(notFound.includes('content="noindex,follow"'));
   const sitemap = await readFile(new URL('../dist/sitemap.xml', import.meta.url),'utf8');
-  assert.deepEqual([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>m[1]).sort(),['https://nostracura.ca/','https://nostracura.ca/liam']);
+  assert.deepEqual([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>m[1]).sort(),['https://nostracura.ca/','https://nostracura.ca/liam/']);
 });
 test('service calls to action do not link to missing pages', () => {
   assert.ok(home.includes('href="/#contact"'));
@@ -54,5 +54,5 @@ test('home prioritizes responsive hero images and defers section backgrounds', (
  assert.ok(home.includes('fetchpriority="high"'));
  assert.ok(home.includes('class="nc-section__background"'));
  assert.ok(home.includes('loading="lazy"'));
- assert.ok(home.includes('aria-label="Read More about Liam Dillon"'));
+ assert.ok(home.includes('Read Liam’s Story'));
 });

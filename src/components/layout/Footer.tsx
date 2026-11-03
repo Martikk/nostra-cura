@@ -43,7 +43,7 @@ export default function Footer() {
       <div className="footer__inner">
         {/* БРЕНД */}
         <a className="brand brand--footer" href="/" aria-label="Nostra Cura home">
-<img className="brand__nccg" src="/images/nccg-logo-header.webp" alt="NCCG — Nostra Cura Consulting Group" width={2172} height={724} />
+<img className="brand__nccg" src="/images/nccg-logo-header-440.webp" alt="NCCG — Nostra Cura Consulting Group" width={440} height={147} />
         </a>
 
         {/* СОЦСЕТИ */}

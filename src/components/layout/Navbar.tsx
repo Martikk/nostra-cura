@@ -114,7 +114,7 @@ const scrollToId = scrollToSection;
           aria-label="Nostra Cura — Home"
           onClick={(e) => goTo("home", e)}
         >
-<img className="brand__nccg" src="/images/nccg-logo-header.webp" alt="NCCG — Nostra Cura Consulting Group" width={2172} height={724} />
+<img className="brand__nccg" src="/images/nccg-logo-header-440.webp" alt="NCCG — Nostra Cura Consulting Group" width={440} height={147} />
         </Link>
 
         {/* Десктоп-меню */}

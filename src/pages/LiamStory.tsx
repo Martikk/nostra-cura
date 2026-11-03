@@ -207,13 +207,13 @@ export default function LiamStory() {
   width={1000}
   height={1500}
   className="ph-img"
-  src="https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,dpr_auto,w_1000/liam/68ee59cb0deae2deb8dba77b_2_Liam_bwumbk.jpg"
+  src="https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_640/liam/68ee59cb0deae2deb8dba77b_2_Liam_bwumbk.jpg"
   srcSet="
-    https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,dpr_auto,w_640/liam/68ee59cb0deae2deb8dba77b_2_Liam_bwumbk.jpg 640w,
-    https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,dpr_auto,w_1000/liam/68ee59cb0deae2deb8dba77b_2_Liam_bwumbk.jpg 1000w,
-    https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,dpr_auto,w_1400/liam/68ee59cb0deae2deb8dba77b_2_Liam_bwumbk.jpg 1400w
+    https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_400/liam/68ee59cb0deae2deb8dba77b_2_Liam_bwumbk.jpg 400w,
+    https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_640/liam/68ee59cb0deae2deb8dba77b_2_Liam_bwumbk.jpg 640w,
+    https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_900/liam/68ee59cb0deae2deb8dba77b_2_Liam_bwumbk.jpg 900w
   "
-  sizes="(max-width:980px) 92vw, 52vw"
+  sizes="(max-width:700px) calc(100vw - 56px), 360px"
   alt=""
   loading="lazy"
   decoding="async"
@@ -230,13 +230,13 @@ export default function LiamStory() {
     width={748}
     height={1123}
   className="ph-img"
-    src="https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_1000/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg"
+    src="https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_640/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg"
     srcSet="
+      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_400/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg 400w,
       https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_640/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg 640w,
-      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_1000/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg 1000w,
-      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_1400/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg 1400w
+      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_900/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg 900w
     "
-    sizes="(max-width:980px) 92vw, 52vw"
+    sizes="(max-width:700px) calc(100vw - 56px), 360px"
     alt=""
     loading="lazy"
     decoding="async"
@@ -253,13 +253,13 @@ export default function LiamStory() {
     width={748}
     height={965}
   className="ph-img"
-    src="https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_1000/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg"
+    src="https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_640/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg"
     srcSet="
+      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_400/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg 400w,
       https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_640/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg 640w,
-      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_1000/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg 1000w,
-      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_1400/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg 1400w
+      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_900/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg 900w
     "
-    sizes="(max-width:980px) 92vw, 52vw"
+    sizes="(max-width:700px) calc(100vw - 56px), 360px"
     alt=""
     loading="lazy"
     decoding="async"
