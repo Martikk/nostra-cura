@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import Typewriter from "../components/Typewriter";
+import { useEffect, useRef, useState } from "react";
 import Footer from "../components/layout/Footer";
 import "./LiamStory.css";
 import { Toaster, toast } from 'react-hot-toast';
@@ -48,6 +49,13 @@ function useMagnetic() {
 }
 
 export default function LiamStory() {
+  const rootRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const marquee=rootRef.current?.querySelector(".marquee");
+    if (!marquee) return;
+    const observer=new IntersectionObserver(([entry])=>marquee.classList.toggle("is-visible",entry.isIntersecting));
+    observer.observe(marquee); return ()=>observer.disconnect();
+  }, []);
 
 
   type Theme = "light" | "dark";
@@ -71,6 +79,7 @@ export default function LiamStory() {
   return (
     <main
       id="main-content"
+      ref={rootRef}
       className={`liam ${theme === "light" ? "liam--light" : "liam--dark"}`}
     >
       {/* Theme toggle */}
@@ -117,7 +126,7 @@ export default function LiamStory() {
               Meet <span className="accent">Liam Dillon</span>
             </h1>
 
-            <p className="welcome__lead">I've spent over 15 years working in the construction industry, starting in the trades and eventually moving into project management and leadership.</p>
+            <p className="welcome__lead"><Typewriter text="I've spent over 15 years working in the construction industry, starting in the trades and eventually moving into project management and leadership." /></p>
             <p className="welcome__lead">Along the way, I've experienced professional success, personal struggles, setbacks, and new beginnings. Those experiences have taught me that building a successful career or business means very little if we lose sight of the people behind it.</p>
             <p className="welcome__lead">That's why I founded Nostra Cura Consulting Group Inc. — to bring together my professional experience, personal lessons, and belief that we can build better businesses while building better lives.</p>
           </div>

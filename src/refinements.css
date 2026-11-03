@@ -93,3 +93,8 @@ body button.navbtn,body button.navbtn:hover,body button.team__btn,body button.te
 .liam--light { --action-gold: #7c5b00; }
 .liam .actions .btn { display: inline-flex; justify-content: center; align-items: center; min-height: 48px; min-width: 160px; padding: 11px 20px; border: 1px solid var(--action-gold); border-radius: 10px; background: transparent; color: var(--action-gold); font: 700 16px/1.35 Georgia,serif; text-decoration: none; opacity: 1; box-shadow: none; transform: none; }
 @media (hover:hover) and (pointer:fine) { .liam .actions .btn:hover { background: var(--action-gold); color: #fff; transform: none; box-shadow: none; } .liam--dark .actions .btn:hover { color: #111; } }
+
+/* Requested text motion runs only while its section is visible. */
+.liam .marquee__track { animation: marquee 22s linear infinite; animation-play-state: paused; }
+.liam .marquee.is-visible .marquee__track { animation-play-state: running; }
+@media (prefers-reduced-motion:reduce) { .liam .marquee__track { animation: none; } }

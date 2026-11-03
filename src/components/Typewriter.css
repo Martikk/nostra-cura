@@ -1,0 +1,7 @@
+.typing-copy { position: relative; display: block; }
+.typing-copy__reserve { display: block; visibility: hidden; }
+.typing-copy__ink { position: absolute; inset: 0; }
+.typing-copy__caret { color: currentColor; animation: typing-caret 1s steps(2,end) infinite; }
+.typing-copy__accessible { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@keyframes typing-caret { 50% { opacity: 0; } }
+@media (prefers-reduced-motion:reduce) { .typing-copy__caret { animation: none; } }
