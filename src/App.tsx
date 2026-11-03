@@ -1,3 +1,4 @@
+import Seo from "./components/Seo";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Hero from "./sections/Hero";
@@ -13,10 +14,12 @@ import NotFound from "./pages/NotFound";
 
 export default function App() {
   // смещение под высоту навигации (подбери под свой header)
-  useHashScroll(84);
+  useHashScroll();
 
   return (
     <>
+      <Seo />
+      <a className="skip-link" href="#main-content">Skip to content</a>
       <Navbar />
 
       <Routes>
@@ -25,13 +28,13 @@ export default function App() {
           path="/"
           element={
             <>
-              <main>
-                <section id="home"><Hero /></section>
-                <section id="about"><About /></section>
-                <section id="services"><Services /></section>
-                <section id="team"><Team /></section>
-                <section id="stories"><YourStories /></section>
-                <section id="contact"><Contact /></section>
+              <main id="main-content">
+                <Hero />
+                <About />
+                <Services />
+                <Team />
+                <YourStories />
+                <Contact />
               </main>
               <Footer />
             </>

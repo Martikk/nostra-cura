@@ -1,3 +1,4 @@
+import { CardAction } from "../components/SectionCarousel";
 import React, { useRef } from "react";
 import "./Hero.css";
 
@@ -19,13 +20,17 @@ export default function Hero() {
       <div className="hero__rays" aria-hidden="true" />
       <div className="hero__glow" aria-hidden="true" />
       <div className="hero__inner">
-        <h1 className="hero__title" tabIndex={0}>
+        <h1 className="hero__title">
           BUILDING BETTER<br />LIVES IN<br />CONSTRUCTION
         </h1>
         <p className="hero__subtitle">
           Helping individuals and teams navigate decisions,<br />
           responsibilities, and pressure with confidence.
         </p>
+        <div className="hero__actions">
+          <CardAction action={{ label: "Explore Services", href: "/#services" }} />
+          <CardAction action={{ label: "Contact Us", href: "/#contact" }} />
+        </div>
   </div>
     <div className="hero__tagline" aria-label="Slow Down. See Clearly. Live Better.">
 

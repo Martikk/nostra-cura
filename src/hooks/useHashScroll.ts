@@ -1,19 +1,18 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-/** Плавно скроллит к элементу по location.hash при монтировании/смене hash */
-export function useHashScroll(offsetPx = 0) {
+export function scrollToSection(id: string) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  // Sections reserve their own header space; Home must always return to zero.
+  const top = id === "home" ? 0 : el.getBoundingClientRect().top + window.scrollY;
+  window.scrollTo({ top: Math.max(0, top), behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+}
+
+export function useHashScroll() {
   const { hash, pathname } = useLocation();
-
   useEffect(() => {
-    // ждём рендера секций на главной
-    if (pathname !== "/") return;
-    const id = hash?.replace("#", "");
-    if (!id) return;
-    const el = document.getElementById(id);
-    if (!el) return;
-
-    const top = el.getBoundingClientRect().top + window.scrollY - offsetPx;
-    window.scrollTo({ top, behavior: "smooth" });
-  }, [hash, pathname, offsetPx]);
+    if (hash) scrollToSection(decodeURIComponent(hash.slice(1)));
+    else window.scrollTo({ top: 0, behavior: "instant" });
+  }, [hash, pathname]);
 }

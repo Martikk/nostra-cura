@@ -1,3 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
 # HTTP -> HTTPS + все на apex .ca
 [[redirects]]
   from = "http://*"
@@ -16,3 +23,13 @@
   to = "https://nostracura.ca/:splat"
   status = 301
   force = true
+
+# Content-hashed build assets are safe to retain; HTML is revalidated on each visit.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

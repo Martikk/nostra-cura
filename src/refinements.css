@@ -1,0 +1,84 @@
+/* Shared section rhythm; content remains in normal flow at every text size. */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-padding-top: 0; }
+body { background: #081b29; }
+section[id] { scroll-margin-top: 0; }
+[hidden] { display: none !important; }
+:is(.about,.services,.team,.stories,.contact) {
+  min-height: 100svh;
+  padding: calc(var(--nav-h) + 32px) var(--gutter) 36px;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 28px;
+}
+:is(.about__title,.services__title,.team__title,.stories__title) {
+  position: relative; inset: auto; transform: none; animation: none;
+  flex: none; margin: 0; width: 100%; font-size: clamp(28px,4vw,52px); line-height: 1.15;
+}
+:is(.aboutcard,.svc,.teamcard,.storycard) { margin-top: 0; }
+:is(.aboutcard__title,.svc__title) { font-size: clamp(24px,3vw,36px); }
+:is(.aboutcard__text,.svc__text) { font-size: clamp(16px,1.35vw,19px); line-height: 1.6; max-width: 70ch; }
+:is(.aboutcard__text,.svc__text) p { margin: 0 0 1em; }
+:is(.aboutcard__text,.svc__text) p:last-child { margin-bottom: 0; }
+.hero { min-height: 100svh; }
+.hero__title { font-size: clamp(40px,6.5vw,88px); }
+.teamcard__photo img { max-height: min(42svh,360px); object-fit: contain; }
+.brand__nccg { width: 176px; height: 60px; object-fit: contain; background: transparent; border-radius: 0; }
+.brand--footer .brand__nccg { width: 220px; height: 110px; }
+:is(.aboutcard__button,.svc__button,.teamcard__button,.btn) { border-radius: 12px; }
+:focus-visible { outline: 3px solid #f0c65b; outline-offset: 4px; }
+.skip-link { position: fixed; top: 8px; left: 8px; z-index: 2000; padding: 12px 18px; background: #fff; color: #081b29; transform: translateY(-180%); }
+.skip-link:focus { transform: none; }
+.liam .welcome__photo img { max-height: 68svh; object-fit: contain; }
+.liam .chapter__media img { width: 100%; height: auto; max-height: 65svh; object-fit: contain; }
+.liam .chapter__content h2 { font-size: clamp(24px,3vw,38px); margin: 0 0 12px; }
+.liam__contact { min-height: calc(100svh - var(--nav-h)); }
+/* Reveal effects must never hide readable HTML before JS executes. */
+.liam .reveal { opacity: 1; transform: none; }
+@media (max-width: 700px) {
+  :is(.about,.services,.team,.stories,.contact) { padding-inline: 16px; gap: 24px; }
+  :is(.about__container,.team__container) { padding-inline: 0; }
+  .team__row { width: 100%; }
+  .brand__nccg { width: 142px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html, body { scroll-behavior: auto; }
+  :is(.about,.services,.team,.stories)::before,
+  .hero::before,.hero__rays,.hero__glow,.marquee__track,
+  .aboutcard,.svc,.teamcard,.storycard,.footer,.liam .reveal,
+  .hero__title,.hero__subtitle { animation: none; transition: none; transform: none; }
+}
+
+/* Retain layout repairs while using the original palette and glass surfaces. */
+.nav { background: rgba(15,17,20,.38); backdrop-filter: saturate(140%) blur(8px); -webkit-backdrop-filter: saturate(140%) blur(8px); border-bottom: 1px solid rgba(255,255,255,.12); }
+.nav:hover { background: rgba(15,17,20,.52); backdrop-filter: saturate(150%) blur(10px); -webkit-backdrop-filter: saturate(150%) blur(10px); }
+.brand__nccg,.brand--footer .brand__nccg { width: 220px; height: 62px; background: transparent; }
+.footer__inner { height: auto; min-height: 110px; padding-block: 24px; }
+.footer { opacity: 1; transform: none; transition: none; }
+.teamcard { background: rgba(15,17,20,.55); border: 1px solid rgba(255,255,255,.16); border-radius: 16px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); color: #fff; }
+.teamcard__name,.cta__title { font: 700 clamp(26px,3vw,38px)/1.2 Georgia,serif; }
+.teamcard__role,.cta__text { font-size: 18px; line-height: 1.6; color: rgba(255,255,255,.9); }
+.teamcard .btn { display: inline-flex; justify-content: center; align-items: center; min-height: 48px; padding: 12px 24px; background: #fff; color: #111; font-weight: 700; text-decoration: none; border-radius: 12px; }
+.team__row > .navbtn,.team__controls > .team__btn { display: grid; place-items: center; flex-shrink: 0; width: 48px; height: 48px; border: none; border-radius: 50%; background: #fff; color: #111; cursor: pointer; }
+body button.navbtn,body button.navbtn:hover,body button.team__btn,body button.team__btn:hover { animation: none; transform: none; }
+.liam .welcome__photo { aspect-ratio: auto; border-radius: 16px; box-shadow: none; }
+.liam .welcome__photo img { height: auto; max-height: 62svh; object-fit: contain; }
+@media (min-width:901px) { .team__controls > .team__btn { display: none; } }
+@media (max-width:900px) { .team__row > .navbtn { display: none; } }
+@media (max-width:700px) { .brand__nccg { width: 180px; height: 56px; } }
+@media (prefers-reduced-motion:reduce) { body button.navbtn span { animation: none; } }
+
+/* Content is centered within the viewport beneath the fixed header. Long content can grow. */
+.contact { justify-content: center; padding-bottom: 32px; }
+.hero__subtitle { font-size: clamp(16px,1.6vw,20px); line-height: 1.5; }
+.hero__title { line-height: 1.04; }
+.contactcard__form input,.contactcard__form textarea { font-size: 16px; line-height: 1.5; min-height: 44px; }
+.contactcard__form label { font-size: 16px; line-height: 1.5; }
+.liam .lead,.liam .welcome__lead,.liam .chapter__content p { font-size: clamp(16px,1.3vw,18px); line-height: 1.65; }
+.liam .liam__quote blockquote { font-size: clamp(22px,3vw,36px); line-height: 1.4; }
+
+.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+@media (max-width:600px) { .hero__title { font-size: clamp(30px,8.2vw,40px); } }
+
+/* Biography text stays still while reading; no continuous decorative paint work. */
+.liam .liam__title::after { display: none; animation: none; }
+.liam .marquee__track { animation: none; }
+.liam .liam__hero-bg { transform: none; will-change: auto; }

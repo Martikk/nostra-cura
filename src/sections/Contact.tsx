@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Toaster, toast } from "react-hot-toast";
 import "./Contact.css";
@@ -5,16 +6,18 @@ import "./Contact.css";
 type FormData = {
   name: string;
   phone: string;
+  "bot-field": string;
   email: string;
   message: string;
 };
 
 export default function Contact() {
+  const [sent, setSent] = useState(false);
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitSuccessful, isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm<FormData>();
 
   // helper: url-encode
@@ -24,7 +27,7 @@ export default function Contact() {
       .join("&");
 
   const onSubmit = async (data: FormData) => {
-    // (опц.) toast.loading("Sending...");
+    setSent(false);
     const payload = {
       "form-name": "contact-main", // ОБЯЗАТЕЛЬНО: имя формы для Netlify
       ...data,
@@ -40,10 +43,11 @@ export default function Contact() {
 
       // (опц.) toast.dismiss(); toast.success("Message sent!");
       reset();
+      setSent(true);
     } catch (e) {
       toast.dismiss(); toast.error("Failed to send. Try again later.");
       console.error(e);
-      alert("Failed to send. Try again later.");
+
     }
   };
 
@@ -74,7 +78,7 @@ export default function Contact() {
         >
           {/* honeypot */}
           <p hidden>
-            <label>Don’t fill this out: <input name="bot-field" /></label>
+            <label>Don’t fill this out: <input {...register("bot-field")} /></label>
           </p>
 
           {/* скрытое поле form-name для Netlify */}
@@ -93,7 +97,7 @@ export default function Contact() {
             Phone
             <input
               {...register("phone", {
-                required: "Phone number required",
+
                 pattern: {
                   value: /^\+?[\d\s\-()]{7,20}$/,
                   message: "Invalid phone format",
@@ -133,14 +137,14 @@ export default function Contact() {
           </label>
 
           {/* (опц.) reCAPTCHA — перед кнопкой */}
-          <div data-netlify-recaptcha="true"></div>
+
 
           <button type="submit" className="btn btn--submit" disabled={isSubmitting}>
             {isSubmitting ? "Sending..." : "Submit"}
           </button>
 
-          {isSubmitSuccessful && (
-            <p className="success">✅ Your message has been sent successfully!</p>
+          {sent && (
+            <p className="success" role="status">Your message has been sent successfully!</p>
           )}
         </form>
       </div>

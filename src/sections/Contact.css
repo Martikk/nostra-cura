@@ -17,7 +17,7 @@
   display: grid;
   place-items: center;
   color: var(--text);
-  background: url("https://res.cloudinary.com/dzytbkc5l/image/upload/v1761064892/liam/689f50a386bb7ad169823d94_2025-08-15_08.21.46_swubwe.png")
+  background: url("https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_1600/v1761064892/liam/689f50a386bb7ad169823d94_2025-08-15_08.21.46_swubwe.png")
     center/cover no-repeat;
   overflow: hidden;
 }

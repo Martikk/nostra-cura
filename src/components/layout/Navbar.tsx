@@ -1,3 +1,4 @@
+import { scrollToSection } from "../../hooks/useHashScroll";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
@@ -13,12 +14,13 @@ function useNavOffset(fallback = 92) {
     const raw = root.getPropertyValue("--nav-h").trim();
     const px = parseInt(raw.replace("px", ""), 10);
     return Number.isFinite(px) ? px + 12 /* небольшой зазор */ : fallback;
-  }, []);
+  }, [fallback]);
 }
 
 export default function Navbar() {
   const [active, setActive] = useState<SectionId>("home");
   const [open, setOpen] = useState(false);
+  const wasOpen = useRef(false);
   const btnRef = useRef<HTMLButtonElement>(null);
   const NAV_OFFSET = useNavOffset();
 
@@ -60,36 +62,34 @@ export default function Navbar() {
   // Закрытие по ESC и возврат фокуса на кнопку
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('#mobile-sheet a'));
+    links[0]?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Tab") {
+        const first = links[0], last = links[links.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
+      }
+    };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
   useEffect(() => {
-    if (!open && btnRef.current) btnRef.current.focus();
+    if (!open && wasOpen.current) btnRef.current?.focus();
+    wasOpen.current = open;
   }, [open]);
 
   // Локальный скролл по секции (на главной)
-const EXTRA_UP = 120; // ← подбери: 40..180
-
-const scrollToId = (id: SectionId) => {
-  const el = document.getElementById(id);
-  if (!el) return;
-
-  const y = window.scrollY + el.getBoundingClientRect().top;
-
-  // было: y - NAV_OFFSET
-  // стало: прокручиваем чуть ДАЛЬШЕ вниз => секция визуально ВЫШЕ
-  const top = Math.max(0, y - NAV_OFFSET + EXTRA_UP);
-
-  window.scrollTo({ top, behavior: "smooth" });
-};
+const scrollToId = scrollToSection;
 
   // Универсальный обработчик: если мы НЕ на главной — уходим на /#id, иначе плавно скроллим
   const goTo = (id: SectionId, e?: React.MouseEvent) => {
     e?.preventDefault();
     setOpen(false);
     if (isHome) {
+      navigate(`/#${id}`);
       scrollToId(id);
     } else {
       navigate(`/#${id}`); // Router-переход на главную с hash
@@ -106,20 +106,7 @@ const scrollToId = (id: SectionId) => {
           aria-label="Nostra Cura — Home"
           onClick={(e) => goTo("home", e)}
         >
-<img 
-className="brand__logo"
-  src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1761234663/12_lhiys5.png"
-  alt="Nostra Cura logo"
-  width={60}
-  height={50}
-/>
-          <img
-            className="brand__logo_text"
-            src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1761235802/Nostra_Cura_text-removebg-preview_anewtd.png"
-            alt="NOSTRA CURA"
-            width={200}
-            height={42}
-          />
+<img className="brand__nccg" src="/images/nccg-logo-header.webp" alt="NCCG — Nostra Cura Consulting Group" width={2172} height={724} />
         </Link>
 
         {/* Десктоп-меню */}
@@ -162,6 +149,7 @@ className="brand__logo"
       <div
         id="mobile-sheet"
         className={"nav__sheet" + (open ? " is-open" : "")}
+        hidden={!open}
         role="dialog"
         aria-modal="true"
         aria-label="Mobile navigation"

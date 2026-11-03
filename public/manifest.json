@@ -1,12 +1,12 @@
 {
-  "name": "Nostra Cura — Coaching & Leadership",
-  "short_name": "Nostra Cura",
+  "name": "Nostra Cura Consulting Group",
+  "short_name": "NCCG",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#0f1114",
-  "theme_color": "#ffd166",
-  "description": "From the trades to leadership — discover Liam’s story of growth, purpose, and resilience.",
+  "theme_color": "#081b29",
+  "description": "Practical consulting for individuals and teams in construction.",
   "icons": [
     {
       "src": "https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_192,h_192,c_fill/liam/Logo_32x32_qdhx3o.png",

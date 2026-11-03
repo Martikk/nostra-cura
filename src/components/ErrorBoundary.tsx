@@ -8,7 +8,7 @@ export class ErrorBoundary extends React.Component<React.PropsWithChildren, Stat
     return { hasError: true };
   }
 
-  componentDidCatch(error: any, info: any) {
+  componentDidCatch(error: Error, info: React.ErrorInfo) {
     // можно отправить в Sentry/LogRocket и т.п.
     console.error("ErrorBoundary caught:", error, info);
   }

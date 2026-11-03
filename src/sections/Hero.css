@@ -17,7 +17,7 @@
 .hero::before{
   content:"";
   position:absolute; inset:-2%;
-  background-image: url("https://res.cloudinary.com/dzytbkc5l/image/upload/v1766885184/liam/hero_2_m5kicm.png");
+  background-image: url("https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_1600/v1766885184/liam/hero_2_m5kicm.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -241,3 +241,4 @@
     width: 34px;
   }
 }
+@media (max-width:700px) { .hero::before { background-image: url("https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_900/v1766885184/liam/hero_2_m5kicm.png"); } }

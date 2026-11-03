@@ -43,24 +43,7 @@ export default function Footer() {
       <div className="footer__inner">
         {/* БРЕНД */}
         <a className="brand brand--footer" href="/" aria-label="Nostra Cura home">
-          <img
-            className="brand__mark"
-            src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1761234663/12_lhiys5.png"
-            alt=""
-            width={56}
-            height={32}
-            loading="lazy"
-            decoding="async"
-          />
-          <img
-            className="brand__wordmark"
-            src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1761235802/Nostra_Cura_text-removebg-preview_anewtd.png"
-            alt="NOSTRA CURA — Consulting Group"
-            width={220}
-            height={32}
-            loading="lazy"
-            decoding="async"
-          />
+<img className="brand__nccg" src="/images/nccg-logo-header.webp" alt="NCCG — Nostra Cura Consulting Group" width={2172} height={724} />
         </a>
 
         {/* СОЦСЕТИ */}

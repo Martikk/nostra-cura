@@ -2,7 +2,7 @@ import "./NotFound.css";
 
 export default function NotFound() {
   return (
-    <main className="nf">
+    <main id="main-content" className="nf">
       {/* мягкий фон + анимация частиц */}
       <div className="nf__bg" aria-hidden />
       <div className="nf__stars" aria-hidden />

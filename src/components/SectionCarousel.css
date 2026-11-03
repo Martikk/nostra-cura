@@ -1,0 +1,57 @@
+/* One layout and motion contract shared by About, Services, Team and Stories. */
+.nc-section {
+ position: relative; isolation: isolate; display: flex; flex-direction: column; align-items: center;
+ min-height: 100svh; padding: calc(var(--nav-h,72px) + 32px) clamp(20px,4vw,56px) 32px;
+ background-position: center; background-size: cover; color: #fff; gap: 28px; justify-content: center;
+}
+.nc-section__background { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.nc-section::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: rgba(8,18,28,.28); }
+.nc-section__title { position: relative; width: 100%; margin: 0; text-align: center; font: 800 clamp(30px,4vw,52px)/1.15 Georgia,serif; letter-spacing: .02em; text-shadow: 0 3px 14px rgba(0,0,0,.45); }
+.nc-carousel { width: min(760px,100%); min-width: 0; }
+.nc-stage { display: grid; perspective: 1400px; touch-action: pan-y; border-radius: 16px; border: 1px solid rgba(255,255,255,.18); background: rgba(15,17,20,.6); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); overflow: clip; }
+.nc-card {
+ grid-area: 1/1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 24px;
+ padding: clamp(24px,2.5vw,32px); border-radius: 0; border: 0;
+ background: transparent;
+ visibility: hidden; pointer-events: none;
+}
+.nc-card[data-active="true"] { visibility: visible; pointer-events: auto; z-index: 1; }
+
+.nc-card__body { flex: 1; display: flex; align-items: center; justify-content: center; min-width: 0; }
+.nc-card__body--portrait { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1fr); gap: 32px; }
+.nc-card__portrait { height: 260px; display: flex; justify-content: center; }
+.nc-card__portrait img { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 12px; }
+.nc-card__copy { width: 100%; max-width: none; margin: 0 auto; text-align: center; }
+.nc-card__title { margin: 0 0 16px; font: 700 clamp(26px,2.5vw,32px)/1.2 Georgia,serif; }
+.nc-card__lead { margin: 0 auto 24px; max-width: 54ch; font: 600 clamp(19px,1.8vw,22px)/1.4 Georgia,serif; color: #e6ba43; }
+.nc-card__text { margin: 0 auto; max-width: none; font: 400 clamp(16px,1.3vw,17px)/1.6 Georgia,serif; }
+.nc-card__text p { margin: 0 0 1em; }
+.nc-card__text p:last-child { margin-bottom: 0; }
+.nc-card__text--quote { font-size: clamp(19px,2vw,25px); font-style: italic; line-height: 1.65; }
+.nc-card__stars { display: flex; justify-content: center; gap: 12px; margin-bottom: 24px; }
+.nc-card__action { display: flex; justify-content: center; margin-top: auto; }
+.nc-action,.nc-action:visited {
+ display: inline-flex; justify-content: center; align-items: center; gap: 12px; width: max-content; max-width: 100%; min-width: 160px; min-height: 48px;
+ padding: 11px 20px; border: 1px solid #e6ba43; border-radius: 10px;
+ background: transparent; color: #e6ba43; font: 700 16px/1.35 Georgia,serif; text-decoration: none; white-space: nowrap;
+ transition: background-color 160ms ease, color 160ms ease;
+}
+.nc-action svg { flex-shrink: 0; width: 18px; height: 18px; }
+.nc-controls { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 24px; }
+.nc-arrow { width: 44px; height: 44px; flex: 0 0 44px; border: 1px solid rgba(255,255,255,.65); border-radius: 50%; padding: 0; background: #fff; color: #111; display: grid; place-items: center; cursor: pointer; transition: background-color 160ms ease; }
+.nc-dots { display: flex; justify-content: center; gap: 2px; }
+.nc-dot { border: none; padding: 0; width: 32px; height: 44px; position: relative; background: transparent; cursor: pointer; }
+.nc-dot::after { content: ""; position: absolute; width: 9px; height: 9px; border-radius: 50%; top: 17px; left: 12px; background: rgba(255,255,255,.5); }
+.nc-dot[aria-pressed="true"]::after { background: #fff; }
+.nc-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (hover:hover) and (pointer:fine) { .nc-action:hover { background: #e6ba43; color: #111; } .nc-arrow:hover { background: #e6ba43; } }
+@media (max-width:600px) {
+ .nc-section { gap: 24px; padding-inline: 20px; }
+ .nc-card { min-height: 0; padding: 24px; }
+ .nc-card__body--portrait { grid-template-columns: 1fr; gap: 24px; }
+ .nc-card__portrait { height: 230px; }
+ .nc-card__lead { font-size: 20px; }
+}
+@media (prefers-reduced-motion:reduce) { .nc-stage { transform: none; } }
+
+@media (max-width:360px) { .nc-action { padding-inline: 14px; gap: 8px; font-size: 15px; } }

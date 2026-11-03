@@ -1,72 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../components/layout/Footer";
 import "./LiamStory.css";
 import { Toaster, toast } from 'react-hot-toast';
 
-/* === Typewriter (без дёрганья макета) === */
-function Typewriter({
-  text,
-  speed = 95,
-  jitter = 35,
-  className = "",
-  ariaLabel,
-}: {
-  text: string;
-  speed?: number;
-  jitter?: number;
-  className?: string;
-  ariaLabel?: string;
-}) {
-  const [i, setI] = useState(0);
-  const prefReduce =
-    typeof window !== "undefined" &&
-    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-
-  useEffect(() => {
-    if (prefReduce) {
-      setI(text.length);
-      return;
-    }
-    let idx = 0;
-    let alive = true;
-    let timer = 0 as unknown as number;
-
-    const tick = () => {
-      if (!alive) return;
-      idx = Math.min(idx + 1, text.length);
-      setI(idx);
-      if (idx < text.length) {
-        const next = speed + (Math.random() * jitter - jitter / 2);
-        timer = window.setTimeout(tick, Math.max(30, next)) as unknown as number;
-      }
-    };
-
-    timer = window.setTimeout(tick, speed) as unknown as number;
-    return () => {
-      alive = false;
-      window.clearTimeout(timer);
-    };
-  }, [text, speed, jitter, prefReduce]);
-
-  return (
-    <span className={`typewriter ${className}`} aria-label={ariaLabel ?? text}>
-      <span className="typewriter__ghost" aria-hidden>
-        {text}
-      </span>
-      <span className="typewriter__text">{text.slice(0, i)}</span>
-      {i < text.length && <span className="typewriter__caret" aria-hidden />}
-    </span>
-  );
-}
-
 /* === Магнитные бейджи/пиллы — отключаем на тач, оптимизируем через rAF === */
 function useMagnetic() {
-  // детектим «наведение мышью» (десктопы/стилусы с hover)
+
   const hoverCapable =
     typeof window !== "undefined" &&
-    window.matchMedia?.("(hover: hover) and (pointer: fine)").matches;
+    window.matchMedia?.("(hover: hover) and (pointer: fine)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // тач-девайсы: возвращаем no-op, чтобы не блокировать скролл
   if (!hoverCapable) {
     return {
       onMove: () => {},
@@ -104,75 +48,29 @@ function useMagnetic() {
 }
 
 export default function LiamStory() {
-  const rootRef = useRef<HTMLDivElement>(null);
 
-  // ===== THEME (default: light) =====
+
   type Theme = "light" | "dark";
-  const [theme, setTheme] = useState<Theme>(() => {
-    const saved =
-      (typeof window !== "undefined"
-        ? localStorage.getItem("liamTheme")
-        : null) as Theme | null;
-    return saved ?? "light";
-  });
+  const [theme, setTheme] = useState<Theme>("light");
   useEffect(() => {
-    localStorage.setItem("liamTheme", theme);
-  }, [theme]);
-  const toggleTheme = () => setTheme((t) => (t === "light" ? "dark" : "light"));
-
-  // ===== Reveal + parallax =====
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root || typeof window === "undefined") return;
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            (e.target as HTMLElement).classList.add("is-inview");
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-    root.querySelectorAll<HTMLElement>(".reveal").forEach((el) => io.observe(el));
-
-    const onScroll = () => {
-      const y = window.scrollY * 0.25;
-      root.style.setProperty("--hero-shift", `${y}px`);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    return () => {
-      io.disconnect();
-      window.removeEventListener("scroll", onScroll);
-    };
+    try { const saved = localStorage.getItem("liamTheme"); if (saved === "dark" || saved === "light") setTheme(saved); } catch { /* Storage may be unavailable. */ }
   }, []);
+  const toggleTheme = () => setTheme((t) => {
+    const next = t === "light" ? "dark" : "light";
+    try { localStorage.setItem("liamTheme", next); } catch { /* Theme still works without storage. */ }
+    return next;
+  });
+
+
 
   const magnet = useMagnetic();
 
-  // ===== форма =====
   const [sent, setSent] = useState(false);
-  // const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const fd = new FormData(e.currentTarget);
-  //   const name = String(fd.get("name") || "").trim();
-  //   const email = String(fd.get("email") || "").trim();
-  //   const message = String(fd.get("message") || "").trim();
-  //   if (!name || !email || !message) {
-  //     alert("Please fill in Name, Email and Message.");
-  //     return;
-  //   }
-  //   // TODO: отправка на ваш бэкенд / Netlify Forms
-  //   setSent(true);
-  //   (e.currentTarget as HTMLFormElement).reset();
-  // };
+  const [sending, setSending] = useState(false);
 
   return (
-    <div
-      ref={rootRef}
+    <main
+      id="main-content"
       className={`liam ${theme === "light" ? "liam--light" : "liam--dark"}`}
     >
       {/* Theme toggle */}
@@ -204,6 +102,9 @@ export default function LiamStory() {
     "
     sizes="(max-width: 980px) 60vw, 520px"
     alt="Liam Dillon portrait"
+    fetchPriority="high"
+    width={700}
+    height={1050}
     loading="eager"
     decoding="async"
   />
@@ -212,31 +113,13 @@ export default function LiamStory() {
           <div className="welcome__content">
             <span className="chip">Welcome</span>
 
-            <h2 className="welcome__title">
-              Welcome to coaching with <span className="accent">Liam Dillon</span>
-            </h2>
+            <h1 className="welcome__title">
+              Meet <span className="accent">Liam Dillon</span>
+            </h1>
 
-            <p className="welcome__lead">
-              My first introduction to mental fitness came through years in construction.
-              What started as survival turned into purpose: helping people and crews find
-              clarity, resilience, and growth.
-            </p>
-
-            <div className="welcome__quote">
-              {/* <span className="quote-mark" aria-hidden>
-                “
-              </span> */}
-                            <span>
-                “
-              </span>
-              <Typewriter
-                className="welcome__type"
-                text={`For over 15 years, I’ve helped turn struggle into growth—so people can build not only projects, but fulfilling lives.“`}
-                speed={110}
-                jitter={25}
-                ariaLabel="For over 15 years, I’ve helped turn struggle into growth—so people can build not only projects, but fulfilling lives.“"
-              />
-            </div>
+            <p className="welcome__lead">I've spent over 15 years working in the construction industry, starting in the trades and eventually moving into project management and leadership.</p>
+            <p className="welcome__lead">Along the way, I've experienced professional success, personal struggles, setbacks, and new beginnings. Those experiences have taught me that building a successful career or business means very little if we lose sight of the people behind it.</p>
+            <p className="welcome__lead">That's why I founded Nostra Cura Consulting Group Inc. — to bring together my professional experience, personal lessons, and belief that we can build better businesses while building better lives.</p>
           </div>
         </div>
       </section>
@@ -247,48 +130,40 @@ export default function LiamStory() {
         <div className="liam__hero-glow" aria-hidden />
         <div className="liam__hero-inner reveal up">
           <p className="eyebrow">Liam Dillon — My Story</p>
-          <h1 className="liam__title">
+          <h2 className="liam__title">
             From the trades to leadership. <br className="md" />
-            From struggle to purpose.
-          </h1>
+            A different perspective on success.
+          </h2>
 
           <div className="liam__badges">
-            <button
-              type="button"
+            <span
               className="badge is-magnetic"
               onPointerMove={magnet.onMove}
               onPointerLeave={magnet.onLeave}
-              aria-label="15+ Years in Construction"
             >
               15+ Years <em>in Construction</em>
-            </button>
-            <button
-              type="button"
+            </span>
+            <span
               className="badge is-magnetic"
               onPointerMove={magnet.onMove}
               onPointerLeave={magnet.onLeave}
-              aria-label="Red Seal Refrigeration Mechanic"
             >
               Red Seal <em>Refrigeration Mechanic</em>
-            </button>
-            <button
-              type="button"
+            </span>
+            <span
               className="badge is-magnetic"
               onPointerMove={magnet.onMove}
               onPointerLeave={magnet.onLeave}
-              aria-label="PMP Project Manager"
             >
               PMP <em>Project Manager</em>
-            </button>
-            <button
-              type="button"
+            </span>
+            <span
               className="badge is-magnetic"
               onPointerMove={magnet.onMove}
               onPointerLeave={magnet.onLeave}
-              aria-label="Advocate Mental Health and Growth"
             >
               Advocate <em>Mental Health & Growth</em>
-            </button>
+            </span>
           </div>
         </div>
 
@@ -304,23 +179,12 @@ export default function LiamStory() {
       {/* ===== INTRO ===== */}
       <section className="liam__intro">
         <div className="container">
-          <p className="lead reveal up">
-            My name is Liam Dillon and this is my story. I have been in the construction
-            industry for over 15 years. I started out working as a warehouse helper for a
-            commercial refrigeration company. After some time, I was offered the opportunity
-            to sign up as a Refrigeration Mechanic apprentice. I completed my apprenticeship
-            training and received my Refrigeration Mechanic Red Seal Certification. Through
-            all this time, things never felt quite right. I was always searching for meaning
-            and fulfillment in life—usually in all the wrong places.
-          </p>
-          <p className="lead reveal up">
-            I bounced around multiple companies and experienced being laid off with no clue
-            what to do. Eventually, I challenged the Project Management Professional exam,
-            passed, and moved into leadership. Through those years I battled mental health
-            and substance abuse issues. I was lost. My life fell apart as these problems
-            took over. Luckily, I survived and rebuilt. Now I live a life beyond my wildest
-            dreams—and I want to help others do the same. This is my purpose.
-          </p>
+          <h2>Founder &amp; Consultant</h2><p>Nostra Cura Consulting Group Inc.</p>
+<p className="lead">One thing I've learned over the years is that everyone has a story. We all experience challenges, make mistakes, learn lessons, and find our own way forward.</p>
+<p className="lead">I've worked alongside some incredible people and seen firsthand how much leadership, workplace culture, and the decisions we make can affect our lives, both professionally and personally.</p>
+<p className="lead">I believe good business doesn't need to be complicated, and good leadership doesn't need to be intimidating. It starts with treating people well, communicating honestly, taking responsibility, and continually looking for ways to improve.</p>
+<p className="lead">These are the principles I believe in, the values I try to live by, and the foundation of Nostra Cura Consulting Group Inc.</p>
+
         </div>
       </section>
 
@@ -330,6 +194,8 @@ export default function LiamStory() {
           <article className="chapter reveal fade">
 <div className="chapter__media">
 <img
+  width={1000}
+  height={1500}
   className="ph-img"
   src="https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,dpr_auto,w_1000/liam/68ee59cb0deae2deb8dba77b_2_Liam_bwumbk.jpg"
   srcSet="
@@ -344,24 +210,21 @@ export default function LiamStory() {
 />
 </div>
             <div className="chapter__content">
-              <h3>Where I Started</h3>
-              <p>
-                I began as a warehouse helper in commercial refrigeration. I earned my Red
-                Seal as a Refrigeration Mechanic and learned the trade on job sites—with
-                real responsibility.
-              </p>
+              <h2>Where I Started</h2><p>I started my career as a warehouse helper in commercial refrigeration before becoming a Red Seal Refrigeration Mechanic. Working in the trades gave me an appreciation for hard work, practical problem-solving, and the people who keep our industry moving.</p><p>Those early years also gave me firsthand experience with the challenges, responsibilities, and pressures that come with working in construction.</p>
             </div>
           </article>
 
           <article className="chapter chapter--rtl reveal fade">
 <div className="chapter__media">
   <img
-    className="ph-img"
-    src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg"
+    width={748}
+    height={1123}
+  className="ph-img"
+    src="https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_1000/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg"
     srcSet="
-      https://res.cloudinary.com/dzytbkc5l/image/upload/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg 640w,
-      https://res.cloudinary.com/dzytbkc5l/image/upload/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg 1000w,
-      https://res.cloudinary.com/dzytbkc5l/image/upload/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg 1400w
+      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_640/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg 640w,
+      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_1000/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg 1000w,
+      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_1400/v1761063637/liam/68ee810d5b386ba479b80e09_homepage_luwtfx.jpg 1400w
     "
     sizes="(max-width:980px) 92vw, 52vw"
     alt=""
@@ -370,24 +233,21 @@ export default function LiamStory() {
   />
 </div>
             <div className="chapter__content">
-              <h3>Losing My Way</h3>
-              <p>
-                Layoffs, wrong turns, and battles with mental health and substance abuse
-                left me lost. I learned that white-knuckling through pain isn’t strength—
-                vulnerability and help are.
-              </p>
+              <h2>Lessons Along the Way</h2><p>My career and personal life haven't always followed a straight path. I've experienced successes, setbacks, and plenty of lessons along the way.</p><p>Through those experiences, I've learned the importance of asking for help, taking responsibility, and being willing to make changes. They've also shaped how I approach challenges, work with people, and understand the pressures we all face in our professional and personal lives.</p>
             </div>
           </article>
 
           <article className="chapter reveal fade">
 <div className="chapter__media">
   <img
-    className="ph-img"
-    src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg"
+    width={748}
+    height={965}
+  className="ph-img"
+    src="https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_1000/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg"
     srcSet="
-      https://res.cloudinary.com/dzytbkc5l/image/upload/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg 640w,
-      https://res.cloudinary.com/dzytbkc5l/image/upload/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg 1000w,
-      https://res.cloudinary.com/dzytbkc5l/image/upload/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg 1400w
+      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_640/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg 640w,
+      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_1000/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg 1000w,
+      https://res.cloudinary.com/dzytbkc5l/image/upload/f_auto,q_auto,w_1400/v1761063637/liam/68ee59cbcdffd92983de6047_4_Liam_nzuwny.jpg 1400w
     "
     sizes="(max-width:980px) 92vw, 52vw"
     alt=""
@@ -396,25 +256,19 @@ export default function LiamStory() {
   />
 </div>
             <div className="chapter__content">
-              <h3>Rebuilding</h3>
-              <p>
-                I chose change. I pursued project management, passed the PMP, and shifted
-                into leadership. Mentorship, structure, and accountability rebuilt my life
-                and career.
-              </p>
+              <h2>A Different Perspective</h2><p>Moving from the trades into project management and leadership gave me a different perspective on the construction industry. I've seen firsthand how the decisions we make as leaders affect not only the success of a business, but also the people working within it. I believe that building successful organizations and supporting the people behind them are equally important.</p><p>I believe we can do better at both.</p>
 
               <ul className="pill-grid">
                 {["Integrity", "People First", "Quality", "Growth"].map((v) => (
                   <li key={v}>
-                    <button
-                      type="button"
+                    <span
                       className="pill is-magnetic"
                       onPointerMove={magnet.onMove}
                       onPointerLeave={magnet.onLeave}
                       aria-label={v}
                     >
                       {v}
-                    </button>
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -426,7 +280,7 @@ export default function LiamStory() {
       {/* ===== QUOTE ===== */}
       <section className="liam__quote liam__quote--plain reveal up">
         <div className="container">
-          <blockquote>“I was working — <em>but I wasn’t fulfilled.</em>”</blockquote>
+          <blockquote>“Success means more when the people behind it are doing well.”</blockquote>
         </div>
       </section>
 
@@ -434,52 +288,13 @@ export default function LiamStory() {
       <section className="liam__contact" id="contact-liam">
         <div className="container">
           <h3>Contact Liam</h3>
-          <p className="contact__sub">Tell me a little about you and how I can help.</p>
+          <p className="contact__sub">Have a question, an idea, or something you'd like to discuss? I'd be happy to hear from you.</p>
 
           {sent ? (
             <div className="contact__success" role="status">
               Thanks! Your message has been sent. I’ll get back to you shortly.
             </div>
           ) : (
-            // <form className="contact__form" onSubmit={onSubmit} noValidate>
-            //   <div className="field">
-            //     <label htmlFor="name">Name*</label>
-            //     <div className="input-wrap">
-            //       <input id="name" name="name" type="text" required placeholder="Your name" />
-            //     </div>
-            //   </div>
-
-            //   <div className="field two">
-            //     <div className="field">
-            //       <label htmlFor="email">Email*</label>
-            //       <div className="input-wrap">
-            //         <input id="email" name="email" type="email" required placeholder="you@example.com" />
-            //       </div>
-            //     </div>
-            //     <div className="field">
-            //       <label htmlFor="phone">Phone</label>
-            //       <div className="input-wrap">
-            //         <input id="phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" />
-            //       </div>
-            //     </div>
-            //   </div>
-
-            //   <div className="field">
-            //     <label htmlFor="message">How can I help?*</label>
-            //     <div className="input-wrap textarea">
-            //       <textarea id="message" name="message" required placeholder="Write your text here" rows={6} />
-            //     </div>
-            //   </div>
-
-            //   <div className="actions">
-            //     <button type="submit" className="btn btn--primary">
-            //       Send
-            //     </button>
-            //     <a className="btn btn--ghost" href="/#services">
-            //       See our services
-            //     </a>
-            //   </div>
-            // </form>
 
 <form
   name="contact-liam"
@@ -489,10 +304,10 @@ export default function LiamStory() {
   className="contact__form"
   onSubmit={async (e) => {
     e.preventDefault();
+    if (sending) return;
     const form = e.currentTarget;
     const fd = new FormData(form);
 
-    // валидация перед отправкой
     const name = fd.get('name')?.toString().trim();
     const email = fd.get('email')?.toString().trim();
     const message = fd.get('message')?.toString().trim();
@@ -501,16 +316,17 @@ export default function LiamStory() {
       return;
     }
 
+    setSending(true);
     toast.loading('Sending...');
 
     try {
-      // ОБЯЗАТЕЛЬНО для Netlify Forms
-      fd.append('form-name', 'contact-liam');
+
+      fd.set('form-name', 'contact-liam');
 
       const res = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(fd as any).toString(),
+        body: new URLSearchParams(Array.from(fd.entries(), ([key, value]) => [key, String(value)])).toString(),
       });
 
       toast.dismiss();
@@ -519,12 +335,13 @@ export default function LiamStory() {
       toast.success('Message sent successfully!');
       setSent(true);
       form.reset();
-    } catch (err) {
+    } catch {
       toast.dismiss();
       toast.error('Failed to send. Try again later.');
+    } finally {
+      setSending(false);
     }
   }}
-  noValidate
 >
   {/* honeypot для антиспама */}
   <p hidden>
@@ -542,33 +359,30 @@ export default function LiamStory() {
     <div className="field">
       <label htmlFor="email">Email*</label>
       <div className="input-wrap">
-        <input id="email" name="email" type="email" required placeholder="you@example.com" />
+        <input id="email" name="email" type="email" required placeholder="Your email address" />
       </div>
     </div>
     <div className="field">
       <label htmlFor="phone">Phone</label>
       <div className="input-wrap">
-        <input id="phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" />
+        <input id="phone" name="phone" type="tel" placeholder="Your phone number" />
       </div>
     </div>
   </div>
 
   <div className="field">
-    <label htmlFor="message">How can I help?*</label>
+    <label htmlFor="message">What would you like to discuss?*</label>
     <div className="input-wrap textarea">
-      <textarea id="message" name="message" required placeholder="Write your text here" rows={6} />
+      <textarea id="message" name="message" required placeholder="Tell me a little about what you’re looking for..." rows={6} />
     </div>
   </div>
 
   {/* скрытое имя формы (дублируем для надёжности) */}
   <input type="hidden" name="form-name" value="contact-liam" />
 
-  {/* reCAPTCHA — ОБЯЗАТЕЛЬНО перед кнопками */}
-  <div data-netlify-recaptcha="true"></div>
-
   <div className="actions">
-    <button type="submit" className="btn btn--primary">Send</button>
-    <a className="btn btn--ghost" href="/#services">See our services</a>
+    <button type="submit" disabled={sending} className="btn btn--primary">{sending ? "Sending..." : "Send Message"}</button>
+    <a className="btn btn--ghost" href="/#services">Explore Our Services</a>
   </div>
 </form>
 
@@ -577,6 +391,6 @@ export default function LiamStory() {
       </section>
 <Toaster position="top-right" />
       <Footer />
-    </div>
+    </main>
   );
 }
