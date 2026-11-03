@@ -31,21 +31,25 @@ export default function SectionCarousel({ id, title, background, slides }: {
    const startOpacity = frame ? getComputedStyle(frame).opacity : "1";
    if (swapTimer.current) clearTimeout(swapTimer.current);
    animation.current?.cancel();
-   if (!frame || keyboard || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-     setIndex(target); return;
+   if (!frame || keyboard) { setIndex(target); return; }
+   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+     setIndex(target);
+     animation.current = frame.animate([{opacity:.45},{opacity:1}],{duration:160});
+     return;
    }
+   const distance = Math.min(frame.clientWidth * .16, 96);
    // Animate the complete surface; switch content during its invisible midpoint.
    animation.current = frame.animate([
-     {transform:start === "none" ? "translateX(0px)" : start, opacity:startOpacity, offset:0},
-     {transform:`translateX(${-dir*24}px)`, opacity:0, offset:.38},
-     {transform:`translateX(${dir*24}px)`, opacity:0, offset:.42},
+     {transform:start === "none" ? "translateX(0px)" : start, opacity:startOpacity, offset:0, easing:"cubic-bezier(.23,1,.32,1)"},
+     {transform:`translateX(${-dir*distance}px)`, opacity:0, offset:.4},
+     {transform:`translateX(${dir*distance}px)`, opacity:0, offset:.401, easing:"cubic-bezier(.23,1,.32,1)"},
      {transform:"translateX(0px)", opacity:1, offset:1}
-   ], {duration:260,easing:"cubic-bezier(.23,1,.32,1)"});
+   ], {duration:300,easing:"linear"});
    // State changes remain reliable even if the browser pauses the animation timeline.
    swapTimer.current = setTimeout(() => {
      flushSync(() => setIndex(target));
      swapTimer.current = null;
-   }, 100);
+   }, 120);
  };
 
  return <section id={id} className="nc-section" aria-labelledby={`${uid}-heading`}>

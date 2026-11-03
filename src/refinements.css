@@ -82,3 +82,14 @@ body button.navbtn,body button.navbtn:hover,body button.team__btn,body button.te
 .liam .liam__title::after { display: none; animation: none; }
 .liam .marquee__track { animation: none; }
 .liam .liam__hero-bg { transform: none; will-change: auto; }
+
+/* Portrait frames follow the photograph, without full-column borders or empty bands. */
+.liam .chapter__media { width: fit-content; max-width: 100%; justify-self: center; border: 0; background: transparent; }
+.liam .chapter__media img.ph-img { display: block; width: auto; height: auto; max-width: 100%; max-height: min(58svh,480px); aspect-ratio: auto; border: 0; outline: 0; box-shadow: none; border-radius: 12px; margin: 0 auto; }
+.liam .welcome__photo { width: fit-content; max-width: 100%; border: 0; background: transparent; }
+.liam .welcome__photo img { width: auto; height: min(58svh,460px); max-width: 100%; aspect-ratio: auto; object-fit: contain; }
+.liam .actions { flex-wrap: wrap; gap: 12px; }
+.liam { --action-gold: #e6ba43; }
+.liam--light { --action-gold: #7c5b00; }
+.liam .actions .btn { display: inline-flex; justify-content: center; align-items: center; min-height: 48px; min-width: 160px; padding: 11px 20px; border: 1px solid var(--action-gold); border-radius: 10px; background: transparent; color: var(--action-gold); font: 700 16px/1.35 Georgia,serif; text-decoration: none; opacity: 1; box-shadow: none; transform: none; }
+@media (hover:hover) and (pointer:fine) { .liam .actions .btn:hover { background: var(--action-gold); color: #fff; transform: none; box-shadow: none; } .liam--dark .actions .btn:hover { color: #111; } }
