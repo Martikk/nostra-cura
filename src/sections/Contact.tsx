@@ -1,3 +1,4 @@
+import { FiMail, FiUsers, FiSend, FiLock } from "react-icons/fi";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Toaster, toast } from "react-hot-toast";
@@ -60,10 +61,11 @@ export default function Contact() {
           <h2>Start a Conversation</h2>
           <p>Whether you have a question, an idea, or would like to learn more about our services, we would be happy to hear from you.</p>
 
-          <h3>Email</h3>
-          <a href="mailto:info@nostracura.ca" className="contactcard__email">
-            info@nostracura.ca
-          </a>
+          <div className="contactcard__email-row">
+            <span className="contactcard__icon"><FiMail aria-hidden="true" /></span>
+            <div><h3>Email</h3><a href="mailto:info@nostracura.ca" className="contactcard__email">info@nostracura.ca</a></div>
+          </div>
+          <div className="contactcard__welcome"><FiUsers aria-hidden="true" /><div><p>We value every conversation and will respond as soon as possible.</p><strong>Thank you for reaching out.</strong></div></div>
         </div>
 
         {/* ВАЖНО: имя формы и атрибуты Netlify */}
@@ -118,7 +120,7 @@ export default function Contact() {
                   message: "Invalid email format",
                 },
               })}
-              placeholder="Email address"
+              placeholder="Your email address"
               type="email"
               inputMode="email"
               autoComplete="email"
@@ -140,9 +142,10 @@ export default function Contact() {
 
 
           <button type="submit" className="btn btn--submit" disabled={isSubmitting}>
-            {isSubmitting ? "Sending..." : "Send Message"}
+            <FiSend aria-hidden="true" />{isSubmitting ? "Sending..." : "Send Message"}
           </button>
 
+          <p className="contactcard__privacy"><FiLock aria-hidden="true" />Your information is safe with us. We respect your privacy.</p>
           {sent && (
             <p className="success" role="status">Your message has been sent successfully!</p>
           )}
