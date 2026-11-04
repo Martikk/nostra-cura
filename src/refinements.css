@@ -208,3 +208,43 @@ body button.navbtn,body button.navbtn:hover,body button.team__btn,body button.te
  :is(#contact,.liam__contact) .contactcard__form textarea { min-height: 140px; font-size: 16px; }
  :is(#contact,.liam__contact) .contactcard__form .btn--submit { min-height: 52px; font-size: 17px; }
 }
+
+/* Main page final touches: related actions stay beside their content. */
+#home .hero__actions { margin-top: 28px; }
+#team .nc-card__body--portrait { grid-template-columns: minmax(0,1fr) minmax(0,1.1fr); gap: 28px; }
+#team .nc-card__portrait { width: min(100%,280px); height: auto; aspect-ratio: 1; }
+#team .nc-card__copy .nc-card__action { margin-top: 26px; }
+#team .nc-card__body--portrait .nc-card__lead { margin-bottom: 0; }
+#contact { padding-top: calc(var(--nav-h) + 28px); padding-bottom: 28px; }
+#contact .contactcard { width: min(900px,100%); padding: 28px 32px; gap: 28px; border-radius: 16px; background: rgba(15,17,20,.65); }
+#contact .contactcard__info h2 { margin: 8px 0 20px; font-size: clamp(30px,3vw,38px); }
+#contact .contactcard__info h2::after { margin-top: 18px; width: 40px; }
+#contact .contactcard__info > p { font-size: 16px; line-height: 1.6; }
+#contact .contactcard__email-row { margin-top: 24px; padding-top: 24px; gap: 14px; }
+#contact .contactcard__icon { width: 44px; height: 44px; flex-basis: 44px; font-size: 21px; }
+#contact .contactcard__welcome { padding-top: 28px; gap: 14px; }
+#contact .contactcard__welcome p,#contact .contactcard__welcome strong { font-size: 15px; }
+#contact .contactcard__welcome > svg { width: 32px; height: 32px; flex-basis: 32px; }
+#contact .contactcard__form { gap: 14px; padding-left: 28px; }
+#contact .contactcard__form label { font-size: 16px; }
+#contact .contactcard__form input,#contact .contactcard__form textarea { padding: 10px 14px; font-size: 16px; margin-top: 6px; }
+#contact .contactcard__form input { min-height: 44px; }
+#contact .contactcard__form textarea { min-height: 88px; height: 88px; }
+#contact .contactcard__form .btn--submit { width: max-content; align-self: flex-start; min-height: 48px; padding: 12px 24px; margin: 2px 0 0; background: #fff; color: #13181d; border: 1px solid rgba(255,255,255,.8); font-size: 16px; }
+#contact .contactcard__form .btn--submit:hover { background: #f5e9c7; }
+#contact .contactcard__privacy { justify-content: flex-start; font-size: 12px; margin: 0; }
+@media(min-width:701px) and (max-height:700px) {
+ #contact .contactcard__form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+ #contact .contactcard__form > label:nth-of-type(n+3),#contact .contactcard__form > button,#contact .contactcard__privacy,#contact .success { grid-column: 1/-1; }
+}
+@media(max-width:600px) {
+ #team .nc-card__body--portrait { grid-template-columns: 1fr; gap: 24px; }
+ #team .nc-card__portrait { width: min(220px,100%); }
+}
+@media(max-width:700px) {
+ #contact .contactcard { padding: 24px 20px; gap: 24px; }
+ #contact .contactcard__form { padding: 24px 0 0; gap: 20px; }
+ #contact .contactcard__form input { min-height: 52px; }
+ #contact .contactcard__form textarea { min-height: 140px; height: auto; }
+ #contact .contactcard__form .btn--submit { width: 100%; min-height: 52px; }
+}

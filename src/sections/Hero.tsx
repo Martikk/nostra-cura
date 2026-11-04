@@ -23,10 +23,6 @@ export default function Hero() {
         <h1 className="hero__title">
           BUILDING BETTER<br />LIVES IN<br />CONSTRUCTION
         </h1>
-        <p className="hero__subtitle">
-          Helping individuals and teams navigate decisions,<br />
-          responsibilities, and pressure with confidence.
-        </p>
         <div className="hero__actions">
           <CardAction action={{ label: "Explore Services", href: "/#services" }} />
           <CardAction action={{ label: "Contact Us", href: "/#contact" }} />

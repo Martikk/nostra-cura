@@ -81,10 +81,11 @@ export default function SectionCarousel({ id, title, background, slides }: {
        {slide.title && <h3 className="nc-card__title">{slide.title}</h3>}
        {slide.lead && <p className="nc-card__lead">{slide.lead}</p>}
        {slide.quote && <div className="nc-card__stars" aria-hidden="true">{Array.from({length:5},(_,n)=><img key={n} src="https://res.cloudinary.com/dzytbkc5l/image/upload/v1760976788/liam/2sp6am4qncmf05qzut_fmmlir.svg" alt="" width="20" height="20" />)}</div>}
+       {slide.image && slide.action && <div className="nc-card__action"><CardAction action={slide.action} /></div>}
        {slide.text && <div className={"nc-card__text"+(slide.quote?" nc-card__text--quote":"")}>{slide.text.split("\n\n").map(text=><p key={text}>{text}</p>)}</div>}
       </div>
      </div>
-     {slide.action && <div className="nc-card__action"><CardAction action={slide.action} /></div>}
+     {!slide.image && slide.action && <div className="nc-card__action"><CardAction action={slide.action} /></div>}
     </div>)}
    </div>
    <div className="nc-controls">
