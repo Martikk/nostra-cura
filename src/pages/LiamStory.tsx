@@ -1,5 +1,4 @@
 import { FiMail, FiUsers, FiSend, FiLock } from "react-icons/fi";
-import Typewriter from "../components/Typewriter";
 import { useEffect, useRef, useState } from "react";
 import Footer from "../components/layout/Footer";
 import "./LiamStory.css";
@@ -127,7 +126,7 @@ export default function LiamStory() {
               Meet <span className="accent">Liam Dillon</span>
             </h1>
 
-            <p className="welcome__lead"><Typewriter text="I've spent over 15 years working in the construction industry, starting in the trades and eventually moving into project management and leadership." /></p>
+            <p className="welcome__lead">I've spent over 15 years working in the construction industry, starting in the trades and eventually moving into project management and leadership.</p>
             <p className="welcome__lead">Along the way, I've experienced professional success, personal struggles, setbacks, and new beginnings. Those experiences have taught me that building a successful career or business means very little if we lose sight of the people behind it.</p>
             <p className="welcome__lead">That's why I founded Nostra Cura Consulting Group Inc. — to bring together my professional experience, personal lessons, and belief that we can build better businesses while building better lives.</p>
           </div>
@@ -158,21 +157,21 @@ export default function LiamStory() {
               onPointerMove={magnet.onMove}
               onPointerLeave={magnet.onLeave}
             >
-              Red Seal <em>Refrigeration Mechanic</em>
+              Red Seal Endorsed <em>Refrigeration Mechanic</em>
             </span>
             <span
               className="badge is-magnetic"
               onPointerMove={magnet.onMove}
               onPointerLeave={magnet.onLeave}
             >
-              PMP <em>Project Manager</em>
+              PMP Certified <em>Project Manager</em>
             </span>
             <span
               className="badge is-magnetic"
               onPointerMove={magnet.onMove}
               onPointerLeave={magnet.onLeave}
             >
-              Advocate <em>Mental Health & Growth</em>
+              Founder &amp; Consultant <em>NCCG Inc.</em>
             </span>
           </div>
         </div>
@@ -189,7 +188,6 @@ export default function LiamStory() {
       {/* ===== INTRO ===== */}
       <section className="liam__intro">
         <div className="container">
-          <h2>Founder &amp; Consultant</h2><p>Nostra Cura Consulting Group Inc.</p>
 <p className="lead">One thing I've learned over the years is that everyone has a story. We all experience challenges, make mistakes, learn lessons, and find our own way forward.</p>
 <p className="lead">I've worked alongside some incredible people and seen firsthand how much leadership, workplace culture, and the decisions we make can affect our lives, both professionally and personally.</p>
 <p className="lead">I believe good business doesn't need to be complicated, and good leadership doesn't need to be intimidating. It starts with treating people well, communicating honestly, taking responsibility, and continually looking for ways to improve.</p>
@@ -268,20 +266,6 @@ export default function LiamStory() {
             <div className="chapter__content">
               <h2>A Different Perspective</h2><p>Moving from the trades into project management and leadership gave me a different perspective on the construction industry. I've seen firsthand how the decisions we make as leaders affect not only the success of a business, but also the people working within it. I believe that building successful organizations and supporting the people behind them are equally important.</p><p>I believe we can do better at both.</p>
 
-              <ul className="pill-grid">
-                {["Integrity", "People First", "Quality", "Growth"].map((v) => (
-                  <li key={v}>
-                    <span
-                      className="pill is-magnetic"
-                      onPointerMove={magnet.onMove}
-                      onPointerLeave={magnet.onLeave}
-                      aria-label={v}
-                    >
-                      {v}
-                    </span>
-                  </li>
-                ))}
-              </ul>
             </div>
           </article>
         </div>
@@ -301,7 +285,7 @@ export default function LiamStory() {
             <h2>Contact Liam</h2>
             <p>Have a question, an idea, or something you'd like to discuss? I'd be happy to hear from you.</p>
             <div className="contactcard__email-row"><span className="contactcard__icon"><FiMail aria-hidden="true" /></span><div><h3>Email</h3><a className="contactcard__email" href="mailto:liam@nostracura.ca">liam@nostracura.ca</a></div></div>
-            <div className="contactcard__welcome"><FiUsers aria-hidden="true" /><div><p>We value every conversation and will respond as soon as possible.</p><strong>Thank you for reaching out.</strong></div></div>
+            <div className="contactcard__welcome"><FiUsers aria-hidden="true" /><div><p>I value every conversation and will respond as soon as possible.</p><strong>Thank you for reaching out.</strong></div></div>
           </div>
           <div className="liam-contact__fields">
 
@@ -397,7 +381,6 @@ export default function LiamStory() {
 
   <div className="actions">
     <button type="submit" disabled={sending} className="btn btn--primary btn--submit"><FiSend aria-hidden="true" />{sending ? "Sending..." : "Send Message"}</button>
-    <a className="btn btn--ghost" href="/#services">Explore Our Services</a>
   </div>
   <p className="contactcard__privacy"><FiLock aria-hidden="true" />Your information is safe with us. We respect your privacy.</p>
 </form>
