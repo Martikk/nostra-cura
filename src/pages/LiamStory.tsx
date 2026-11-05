@@ -1,3 +1,4 @@
+import { submitContact } from "../contact";
 import { FiMail, FiUsers, FiSend, FiLock } from "react-icons/fi";
 import { useEffect, useRef, useState } from "react";
 import Footer from "../components/layout/Footer";
@@ -322,21 +323,15 @@ export default function LiamStory() {
 
       fd.set('form-name', 'contact-liam');
 
-      const res = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(Array.from(fd.entries(), ([key, value]) => [key, String(value)])).toString(),
-      });
-
+      await submitContact(new URLSearchParams(Array.from(fd.entries(), ([key, value]) => [key, String(value)])).toString());
       toast.dismiss();
-      if (!res.ok) throw new Error('Submit failed');
 
       toast.success('Message sent successfully!');
       setSent(true);
       form.reset();
-    } catch {
+    } catch (error) {
       toast.dismiss();
-      toast.error('Failed to send. Try again later.');
+      toast.error(error instanceof Error ? error.message : 'Failed to send. Try again later.');
     } finally {
       setSending(false);
     }

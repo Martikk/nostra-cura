@@ -1,3 +1,4 @@
+import { submitContact } from "../contact";
 import { FiMail, FiUsers, FiSend, FiLock } from "react-icons/fi";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -35,18 +36,13 @@ export default function Contact() {
     };
 
     try {
-      const res = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode(payload),
-      });
-      if (!res.ok) throw new Error("Submit failed");
+      await submitContact(encode(payload));
 
       // (опц.) toast.dismiss(); toast.success("Message sent!");
       reset();
       setSent(true);
     } catch (e) {
-      toast.dismiss(); toast.error("Failed to send. Try again later.");
+      toast.dismiss(); toast.error(e instanceof Error ? e.message : "Failed to send. Try again later.");
       console.error(e);
 
     }
