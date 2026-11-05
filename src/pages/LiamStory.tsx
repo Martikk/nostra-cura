@@ -279,7 +279,7 @@ export default function LiamStory() {
       </section>
 
       {/* ===== CONTACT ===== */}
-      <section className="liam__contact contact" id="contact-liam">
+      <section className="liam__contact" id="contact-liam">
         <div className="contactcard">
           <div className="contactcard__info">
             <h2>Contact Liam</h2>
