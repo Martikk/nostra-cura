@@ -261,3 +261,12 @@ body button.navbtn,body button.navbtn:hover,body button.team__btn,body button.te
  .liam .liam__contact .field.two { grid-template-columns: 1fr; gap: 20px; }
  .liam .liam__contact .contactcard__form textarea { height: auto; min-height: 140px; }
 }
+
+/* Both contact sections share the same surface, field markup and background. */
+.liam .liam__contact.contact { display: flex; align-items: center; justify-content: center; min-height: 100svh; padding: calc(var(--nav-h) + 28px) var(--gutter) 28px; }
+.liam .liam__contact .contactcard__form { padding-left: 28px; }
+.liam .liam__contact .contactcard__info p { color: rgba(255,255,255,.9); }
+@media(max-width:700px) {
+ .liam .liam__contact.contact { padding-inline: 16px; }
+ .liam .liam__contact .contactcard__form { padding: 24px 0 0; }
+}

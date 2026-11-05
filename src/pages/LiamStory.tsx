@@ -279,8 +279,8 @@ export default function LiamStory() {
       </section>
 
       {/* ===== CONTACT ===== */}
-      <section className="liam__contact" id="contact-liam">
-        <div className="container contactcard">
+      <section className="liam__contact contact" id="contact-liam">
+        <div className="contactcard">
           <div className="contactcard__info">
             <h2>Contact Liam</h2>
             <p>Have a question, an idea, or something you'd like to discuss? I'd be happy to hear from you.</p>
@@ -300,7 +300,7 @@ export default function LiamStory() {
   method="POST"
   data-netlify="true"
   data-netlify-honeypot="bot-field"
-  className="contact__form contactcard__form"
+  className="contactcard__form"
   onSubmit={async (e) => {
     e.preventDefault();
     if (sending) return;
@@ -347,41 +347,23 @@ export default function LiamStory() {
     <label>Don’t fill this out: <input name="bot-field" /></label>
   </p>
 
-  <div className="field">
-    <label htmlFor="name">Name*</label>
-    <div className="input-wrap">
-      <input id="name" name="name" type="text" autoComplete="name" enterKeyHint="next" required placeholder="Your name" />
-    </div>
-  </div>
-
-  <div className="field two">
-    <div className="field">
-      <label htmlFor="email">Email*</label>
-      <div className="input-wrap">
-        <input id="email" name="email" type="email" inputMode="email" autoComplete="email" enterKeyHint="next" required placeholder="Your email address" />
-      </div>
-    </div>
-    <div className="field">
-      <label htmlFor="phone">Phone</label>
-      <div className="input-wrap">
-        <input id="phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" enterKeyHint="next" placeholder="Your phone number" />
-      </div>
-    </div>
-  </div>
-
-  <div className="field">
-    <label htmlFor="message">What would you like to discuss?*</label>
-    <div className="input-wrap textarea">
-      <textarea id="message" name="message" required placeholder="Tell me a little about what you’re looking for..." rows={4} />
-    </div>
-  </div>
+  <label htmlFor="name">Name*
+    <input id="name" name="name" type="text" autoComplete="name" enterKeyHint="next" required placeholder="Your name" />
+  </label>
+  <label htmlFor="phone">Phone
+    <input id="phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" enterKeyHint="next" placeholder="Your phone number" />
+  </label>
+  <label htmlFor="email">Email Address*
+    <input id="email" name="email" type="email" inputMode="email" autoComplete="email" enterKeyHint="next" required placeholder="Your email address" />
+  </label>
+  <label htmlFor="message">What would you like to discuss?*
+    <textarea id="message" name="message" required placeholder="Tell me a little about what you’re looking for..." rows={4} />
+  </label>
 
   {/* скрытое имя формы (дублируем для надёжности) */}
   <input type="hidden" name="form-name" value="contact-liam" />
 
-  <div className="actions">
-    <button type="submit" disabled={sending} className="btn btn--primary btn--submit"><FiSend aria-hidden="true" />{sending ? "Sending..." : "Send Message"}</button>
-  </div>
+  <button type="submit" disabled={sending} className="btn btn--submit"><FiSend aria-hidden="true" />{sending ? "Sending..." : "Send Message"}</button>
   <p className="contactcard__privacy"><FiLock aria-hidden="true" />Your information is safe with us. We respect your privacy.</p>
 </form>
 
