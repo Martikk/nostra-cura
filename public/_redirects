@@ -1,2 +1,11 @@
+# Domain migration rules must precede local page rewrites and the 404 fallback.
+http://nccg.ca/* https://nccg.ca/:splat 301!
+http://www.nccg.ca/* https://nccg.ca/:splat 301!
+https://www.nccg.ca/* https://nccg.ca/:splat 301!
+http://nostracura.ca/* https://nccg.ca/:splat 301!
+https://nostracura.ca/* https://nccg.ca/:splat 301!
+http://www.nostracura.ca/* https://nccg.ca/:splat 301!
+https://www.nostracura.ca/* https://nccg.ca/:splat 301!
+https://nostracura.netlify.app/* https://nccg.ca/:splat 301!
 /liam /liam/index.html 200
 /* /404.html 404

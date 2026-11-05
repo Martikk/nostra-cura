@@ -5,37 +5,6 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# HTTP -> HTTPS + все на apex .ca
-[[redirects]]
-  from = "http://*"
-  to = "https://nccg.ca/:splat"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://nostracura.ca/*"
-  to = "https://nccg.ca/:splat"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.nccg.ca/*"
-  to = "https://nccg.ca/:splat"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.nostracura.ca/*"
-  to = "https://nccg.ca/:splat"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://*.netlify.app/*"
-  to = "https://nccg.ca/:splat"
-  status = 301
-  force = true
-
 # Content-hashed build assets are safe to retain; HTML is revalidated on each visit.
 [[headers]]
   for = "/assets/*"

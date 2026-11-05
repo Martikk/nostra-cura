@@ -56,3 +56,13 @@ test('home prioritizes responsive hero images and defers section backgrounds', (
  assert.ok(home.includes('loading="lazy"'));
  assert.ok(home.includes('Read Liam’s Story'));
 });
+
+test('domain migration precedes local routing and preserves paths', async () => {
+ const rules=(await readFile(new URL('../dist/_redirects',import.meta.url),'utf8')).split('\n').filter(line=>line.trim()&&!line.startsWith('#')).map(line=>line.split(/\s+/));
+ for(const host of ['nostracura.ca','www.nostracura.ca','www.nccg.ca']) {
+  const rule=rules.find(row=>row[0]===`https://${host}/*`);
+  assert.deepEqual(rule,[`https://${host}/*`,'https://nccg.ca/:splat','301!']);
+  assert.ok(rules.indexOf(rule)<rules.findIndex(row=>row[0]==='/liam'));
+ }
+ assert.ok(!rules.some(row=>row[0]==='https://nccg.ca/*'));
+});
