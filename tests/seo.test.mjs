@@ -22,7 +22,7 @@ test('routes have distinct titles and descriptions before JavaScript runs', () =
 test('404 is excluded from indexing and sitemap has exactly the live routes', async () => {
   assert.ok(notFound.includes('content="noindex,follow"'));
   const sitemap = await readFile(new URL('../dist/sitemap.xml', import.meta.url),'utf8');
-  assert.deepEqual([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>m[1]).sort(),['https://nccg.ca/','https://nccg.ca/liam/']);
+  assert.deepEqual([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>m[1]).sort(),['https://nccg.ca/','https://nccg.ca/liam/','https://nccg.ca/privacy/']);
 });
 test('service calls to action do not link to missing pages', () => {
   assert.ok(home.includes('href="/#contact"'));
@@ -65,4 +65,13 @@ test('domain migration precedes local routing and preserves paths', async () => 
   assert.ok(rules.indexOf(rule)<rules.findIndex(row=>row[0]==='/liam'));
  }
  assert.ok(!rules.some(row=>row[0]==='https://nccg.ca/*'));
+});
+
+test('privacy policy is prerendered and linked from both forms and footers', async () => {
+ const privacy = await readFile(new URL('../dist/privacy/index.html', import.meta.url), 'utf8');
+ assert.ok(privacy.includes('<h1>Privacy Policy</h1>'));
+ assert.ok(privacy.includes('rel="canonical" href="https://nccg.ca/privacy/"'));
+ assert.ok(privacy.includes('name="robots" content="index,follow'));
+ for (const term of ['Netlify','Resend','Microsoft 365','local storage','outside Canada','info@nccg.ca']) assert.ok(privacy.includes(term),term);
+ for (const html of [home,liam]) assert.ok((html.match(/href="\/privacy\/"/g)||[]).length >= 2);
 });

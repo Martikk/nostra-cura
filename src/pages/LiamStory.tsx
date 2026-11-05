@@ -357,7 +357,7 @@ export default function LiamStory() {
   <input type="hidden" name="form-name" value="contact-liam" />
 
   <button type="submit" disabled={sending} className="btn btn--submit"><FiSend aria-hidden="true" />{sending ? "Sending..." : "Send Message"}</button>
-  <p className="contactcard__privacy"><FiLock aria-hidden="true" />Your information is safe with us. We respect your privacy.</p>
+  <p className="contactcard__privacy"><FiLock aria-hidden="true" />We use your details to respond to your enquiry. <a href="/privacy/">Privacy Policy</a>.</p>
 </form>
 
           )}

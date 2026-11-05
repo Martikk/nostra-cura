@@ -95,6 +95,7 @@ export default function Footer() {
           </a>
         </nav>
       </div>
+      <nav className="footer__legal" aria-label="Legal"><a href="/privacy/">Privacy Policy</a></nav>
     </footer>
   );
 }

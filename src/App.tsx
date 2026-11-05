@@ -10,6 +10,7 @@ import Contact from "./sections/Contact";
 import Footer from "./components/layout/Footer";
 import LiamStory from "./pages/LiamStory";
 import { useHashScroll } from "./hooks/useHashScroll";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 
 export default function App() {
@@ -43,6 +44,7 @@ export default function App() {
 
         {/* Отдельная страница Liam */}
         <Route path="/liam" element={<LiamStory />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />   {/* ← сюда */}
       </Routes>
     </>

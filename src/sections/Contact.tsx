@@ -143,7 +143,7 @@ export default function Contact() {
             <FiSend aria-hidden="true" />{isSubmitting ? "Sending..." : "Send Message"}
           </button>
 
-          <p className="contactcard__privacy"><FiLock aria-hidden="true" />Your information is safe with us. We respect your privacy.</p>
+          <p className="contactcard__privacy"><FiLock aria-hidden="true" />We use your details to respond to your enquiry. <a href="/privacy/">Privacy Policy</a>.</p>
         </form>
         )}
       </div>
