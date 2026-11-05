@@ -284,7 +284,7 @@ export default function LiamStory() {
           <div className="contactcard__info">
             <h2>Contact Liam</h2>
             <p>Have a question, an idea, or something you'd like to discuss? I'd be happy to hear from you.</p>
-            <div className="contactcard__email-row"><span className="contactcard__icon"><FiMail aria-hidden="true" /></span><div><h3>Email</h3><a className="contactcard__email" href="mailto:liam@nostracura.ca">liam@nostracura.ca</a></div></div>
+            <div className="contactcard__email-row"><span className="contactcard__icon"><FiMail aria-hidden="true" /></span><div><h3>Email</h3><a className="contactcard__email" href="mailto:liam@nccg.ca">liam@nccg.ca</a></div></div>
             <div className="contactcard__welcome"><FiUsers aria-hidden="true" /><div><p>I value every conversation and will respond as soon as possible.</p><strong>Thank you for reaching out.</strong></div></div>
           </div>
           <div className="liam-contact__fields">

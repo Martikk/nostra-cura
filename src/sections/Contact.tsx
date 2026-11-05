@@ -63,7 +63,7 @@ export default function Contact() {
 
           <div className="contactcard__email-row">
             <span className="contactcard__icon"><FiMail aria-hidden="true" /></span>
-            <div><h3>Email</h3><a href="mailto:info@nostracura.ca" className="contactcard__email">info@nostracura.ca</a></div>
+            <div><h3>Email</h3><a href="mailto:info@nccg.ca" className="contactcard__email">info@nccg.ca</a></div>
           </div>
           <div className="contactcard__welcome"><FiUsers aria-hidden="true" /><div><p>We value every conversation and will respond as soon as possible.</p><strong>Thank you for reaching out.</strong></div></div>
         </div>

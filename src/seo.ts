@@ -10,7 +10,7 @@ export const organization = {
   "@context": "https://schema.org", "@type": "Organization",
   "@id": origin + "/#organization", name: "Nostra Cura Consulting Group Inc.",
   alternateName: "NCCG", url: origin, logo: origin + "/images/nccg-logo.webp",
-  email: "info@nostracura.ca", founder: { "@type": "Person", name: "Liam Dillon", url: origin + "/liam/", jobTitle: "Founder & Consultant" }
+  email: "info@nccg.ca", founder: { "@type": "Person", name: "Liam Dillon", url: origin + "/liam/", jobTitle: "Founder & Consultant" }
 };
 
 export function structuredData(path: string) {
