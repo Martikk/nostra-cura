@@ -7,8 +7,8 @@ const notFound = await readFile(new URL('../dist/404.html', import.meta.url), 'u
 for (const [name, html, path] of [['home',home,'/'],['liam',liam,'/liam/']]) {
   test(`${name}: crawlable HTML, unique heading and canonical`, () => {
     assert.equal((html.match(/<h1[ >]/g) || []).length, 1);
-    assert.ok(html.includes(`rel="canonical" href="https://nostracura.ca${path}"`));
-    assert.ok(html.includes(`property="og:url" content="https://nostracura.ca${path}"`));
+    assert.ok(html.includes(`rel="canonical" href="https://nccg.ca${path}"`));
+    assert.ok(html.includes(`property="og:url" content="https://nccg.ca${path}"`));
     const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);
     assert.equal(new Set(ids).size, ids.length);
     assert.ok(html.includes('application/ld+json'));
@@ -22,7 +22,7 @@ test('routes have distinct titles and descriptions before JavaScript runs', () =
 test('404 is excluded from indexing and sitemap has exactly the live routes', async () => {
   assert.ok(notFound.includes('content="noindex,follow"'));
   const sitemap = await readFile(new URL('../dist/sitemap.xml', import.meta.url),'utf8');
-  assert.deepEqual([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>m[1]).sort(),['https://nostracura.ca/','https://nostracura.ca/liam/']);
+  assert.deepEqual([...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>m[1]).sort(),['https://nccg.ca/','https://nccg.ca/liam/']);
 });
 test('service calls to action do not link to missing pages', () => {
   assert.ok(home.includes('href="/#contact"'));
@@ -46,7 +46,7 @@ test('structured data matches each route and identifies the company', () => {
  const schema = html => JSON.parse(html.match(/<script type="application\/ld\+json"[^>]*>(.*?)<\/script>/s)[1]);
  const a=schema(home)['@graph'], b=schema(liam)['@graph'];
  assert.ok(a.some(node=>node['@type']==='Organization' && node.name==='Nostra Cura Consulting Group Inc.'));
- assert.ok(a.some(node=>node['@type']==='WebPage' && node.url==='https://nostracura.ca/'));
+ assert.ok(a.some(node=>node['@type']==='WebPage' && node.url==='https://nccg.ca/'));
  assert.ok(b.some(node=>node['@type']==='ProfilePage' && node.mainEntity.name==='Liam Dillon'));
 });
 test('home prioritizes responsive hero images and defers section backgrounds', () => {

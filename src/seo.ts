@@ -1,4 +1,4 @@
-export const origin = "https://nostracura.ca";
+export const origin = "https://nccg.ca";
 export function pageMetadata(path: string) {
   path = path.replace(/\/+$/, "") || "/";
   const known = path === "/" || path === "/liam";

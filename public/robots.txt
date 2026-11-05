@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Указываем путь к карте сайта
-Sitemap: https://nostracura.ca/sitemap.xml
+Sitemap: https://nccg.ca/sitemap.xml
