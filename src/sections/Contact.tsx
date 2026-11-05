@@ -1,3 +1,4 @@
+import ContactSuccess from "../components/ContactSuccess";
 import { submitContact } from "../contact";
 import { FiMail, FiUsers, FiSend, FiLock } from "react-icons/fi";
 import { useState } from "react";
@@ -65,6 +66,7 @@ export default function Contact() {
         </div>
 
         {/* ВАЖНО: имя формы и атрибуты Netlify */}
+        {sent ? <ContactSuccess onReset={() => setSent(false)} /> : (
         <form
           name="contact-main"
           method="POST"
@@ -142,10 +144,8 @@ export default function Contact() {
           </button>
 
           <p className="contactcard__privacy"><FiLock aria-hidden="true" />Your information is safe with us. We respect your privacy.</p>
-          {sent && (
-            <p className="success" role="status">Your message has been sent successfully!</p>
-          )}
         </form>
+        )}
       </div>
 
       <Toaster position="top-right" />

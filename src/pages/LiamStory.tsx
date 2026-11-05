@@ -1,3 +1,4 @@
+import ContactSuccess from "../components/ContactSuccess";
 import { submitContact } from "../contact";
 import { FiMail, FiUsers, FiSend, FiLock } from "react-icons/fi";
 import { useEffect, useRef, useState } from "react";
@@ -291,9 +292,7 @@ export default function LiamStory() {
           <div className="liam-contact__fields">
 
           {sent ? (
-            <div className="contact__success" role="status">
-              Thanks! Your message has been sent. I’ll get back to you shortly.
-            </div>
+            <ContactSuccess personal onReset={() => setSent(false)} />
           ) : (
 
 <form
@@ -326,7 +325,6 @@ export default function LiamStory() {
       await submitContact(new URLSearchParams(Array.from(fd.entries(), ([key, value]) => [key, String(value)])).toString());
       toast.dismiss();
 
-      toast.success('Message sent successfully!');
       setSent(true);
       form.reset();
     } catch (error) {

@@ -291,3 +291,31 @@ body button.navbtn,body button.navbtn:hover,body button.team__btn,body button.te
   background-color: #34383c !important;
   box-shadow: inset 0 0 0 1000px #34383c !important;
 }
+
+/* One visible confirmation state for both forms, in the site's white/gold palette. */
+:is(#contact, .liam__contact) .contact-confirmation {
+  align-self: stretch; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 20px; min-height: 380px; padding: 36px 24px;
+  color: #fff; text-align: center; outline: none; scroll-margin-top: var(--nav-h);
+}
+:is(#contact, .liam__contact) .contact-confirmation__icon {
+  display: grid; place-items: center; width: 64px; height: 64px;
+  border: 1px solid #e3b63d; border-radius: 50%; color: #e3b63d; flex-shrink: 0;
+}
+.contact-confirmation__icon svg { width: 32px; height: 32px; stroke-width: 2; }
+:is(#contact, .liam__contact) .contact-confirmation h3 {
+  margin: 0; color: #fff; font: 700 clamp(28px, 3vw, 36px)/1.15 Georgia, serif;
+}
+:is(#contact, .liam__contact) .contact-confirmation p {
+  margin: 0; max-width: 34ch; color: rgba(255,255,255,.9); font: 400 17px/1.6 Georgia, serif;
+}
+:is(#contact, .liam__contact) .contact-confirmation .btn {
+  margin: 8px 0 0; min-height: 48px; width: auto; max-width: 100%; padding: 12px 24px;
+  background: #fff; color: #151b20; border: 1px solid #fff; border-radius: 999px;
+  font: 700 16px/1.4 Georgia, serif; white-space: normal;
+}
+:is(#contact, .liam__contact) .contact-confirmation .btn:hover { background: #e3b63d; border-color: #e3b63d; }
+:is(#contact, .liam__contact) .contact-confirmation .btn:focus-visible { outline: 2px solid #e3b63d; outline-offset: 4px; }
+@media(max-width:700px) {
+  :is(#contact, .liam__contact) .contact-confirmation { min-height: 320px; padding: 32px 12px; }
+}
