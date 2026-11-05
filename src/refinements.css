@@ -273,3 +273,21 @@ body button.navbtn,body button.navbtn:hover,body button.team__btn,body button.te
 
 /* The biography contact section continues its own page theme. */
 .liam .liam__contact { background: transparent; }
+
+/* Safari/Chrome autofill must keep the same contrast as our dark form surface.
+   Use an opaque inset fill: a translucent fill lets the browser's yellow show through. */
+:is(#contact, .liam__contact) .contactcard__form :is(input, textarea) {
+  color-scheme: dark;
+  caret-color: #fff;
+}
+:is(#contact, .liam__contact) .contactcard__form :is(input, textarea):-webkit-autofill {
+  -webkit-text-fill-color: #fff !important;
+  caret-color: #fff;
+  -webkit-box-shadow: inset 0 0 0 1000px #34383c !important;
+  box-shadow: inset 0 0 0 1000px #34383c !important;
+}
+:is(#contact, .liam__contact) .contactcard__form :is(input, textarea):autofill {
+  color: #fff !important;
+  background-color: #34383c !important;
+  box-shadow: inset 0 0 0 1000px #34383c !important;
+}
